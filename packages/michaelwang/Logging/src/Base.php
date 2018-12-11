@@ -24,7 +24,6 @@ namespace Michaelwang\Logging;
  *
  * @package    Logging
  * @category   Base
- * @copyright  Copyright (c) 2016 Enigma Software (http://www.enigmasoftware.com)
  * @version    1.0
  * @link       http://enigmasoftware.com
  */
