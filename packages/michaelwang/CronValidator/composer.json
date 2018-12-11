@@ -1,0 +1,16 @@
+{
+    "name": "michaelwang/cron-validator",
+    "description": "Validate for cron expression",
+    "keywords": ["laravel", "cron", "validation"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Wang",
+            "email": "wangqiangshen@gmail.com"
+        }
+    ],
+    "require": {},
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
