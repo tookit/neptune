@@ -28,6 +28,6 @@ class AuthServiceProvider extends ServiceProvider
 
         //Register passport route
 
-        Passport::routes();
+        Passport::routes(null,['prefix'=>'api/oauth']);
     }
 }
