@@ -20,6 +20,12 @@ class CreateUsersTable extends Migration
             $table->string('mobile');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            //extend
+            $table->enum('gender', \App\Models\User::GENDER)->default(\App\Models\User::GENDER_DEFAULT);
+            $table->string('avatar')->nullable();
+            $table->boolean('is_admin')->default(false);
+            $table->boolean('active')->default(false);
+            $table->string('bio')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
