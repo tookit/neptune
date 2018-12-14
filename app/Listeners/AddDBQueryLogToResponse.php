@@ -4,7 +4,10 @@ namespace App\Listeners;
 
 
 use Illuminate\Foundation\Http\Events\RequestHandled;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Psy\Util\Json;
 
 
 class AddDBQueryLogToResponse
@@ -12,18 +15,12 @@ class AddDBQueryLogToResponse
     public function handle(RequestHandled $event)
     {
 
-        // only for the old response
-        if(get_class($event->response) === 'Illuminate\Http\JsonResponse'){
-
-
-            $data = $event->response->getData();
-            if(!empty($data) && env('APP_DEBUG') === 'local')
-            {
-                $data->DBQuery = $this->getQueryLog();
-                $event->response->setData($data);
-            }
+        if(env('APP_ENV') === 'local')
+        {
+            $data = $this->getResponseData($event->response);
+            $data['debug']['queries'] = $this->getQueryLog();
+            $this->setResponseData($event->response,$data);
         }
-
     }
 
 
@@ -57,6 +54,38 @@ class AddDBQueryLogToResponse
 
     }
 
+
+    /**
+     * Fetches the contents of the response and parses them to an assoc array
+     *
+     * @param Response $response
+     * @return array|bool
+     */
+    protected function getResponseData(Response $response)
+    {
+        if ($response instanceof JsonResponse) {
+            /** @var $response JsonResponse */
+            return $response->getData(true) ?: [];
+        }
+        $content = $response->getContent();
+        return json_decode($content, true) ?: false;
+    }
+    /**
+     * Updates the response content
+     *
+     * @param Response $response
+     * @param array    $data
+     * @return JsonResponse|Response
+     */
+    protected function setResponseData(Response $response, array $data)
+    {
+        if ($response instanceof JsonResponse) {
+            /** @var $response JsonResponse */
+            return $response->setData($data);
+        }
+        $content = json_encode($data, JsonResponse::DEFAULT_ENCODING_OPTIONS);
+        return $response->setContent($content);
+    }
 
     /**
      * Be sure that all attributes sent to DB layer are strings.

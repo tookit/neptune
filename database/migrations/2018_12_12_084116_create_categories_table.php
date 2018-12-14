@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Kalnoy\Nestedset\NestedSet;
 
-class CreatePostsTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +14,12 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
+            $table->nestedSet();
             $table->string('title');
             $table->string('slug');
-            $table->string('excerpt');
-            $table->text('content')->nullable();
+            $table->string('excerpt')->nullable();
             $table->integer('created_by')->unsigned()->default(0);
             $table->integer('updated_by')->unsigned()->default(0);
             $table->boolean('is_active')->default(0);
@@ -34,6 +35,6 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('categories');
     }
 }
