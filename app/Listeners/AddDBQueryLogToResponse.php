@@ -4,7 +4,7 @@ namespace App\Listeners;
 
 
 use Illuminate\Foundation\Http\Events\RequestHandled;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Psy\Util\Json;

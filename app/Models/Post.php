@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
 class Post extends Model
 {
     use HasTranslations;
+    use AuditableTrait;
 
 
     protected $table = 'posts';
