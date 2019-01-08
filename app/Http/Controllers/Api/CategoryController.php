@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\CategoryStore;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Category;
+use Illuminate\Validation\ValidationException;
 
 class CategoryController extends Controller
 {
+    use ValidatesRequests;
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +30,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->validate($request,[
+
+            'name'=>'required',
+
+        ]);
+
+        return Category::collection(\App\Models\Category::paginate());
     }
 
     /**
