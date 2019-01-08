@@ -36,8 +36,8 @@ class CategoryController extends Controller
             'name'=>'required',
 
         ]);
+        \App\Models\Category::create($request->all());
 
-        return Category::collection(\App\Models\Category::paginate());
     }
 
     /**
