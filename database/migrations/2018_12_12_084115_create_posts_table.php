@@ -15,15 +15,18 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
+            $table->integer('category_id')->unsigned()->default(0);
             $table->string('slug');
-            $table->string('excerpt');
-            $table->text('content')->nullable();
+            $table->json('title');
+            $table->json('description');
+            $table->json('content');
             $table->integer('created_by')->unsigned()->default(0);
             $table->integer('updated_by')->unsigned()->default(0);
             $table->boolean('is_active')->default(0);
             $table->softDeletes();
             $table->timestamps();
+            $table->index('category_id');
+            $table->index('slug');
         });
     }
 

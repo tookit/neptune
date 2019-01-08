@@ -3,9 +3,8 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Kalnoy\Nestedset\NestedSet;
 
-class CreateCategoriesTable extends Migration
+class CreateProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,15 +13,16 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-            $table->nestedSet();
-            $table->string('slug');
-            $table->json('name');
-            $table->json('description')->nullable();
+            $table->integer('product_category_id')->unsigned()->default(0);
+            $table->integer('product_vendor_id')->unsigned()->default(0);
+            $table->string('sku');
+            $table->json('name')->comment('Product Name');
+            $table->json('description')->comment('Product Short Description');
+            $table->json('body')->comment('Product Long Description');
             $table->integer('created_by')->unsigned()->default(0);
             $table->integer('updated_by')->unsigned()->default(0);
-            $table->boolean('is_active')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -35,6 +35,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('products');
     }
 }

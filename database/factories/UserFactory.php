@@ -24,3 +24,14 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+
+$factory->define(App\Models\Category::class, function (Faker $faker) {
+    return [
+        'slug' =>$faker->uuid,
+        'name' => $faker->word,
+        'description' => $faker->sentence
+    ];
+});
+
+
