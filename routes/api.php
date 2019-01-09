@@ -19,7 +19,8 @@ use Illuminate\Http\Request;
 
 
 
-//Route::apiResource('categories',CategoryController::class);
+Route::apiResource('categories',CategoryController::class);
+Route::apiResource('users',UserController::class);
 
 Route::group([
 

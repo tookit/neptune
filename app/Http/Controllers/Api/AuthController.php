@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
@@ -10,7 +11,10 @@ class AuthController extends Controller
 
 
 
-    protected $loginRules = [];
+    protected $loginRules = [
+        'email' => 'required|string|email|max:255',
+        'password'=> 'required'
+    ];
 
     /**
      * Create a new AuthController instance.
@@ -29,6 +33,11 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        $validator = Validator::make($request->all(),$this->loginRules);
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
         $credentials = $request->only(['email', 'password','active'=>1]);
 
         if (! $token = auth('api')->attempt($credentials)) {

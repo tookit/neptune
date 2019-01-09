@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class UserController extends Controller
 {
@@ -14,7 +16,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return User::collection(
+
+            QueryBuilder::for(\App\Models\User::class)
+                ->allowedFilters('username')
+                ->get()
+
+        );
     }
 
     /**

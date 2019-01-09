@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\CategoryStore;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Category;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 
 class CategoryController extends Controller
 {
-    use ValidatesRequests;
 
 
 
@@ -35,18 +31,11 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      *
      */
-    public function store(CategoryStore $request)
+    public function store(CategoryRequest $request)
     {
 
+        return new Category(\App\Models\Category::create($request->all()));
 
-        $data = $request->validated();
-
-        return new Category(\App\Models\Category::create($data));
-
-//        $this->validateWith(Validator::make(),$request);
-
-
-//        \App\Models\Category::create($request->all());
 
     }
 
