@@ -23,13 +23,20 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        dd($this->route());
 
         return [
-            'username' => 'required|unique:users,id'.$this->get('id'),
+            'username' => 'bail|required|unique:users,username,'.$this->user,
             'email' => 'required',
             'mobile' => 'required',
             'password' => 'required'
         ];
+    }
+
+    /**
+     * @return mixed null|integer
+     */
+    protected function uniqueIdentifier()
+    {
+        return $this->user;
     }
 }

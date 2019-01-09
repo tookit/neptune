@@ -61,7 +61,6 @@ class UserController extends Controller
     public function update(UserRequest $request, $id)
     {
         $item = User::find($id);
-        dd($item);
         return new UserResource($item->update($request->validated(),$id));
     }
 
