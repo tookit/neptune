@@ -25,12 +25,19 @@ class UserRequest extends FormRequest
     {
 
         return [
-            'username' => 'bail|required|unique:users,username,'.$this->user,
-            'email' => 'required',
-            'mobile' => 'required',
+            'username' => 'bail|required|unique:users,username,'.$this->uniqueIdentifier(),
+            'email' => 'required|email|unique:users,email,'.$this->uniqueIdentifier(),
+            'mobile' => 'required|unique:users,mobile,'.$this->uniqueIdentifier(),
             'password' => 'required'
         ];
     }
+
+
+    public function attributes()
+    {
+        return [];
+    }
+
 
     /**
      * @return mixed null|integer
