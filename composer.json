@@ -31,7 +31,8 @@
         "spatie/laravel-validation-rules": "^1.0",
         "spatie/laravel-valuestore": "^1.2",
         "spatie/typed": "^0.1.1",
-        "spatie/url": "^1.3"
+        "spatie/url": "^1.3",
+        "tymon/jwt-auth": "^1.0.0-rc.3"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

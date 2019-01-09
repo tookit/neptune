@@ -7,11 +7,20 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Category;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
 class CategoryController extends Controller
 {
     use ValidatesRequests;
+
+
+
+    public function __construct()
+    {
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,18 +34,19 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryStore $request)
     {
 
-        $this->validate($request,[
 
-            'name'=>'required',
+        $data = $request->validated();
 
-        ]);
-        \App\Models\Category::create($request->all());
+        return new Category(\App\Models\Category::create($data));
+
+//        $this->validateWith(Validator::make(),$request);
+
+
+//        \App\Models\Category::create($request->all());
 
     }
 

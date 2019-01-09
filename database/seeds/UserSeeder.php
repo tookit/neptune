@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Config;
+use App\Models\User;
 
 class UserSeeder extends Seeder
 {
@@ -11,6 +13,20 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        //
+
+        // seed admin 
+        User::updateOrCreate(
+            [
+                'username' => Config::get('admin.username'),
+                'password' => Config::get('admin.password'),
+                'email' => Config::get('admin.email'),
+                'mobile' => Config::get('admin.mobile'),
+                'gender' => 'male'
+            ]
+        );        
+        if(Config::get('app.env') !== 'production'){
+            
+            factory(User::class,25)->create();
+        }
     }
 }

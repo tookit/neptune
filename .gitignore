@@ -31,3 +31,4 @@ _ide_helper.php
 /public/css
 /public/mix-manifest.json
 /dist
+/frontend/node_modules
