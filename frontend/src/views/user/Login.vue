@@ -134,8 +134,8 @@ export default {
         smsSendBtn: false
       },
       formLogin: {
-        username: '',
-        password: '',
+        username: 'wangqiangshen@gmail.com',
+        password: 'secret',
         captcha: '',
         mobile: '',
         rememberMe: true
@@ -143,14 +143,6 @@ export default {
     }
   },
   created() {
-    this.$http
-      .get('/auth/2step-code')
-      .then(res => {
-        this.requiredTwoStepCaptcha = res.result.stepCode
-      })
-      .catch(err => {
-        console.log('2step-code:', err)
-      })
     // this.requiredTwoStepCaptcha = true
   },
   methods: {
@@ -183,7 +175,8 @@ export default {
           if (!err) {
             flag = true
             loginParams[!that.loginType ? 'email' : 'username'] = values.username
-            loginParams.password = md5(values.password)
+            loginParams.password = values.password;
+            // loginParams.password = md5(values.password)
           }
         })
         // 使用手机号登陆
@@ -203,11 +196,8 @@ export default {
       that
         .Login(loginParams)
         .then(() => {
-          if (that.requiredTwoStepCaptcha) {
-            that.stepCaptchaVisible = true
-          } else {
             that.loginSuccess()
-          }
+
         })
         .catch(err => {
           that.requestFailed(err)

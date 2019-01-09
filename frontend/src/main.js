@@ -55,7 +55,6 @@ new Vue({
     store.commit('TOGGLE_COLOR', Vue.ls.get(DEFAULT_COLOR, config.primaryColor))
     store.commit('SET_TOKEN', Vue.ls.get(ACCESS_TOKEN))
 
-    console.log('.... created ()')
 
     removeLoadingAnimate('preloadingWrapper')
   },
