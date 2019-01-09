@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class UserController extends Controller
@@ -16,24 +18,26 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::collection(
+        return UserResource::collection(
 
-            QueryBuilder::for(\App\Models\User::class)
+            QueryBuilder::for(User::class)
                 ->allowedFilters('username')
-                ->get()
+                ->paginate()
 
         );
     }
 
     /**
-     * Store a newly created resource in storage.
+     * create a new user.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+
+        return User::create($request->validated());
+
     }
 
     /**
@@ -44,19 +48,21 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return new UserResource(User::find($id));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UserRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        //
+        $item = User::find($id);
+        dd($item);
+        return new UserResource($item->update($request->validated(),$id));
     }
 
     /**
