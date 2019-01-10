@@ -21,7 +21,7 @@ class UserController extends Controller
         return UserResource::collection(
 
             QueryBuilder::for(User::class)
-                ->allowedFilters('username')
+                ->allowedFilters(User::$allowedFilter)
                 ->paginate()
 
         );
@@ -73,6 +73,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = User::find($id);
+        $item->delete();
+        return new UserResource($item);
     }
 }
