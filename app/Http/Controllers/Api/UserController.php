@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class UserController extends Controller
 {
@@ -16,15 +17,22 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         return UserResource::collection(
 
             QueryBuilder::for(User::class)
                 ->allowedFilters(User::$allowedFilter)
-                ->paginate()
+                ->paginate($request->get('per_page'),['*'],'page')
 
         );
+    }
+
+
+    public function me(){
+
+        return new UserResource(User::find(Auth::id()));
     }
 
     /**

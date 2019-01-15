@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
         User::updateOrCreate(
             [
                 'username' => Config::get('admin.username'),
-                'password' => Config::get('admin.password'),
+                'password' => md5(Config::get('admin.password')),
                 'email' => Config::get('admin.email'),
                 'mobile' => Config::get('admin.mobile'),
                 'gender' => 'male'

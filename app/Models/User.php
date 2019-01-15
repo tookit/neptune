@@ -18,6 +18,7 @@ class User extends Authenticatable implements JWTSubject
     static $allowedFilter = [];
 
     const GENDER = ['male','female','other'];
+
     const GENDER_DEFAULT = 'male';
 
     /**
