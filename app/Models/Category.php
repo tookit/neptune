@@ -9,14 +9,15 @@ use Spatie\Translatable\HasTranslations;
 
 class Category extends Model
 {
-    use NodeTrait;
-    use HasTranslations;
-    use AuditableTrait;
+    use NodeTrait,
+        HasTranslations,
+        AuditableTrait;
 
 
     protected $table = 'categories';
 
     protected $fillable = [
+
         'name','slug'
     ];
 

@@ -4,18 +4,23 @@ namespace App\Models;
 
 use App\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Translatable\HasTranslations;
 
 class Post extends Model
 {
-    use HasTranslations;
-    use AuditableTrait;
+    use HasTranslations,
+        SoftDeletes,
+        HasMediaTrait,
+        AuditableTrait;
 
 
     protected $table = 'posts';
 
     protected $fillable = [
 
+        'name','description',
     ];
 
 
@@ -26,7 +31,7 @@ class Post extends Model
     public $translatable = [
 
         'name',
-        'description'
+        'description',
 
     ];
 
@@ -35,5 +40,7 @@ class Post extends Model
 
         return $this->belongsTo(Category::class);
     }
+
+
 
 }

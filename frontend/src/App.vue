@@ -1,26 +1,25 @@
 <template>
   <a-locale-provider :locale="locale">
     <div id="app">
-      <router-view/>
+      <router-view :key="$route.fullpath"/>
     </div>
   </a-locale-provider>
 </template>
 
 <script>
-  import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
+  import zh_CN from 'ant-design-vue/lib/locale-provider/zh_CN'
   import { deviceEnquire, DEVICE_TYPE } from '@/utils/device'
   import { version } from 'ant-design-vue'
 
   export default {
     data () {
       return {
-        locale: zhCN,
+        locale: zh_CN,
         version
       }
     },
     mounted () {
       const { $store } = this
-      console.log('use Ant-Design Of Vue:', version)
       deviceEnquire(deviceType => {
 
         switch (deviceType) {
@@ -29,7 +28,6 @@
             $store.dispatch('setSidebar', true)
             break
           case DEVICE_TYPE.TABLET:
-            console.log('tablet')
             $store.dispatch('ToggleDevice', 'tablet')
             $store.dispatch('setSidebar', false)
             break
@@ -39,7 +37,6 @@
             $store.dispatch('setSidebar', false)
             break
         }
-        console.log('deviceType', deviceType)
       })
     }
   }

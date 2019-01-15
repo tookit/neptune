@@ -11,7 +11,6 @@ import Viser from 'viser-vue'
 import 'ant-design-vue/dist/antd.less'  // or 'ant-design-vue/dist/antd.less'
 
 import VueClipboard from 'vue-clipboard2'
-import '@/permission' // permission control
 import '@/utils/filter' // base filter
 import PermissionHelper from '@/utils/helper/permission'
 import { removeLoadingAnimate } from '@/utils/util'
@@ -44,6 +43,7 @@ new Vue({
   router,
   store,
   created () {
+    // init default settings
     store.commit('SET_SIDEBAR_TYPE', Vue.ls.get(SIDEBAR_TYPE, true))
     store.commit('TOGGLE_THEME', Vue.ls.get(DEFAULT_THEME, config.navTheme))
     store.commit('TOGGLE_LAYOUT_MODE', Vue.ls.get(DEFAULT_LAYOUT_MODE, config.layout))

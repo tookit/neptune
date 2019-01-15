@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import { UserLayout, BasicLayout, RouteView, BlankLayout, PageView } from '@/components/layouts'
+import { UserLayout, AuthLayout, BasicLayout, RouteView, BlankLayout, PageView } from '@/components/layouts'
 
 export const asyncRouterMap = [
 
@@ -35,7 +35,7 @@ export const asyncRouterMap = [
             path: '/dashboard/workplace',
             name: 'Workplace',
             component: () => import('@/views/dashboard/Workplace'),
-            meta: { title: '工作台', permission: [ 'dashboard' ] }
+            meta: { title: '工作台'}
           }
         ]
       },
@@ -316,6 +316,30 @@ export const constantRouterMap = [
         path: 'register-result',
         name: 'registerResult',
         component: () => import(/* webpackChunkName: "user" */ '@/views/user/RegisterResult')
+      }
+    ]
+  },
+
+  {
+    path: '/auth',
+    component: AuthLayout,
+    redirect: '/auth/login',
+    hidden: true,
+    children: [
+      {
+        path: 'login',
+        name: 'login',
+        component: () => import(/* webpackChunkName: "auth" */ '@/views/Login')
+      },
+      {
+        path: 'register',
+        name: 'register',
+        component: () => import(/* webpackChunkName: "auth" */ '@/views/user/Register')
+      },
+      {
+        path: 'register-result',
+        name: 'registerResult',
+        component: () => import(/* webpackChunkName: "auth" */ '@/views/user/RegisterResult')
       }
     ]
   },

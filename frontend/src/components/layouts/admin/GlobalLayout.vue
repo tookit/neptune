@@ -97,18 +97,18 @@
       }
     },
     computed: {
-      // ...mapState({
-      //   // 主路由
-      //   mainMenu: state => state.permission.addRouters,
-      // })
+      ...mapState({
+        // 主路由
+        mainMenu: state => state.permission.addRouters,
+      })
     },
     watch: {
       sidebarOpened(val) {
+        console.log('sidebarOpened', val)
         this.collapsed = !val
       },
     },
     created() {
-      console.log(this.$router)
       this.menus = this.mainMenu.find((item) => item.path === '/').children
       this.collapsed = !this.sidebarOpened
     },

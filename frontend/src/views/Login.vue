@@ -8,9 +8,9 @@
     >
       <a-form-item
         fieldDecoratorId="username"
-        :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: this.handleUsernameOrEmail }], validateTrigger: 'change'}"
+        :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入帐户名或邮箱地址' }], validateTrigger: 'change'}"
       >
-        <a-input size="large" type="text" placeholder="帐户名或邮箱地址 / admin">
+        <a-input size="large" type="text" placeholder="帐户名或邮箱地址 / admin" >
           <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
         </a-input>
       </a-form-item>
@@ -24,7 +24,7 @@
         </a-input>
       </a-form-item>
       <a-form-item>
-        <a-checkbox v-model="formLogin.rememberMe">自动登陆</a-checkbox>
+        <a-checkbox >自动登陆</a-checkbox>
         <router-link
           :to="{ name: 'recover', params: { user: 'aaa'} }"
           class="forge-password"
@@ -74,84 +74,51 @@ export default {
   data() {
     return {
       loginBtn: false,
-      loginType: 0,
-      stepCaptchaVisible: false,
-      form: null,
-      state: {
-        time: 60,
-        smsSendBtn: false
+      login: {
+        username: 'michaelwang',
+        password: 'secret'
       },
-      formLogin: {
-        username: 'wangqiangshen@gmail.com',
-        password: 'secret',
-        captcha: '',
-        mobile: '',
-        rememberMe: true
-      }
+      formItems: [
+        
+        {
+          fieldDecoratorId: 'username',
+          fieldDecoratorOptions: {
+            rules: [
+              { required: true, message: 'Username Required' }
+            ],
+            validateTrigger: 'change'
+          }
+        },
+        
+        {
+          fieldDecoratorId: 'password',
+          fieldDecoratorOptions: {
+            rules: [
+              { required: true, message: 'Password required' }
+            ],
+            validateTrigger: 'blur'
+          }
+        },
+        
+
+      ],
+
     }
   },
   created() {
-    // this.requiredTwoStepCaptcha = true
+
   },
   methods: {
     ...mapActions(['Login', 'Logout']),
     // handler
-    handleUsernameOrEmail(rule, value, callback) {
-      const regex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
-      if (regex.test(value)) {
-        this.loginType = 0
-      } else {
-        this.loginType = 1
-      }
-      callback()
-    },
-
     handleSubmit() {
-      const that = this
-      let flag = false
-      let loginParams = {
-        remember_me: that.formLogin.rememberMe
-      }
 
-      that.form.validateFields(['username', 'password'], { force: true }, (err, values) => {
-      if (!err) {
-        flag = true
-        loginParams[!that.loginType ? 'email' : 'username'] = values.username
-        loginParams.password = values.password;
-        // loginParams.password = md5(values.password)
-      }
-    })
-
-      if (!flag) return
-
-      that.loginBtn = true
-
-      that
-        .Login(loginParams)
-        .then(() => {
-            that.loginSuccess()
-        })
-        .catch(err => {
-          that.requestFailed(err)
-        })
-    },
-
-    loginSuccess() {
-      this.loginBtn = false
-      this.$router.push({ name: 'dashboard' })
-      this.$notification.success({
-        message: '欢迎',
-        description: `${timeFix()}，欢迎回来`
+      this.form.validateFields(['username', 'password'], { force: true }, (err, values) => {
+        console.log(values)
       })
-    },
-    requestFailed(err) {
-      this.$notification['error']({
-        message: '错误',
-        description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',
-        duration: 4
-      })
-      this.loginBtn = false
     }
+
+
   }
 }
 </script>

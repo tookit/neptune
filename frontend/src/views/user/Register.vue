@@ -187,9 +187,6 @@
       },
 
       handlePhoneCheck (rule, value, callback) {
-       console.log('handlePhoneCheck, rule:', rule)
-        console.log('handlePhoneCheck, value', value)
-        console.log('handlePhoneCheck, callback', callback)
 
        callback()
       },
@@ -264,30 +261,7 @@
     }
   }
 </script>
-<style lang="scss">
-  .user-register {
 
-    &.error {
-      color: #ff0000;
-    }
-
-    &.warning {
-      color: #ff7e05;
-    }
-
-    &.success {
-      color: #52c41a;
-    }
-
-
-  }
-
-  .user-layout-register {
-    .ant-input-group-addon:first-child {
-      background-color: #fff;
-    }
-  }
-</style>
 <style lang="scss" scoped>
   .user-layout-register {
 

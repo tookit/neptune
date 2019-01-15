@@ -1,19 +1,18 @@
 <template>
-  <div id="userLayout" :class="['user-layout-wrapper', device]">
+  <div  :class="['user-layout-wrapper', device]">
     <div class="container">
       <div class="top">
         <div class="header">
           <a href="/">
             <img src="~@/assets/logo.svg" class="logo" alt="logo">
-            <span class="title">Ant Design</span>
+            <span class="title">Neptune</span>
           </a>
         </div>
         <div class="desc">
-          Ant Design 是西湖区最具影响力的 Web 设计规范
         </div>
       </div>
 
-      <route-view></route-view>
+      <route-view :key="$route.path"></route-view>
 
       <div class="footer">
         <div class="links">
@@ -34,7 +33,7 @@
   import { mixinDevice } from '@/utils/mixin.js'
 
   export default {
-    name: 'UserLayout',
+    name: 'AuthLayout',
     components: { RouteView },
     mixins: [mixinDevice],
     data () {
@@ -50,7 +49,7 @@
 </script>
 
 <style lang="scss" scoped>
-  #userLayout.user-layout-wrapper {
+ .user-layout-wrapper {
     height: 100%;
 
     &.mobile {

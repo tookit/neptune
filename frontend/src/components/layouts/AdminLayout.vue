@@ -21,6 +21,7 @@
           <a-input-search style="width: 80%; max-width: 522px;" placeholder="请输入..." size="large" enterButton="搜索" />
         </div>
         <div class="page-menu-tabs" v-if="tabs && tabs.items">
+          <!-- @change="callback" :activeKey="activeKey" -->
           <a-tabs :tabBarStyle="{margin: 0}" @change="tabs.callback" :activeKey="tabs.active()">
             <a-tab-pane v-for="item in tabs.items" :tab="item.title" :key="item.key"></a-tab-pane>
           </a-tabs>
@@ -39,7 +40,7 @@
   import PageHeader from './PageHeader'
 
   export default {
-    name: 'LayoutContent',
+    name: 'AdminLayout',
     components: {
       PageHeader
     },

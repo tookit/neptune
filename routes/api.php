@@ -25,6 +25,9 @@ Route::post('/auth/login','AuthController@login');
 
 // protected route
 Route::middleware(['auth:api'])->group(function () {
+
+    Route::post('/auth/logout','AuthController@logout');
+    Route::post('/auth/refresh','AuthController@refresh');
     Route::apiResource('categories',CategoryController::class);
     Route::apiResource('users',UserController::class);
 });

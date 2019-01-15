@@ -17,14 +17,21 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->integer('product_category_id')->unsigned()->default(0);
             $table->integer('product_vendor_id')->unsigned()->default(0);
-            $table->string('sku');
+            $table->uuid('sku');
+            $table->string('part_no')->nullable();
             $table->json('name')->comment('Product Name');
             $table->json('description')->comment('Product Short Description');
             $table->json('body')->comment('Product Long Description');
+            $table->json('features')->comment('Product features');
+            $table->json('specs')->comment('Product specs');
+            $table->json('ordering')->comment('Product ordering info');
+            $table->boolean('is_hot')->default(false)->comment('Product is hot or not');
+            $table->boolean('active')->default(false);
             $table->integer('created_by')->unsigned()->default(0);
             $table->integer('updated_by')->unsigned()->default(0);
             $table->softDeletes();
             $table->timestamps();
+
         });
     }
 
