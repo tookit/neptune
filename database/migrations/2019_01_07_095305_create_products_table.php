@@ -8,6 +8,7 @@ class CreateProductsTable extends Migration
 {
     /**
      * Run the migrations.
+     * SPU table
      *
      * @return void
      */
@@ -15,13 +16,11 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('product_category_id')->unsigned()->default(0);
-            $table->integer('product_vendor_id')->unsigned()->default(0);
-            $table->uuid('sku');
             $table->string('part_no')->nullable();
             $table->json('name')->comment('Product Name');
             $table->json('description')->comment('Product Short Description');
             $table->json('body')->comment('Product Long Description');
+            $table->json('attribute_list')->comment('attr_id:value_id');
             $table->json('features')->comment('Product features');
             $table->json('specs')->comment('Product specs');
             $table->json('ordering')->comment('Product ordering info');

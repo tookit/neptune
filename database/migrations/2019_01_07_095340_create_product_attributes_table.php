@@ -16,6 +16,25 @@ class CreateProductAttributesTable extends Migration
         Schema::create('product_attributes', function (Blueprint $table) {
             $table->increments('id');
             $table->json('name');
+            $table->boolean('is_spu')->default(1);
+            $table->integer('created_by')->unsigned()->default(0);
+            $table->integer('updated_by')->unsigned()->default(0);
+            $table->timestamps();
+        });
+        Schema::create('product_attribute_values', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('product_attribute_id');
+            $table->string('value');
+            $table->integer('created_by')->unsigned()->default(0);
+            $table->integer('updated_by')->unsigned()->default(0);
+            $table->timestamps();
+        });
+        Schema::create('product_has_attributes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('product_attribute_id');
+            $table->integer('product_attribute_value_id');
+            $table->integer('created_by')->unsigned()->default(0);
+            $table->integer('updated_by')->unsigned()->default(0);
             $table->timestamps();
         });
     }
@@ -28,5 +47,7 @@ class CreateProductAttributesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('product_attributes');
+        Schema::dropIfExists('product_attribute_values');
+        Schema::dropIfExists('product_has_attributes');
     }
 }

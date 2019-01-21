@@ -15,6 +15,13 @@ class CreateProductVendorsTable extends Migration
     {
         Schema::create('product_vendors', function (Blueprint $table) {
             $table->increments('id');
+            $table->json('name');
+            $table->json('description');
+            $table->json('address');
+            $table->string('mobile');
+            $table->boolean('is_active')->default(0);
+            $table->integer('created_by')->unsigned()->default(0);
+            $table->integer('updated_by')->unsigned()->default(0);
             $table->timestamps();
         });
     }

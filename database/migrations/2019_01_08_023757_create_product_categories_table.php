@@ -24,6 +24,14 @@ class CreateProductCategoriesTable extends Migration
             $table->boolean('is_active')->default(0);
             $table->timestamps();
         });
+        Schema::create('product_has_categories', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('product_id');
+            $table->integer('product_category_id');
+            $table->integer('created_by')->unsigned()->default(0);
+            $table->integer('updated_by')->unsigned()->default(0);
+            $table->timestamps();
+        });
     }
 
     /**
@@ -34,5 +42,6 @@ class CreateProductCategoriesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('product_categories');
+        Schema::dropIfExists('product_has_categories');
     }
 }
