@@ -15,7 +15,9 @@ class User extends Authenticatable implements JWTSubject
 //    use Notifiable, HasApiTokens;
     use Notifiable;
 
-    static $allowedFilter = [];
+    static $allowedFilters = ['username'];
+
+    static $allowedSorts = ['username'];
 
     const GENDER = ['male','female','other'];
 

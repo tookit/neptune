@@ -23,8 +23,9 @@ class UserController extends Controller
         return UserResource::collection(
 
             QueryBuilder::for(User::class)
-                ->allowedFilters(User::$allowedFilter)
-                ->paginate($request->get('per_page'),['*'],'page')
+                ->allowedFilters(User::$allowedFilters)
+                ->allowedSorts(User::$allowedSorts)
+                ->paginate($request->get('pageSize'),['*'],'page')
 
         );
     }
