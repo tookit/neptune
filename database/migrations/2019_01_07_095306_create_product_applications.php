@@ -22,6 +22,14 @@ class CreateProductsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+        Schema::create('product_has_applications', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('product_id');
+            $table->integer('product_application_id');
+            $table->integer('created_by')->unsigned()->default(0);
+            $table->integer('updated_by')->unsigned()->default(0);
+            $table->timestamps();
+        });
     }
 
     /**
@@ -32,5 +40,6 @@ class CreateProductsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('product_applications');
+        Schema::dropIfExists('product_has_applications');
     }
 }
