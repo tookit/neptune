@@ -21,7 +21,7 @@ class Product extends Model
 
     protected $fillable = [
 
-        'name','description','body','product_category_id', 'features','specs','ordering'
+        'name','description','body', 'features','specs','ordering'
     ];
 
 
@@ -57,14 +57,29 @@ class Product extends Model
 
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(ProductCategory::class);
+        return $this->belongsToMany(ProductCategory::class,'product_has_categories');
     }
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function properties()
+    {
+        return $this->belongsToMany(ProductAttribute::class,'product_has_attributes');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function applications()
+    {
+        return $this->belongsToMany(ProductApplication::class,'product_has_applications');
+    }
 
 
 }

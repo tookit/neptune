@@ -19,7 +19,7 @@ class CreateProductVendorsTable extends Migration
             $table->json('description');
             $table->json('address');
             $table->string('mobile');
-            $table->boolean('is_active')->default(0);
+            $table->boolean('active')->default(0);
             $table->integer('created_by')->unsigned()->default(0);
             $table->integer('updated_by')->unsigned()->default(0);
             $table->timestamps();

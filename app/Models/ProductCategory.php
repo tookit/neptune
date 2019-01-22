@@ -23,7 +23,7 @@ class ProductCategory extends Model
 
     protected $fillable = [
 
-        'name','description','slug'
+        'name','description'
     ];
 
 
@@ -47,6 +47,14 @@ class ProductCategory extends Model
 
     ];
 
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class,'product_has_categories');
+    }
 
 
 }

@@ -2,10 +2,12 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Config;
-use App\Models\Product;
+use App\Models\ProductCategory;
 
 class ProductsTableSeeder extends Seeder
 {
+
+
     /**
      * Run the database seeds.
      *
@@ -13,12 +15,23 @@ class ProductsTableSeeder extends Seeder
      */
     public function run()
     {
+        // seed product category
 
-        // seed admin 
+        $categories = [
+            'Fiber',
+            'Accessories',
+            'other'
+
+        ];
+
+        collect($categories)->map(function ($name){
+            Category::updateOrCreate(['name'=>$name],[$name => $name]);
+        });
+
+
 
         if(Config::get('app.env') !== 'production'){
-            
-            factory(User::class,25)->create();
+
         }
     }
 }
