@@ -14,8 +14,7 @@ class ProductCategory extends Model
 
     use NodeTrait,
         HasTranslations,
-        HasMediaTrait,
-        SoftDeletes;
+        HasMediaTrait;
 
 
     protected $table = 'product_categories';

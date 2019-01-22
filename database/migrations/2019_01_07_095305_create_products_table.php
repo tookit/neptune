@@ -22,8 +22,10 @@ class CreateProductsTable extends Migration
             $table->json('attribute_list')->comment('format|attr_id:value_id');
             $table->json('features')->comment('Product features');
             $table->json('specs')->comment('Product specs');
-            $table->json('ordering')->comment('Product ordering info');
-            $table->boolean('is_hot')->default(false)->comment('Product is hot or not');
+            $table->json('seo_title')->nullable();
+            $table->json('seo_keywords')->nullable();
+            $table->json('seo_description')->nullable();
+            $table->tinyInteger('flag')->default(0);
             $table->boolean('active')->default(false);
             $table->integer('created_by')->unsigned()->default(0);
             $table->integer('updated_by')->unsigned()->default(0);

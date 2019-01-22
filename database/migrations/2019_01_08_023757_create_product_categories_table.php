@@ -18,9 +18,14 @@ class CreateProductCategoriesTable extends Migration
             $table->nestedSet();
             $table->json('name');
             $table->json('description')->nullable();
+            $table->json('seo_title')->nullable();
+            $table->json('seo_keywords')->nullable();
+            $table->json('seo_description')->nullable();
+            $table->string('reference_url')->nullable();
             $table->integer('created_by')->unsigned()->default(0);
             $table->integer('updated_by')->unsigned()->default(0);
             $table->boolean('is_active')->default(0);
+
             $table->timestamps();
         });
         Schema::create('product_has_categories', function (Blueprint $table) {

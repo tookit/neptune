@@ -19,6 +19,11 @@ class Product extends Model
 
     protected $table = 'products';
 
+    static $flags = [
+
+        'hot','promoted','archived'
+    ];
+
     protected $fillable = [
 
         'name','description','body', 'features','specs','ordering'
