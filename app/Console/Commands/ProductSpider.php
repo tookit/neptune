@@ -33,6 +33,16 @@ class ProductSpider extends Command
     ];
 
 
+    protected $productRules = [
+
+        'name' => ['h1','text'],
+        'cat' => ['ul.breadcrumb li:first','text'],
+        'sub_cat' => ['ul.breadcrumb li:nth-child(2)','text'],
+        'img' => ['.p-img','src'],
+
+    ];
+
+
     /**
      * Create a new command instance.
      *
@@ -55,10 +65,9 @@ class ProductSpider extends Command
         if (($handle = fopen(storage_path("product.csv"), "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $url = $data[1];
-                $item = $this->fetchProduct($url);
-                fputcsv($fp,[
-                   $item['name'],$item['cat'],$item['sub_cat'], $item['tabs'],$item['img']
-                ]);
+                $item = $this->fetchProduct($url)->first();
+                fputcsv($fp,$item);
+                $this->info($item['name'].'  done .');
             }
             fclose($handle);
         }
@@ -67,29 +76,31 @@ class ProductSpider extends Command
 
     protected function fetchProduct($url = '')
     {
-        $cat = QueryList::get($url)->find('ul.breadcrumb li:first')->text();
-        $subCat = QueryList::get($url)->find('ul.breadcrumb li:nth-child(2) ')->text();
-        $name = QueryList::get($url)->find('h1')->text();
-        $img = QueryList::get($url)->find('.p-img')->attr('src');
-        $body = QueryList::get($url)->find('.tab-pane')->map(function (Elements $ele) use ($url) {
-           $id = $ele->attr('id');
-           $content = $ele->children('.para-content')->htmls()->first();
-           $tabSelector = "a[href=#{$id}]";
-           $tabName = strtolower(QueryList::get($url)->find($tabSelector)->text());
-           return [ 'key' => $tabName, 'value'  => $content];
 
-        });
-        $tabs = $body->map(function ($item){
-           return $item['key'];
-        });
-        return [
-            'cat' => $cat,
-            'sub_cat' => $subCat,
-            'name' => $name,
-            'tabs' => $tabs->implode('|'),
-            'img' => $img,
-            'body' => $body
-        ];
+        return QueryList::get($url)->rules($this->productRules)->query()->getData();
+//        $cat = QueryList::get($url)->find('ul.breadcrumb li:first')->text();
+//        $subCat = QueryList::get($url)->find('ul.breadcrumb li:nth-child(2) ')->text();
+//        $name = QueryList::get($url)->find('h1')->text();
+//        $img = QueryList::get($url)->find('.p-img')->attr('src');
+//        $body = QueryList::get($url)->find('.tab-pane')->map(function (Elements $ele) use ($url) {
+//           $id = $ele->attr('id');
+//           $content = $ele->children('.para-content')->htmls()->first();
+//           $tabSelector = "a[href=#{$id}]";
+//           $tabName = strtolower(QueryList::get($url)->find($tabSelector)->text());
+//           return [ 'key' => $tabName, 'value'  => $content];
+//
+//        });
+//        $tabs = $body->map(function ($item){
+//           return $item['key'];
+//        });
+//        return [
+//            'cat' => $cat,
+//            'sub_cat' => $subCat,
+//            'name' => $name,
+//            'tabs' => $tabs->implode('|'),
+//            'img' => $img,
+//            'body' => $body
+//        ];
     }
 
     protected function fetchCategory()
