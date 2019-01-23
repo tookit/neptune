@@ -16,11 +16,11 @@ class CreateProductCategoriesTable extends Migration
         Schema::create('product_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->nestedSet();
-            $table->json('name');
-            $table->json('description')->nullable();
-            $table->json('seo_title')->nullable();
-            $table->json('seo_keywords')->nullable();
-            $table->json('seo_description')->nullable();
+            $table->string('name')->unique();
+            $table->string('description')->nullable();
+            $table->string('seo_title')->nullable();
+            $table->string('seo_keywords')->nullable();
+            $table->string('seo_description')->nullable();
             $table->string('reference_url')->nullable();
             $table->integer('created_by')->unsigned()->default(0);
             $table->integer('updated_by')->unsigned()->default(0);

@@ -15,7 +15,7 @@ class CreateProductAttributesTable extends Migration
     {
         Schema::create('product_attributes', function (Blueprint $table) {
             $table->increments('id');
-            $table->json('name');
+            $table->string('name')->unique();
             $table->enum('type',['sku','spu','other'])->default('spu');
             $table->integer('created_by')->unsigned()->default(0);
             $table->integer('updated_by')->unsigned()->default(0);

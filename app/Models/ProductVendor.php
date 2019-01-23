@@ -5,12 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\Translatable\HasTranslations;
 
 class ProductVendor extends Model
 {
     use SoftDeletes,
-        HasTranslations,
         HasMediaTrait;
 
     protected $table = 'product_applications';

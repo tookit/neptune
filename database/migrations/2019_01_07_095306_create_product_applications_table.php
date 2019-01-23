@@ -15,8 +15,8 @@ class CreateProductApplicationsTable extends Migration
     {
         Schema::create('product_applications', function (Blueprint $table) {
             $table->increments('id');
-            $table->json('name')->comment('Application Name');
-            $table->json('description')->comment('Application Description');
+            $table->string('name')->unique()->comment('Application Name');
+            $table->string('description')->comment('Application Description');
             $table->integer('created_by')->unsigned()->default(0);
             $table->integer('updated_by')->unsigned()->default(0);
             $table->softDeletes();

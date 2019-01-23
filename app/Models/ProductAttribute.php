@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductAttribute extends Model
 {
-    use HasTranslations,
-        SoftDeletes;
 
 
     protected $table = 'product_attributes';

@@ -28,7 +28,7 @@ class ProductSpider extends Command
 
 
     static $tabMapping = [
-        'FEATURES','APPLICATION','ELECTRICAL','PACKAGING','CONSTRUCTION'
+        'FEATURES','APPLICATION','ELECTRICAL','PACKAGING','CONSTRUCTION','Characteristics','other','Specifications','Description','STANDARD'
 
     ];
 
@@ -51,21 +51,50 @@ class ProductSpider extends Command
     public function handle()
     {
         // product
-        $this->fetchProduct();
+        $fp = fopen(storage_path('items.csv'),'w');
+        if (($handle = fopen(storage_path("product.csv"), "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $url = $data[1];
+                $item = $this->fetchProduct($url);
+                fputcsv($fp,[
+                   $item['name'],$item['cat'],$item['sub_cat'], $item['tabs'],$item['img']
+                ]);
+            }
+            fclose($handle);
+        }
     }
 
 
     protected function fetchProduct($url = '')
     {
-        $name = QueryList::get('http://www.optico.com.cn/product/10006')->find('h1')->text();
-        $img = QueryList::get('http://www.optico.com.cn/product/10006')->find('.p-img')->attr('src');
-        $body = QueryList::get('http://www.optico.com.cn/product/10006')->find('.tab-pane')->map(function (Elements $ele) {
+        $cat = QueryList::get($url)->find('ul.breadcrumb li:first')->text();
+        $subCat = QueryList::get($url)->find('ul.breadcrumb li:nth-child(2) ')->text();
+        $name = QueryList::get($url)->find('h1')->text();
+        $img = QueryList::get($url)->find('.p-img')->attr('src');
+        $body = QueryList::get($url)->find('.tab-pane')->map(function (Elements $ele) use ($url) {
            $id = $ele->attr('id');
            $content = $ele->children('.para-content')->htmls()->first();
            $tabSelector = "a[href=#{$id}]";
-           $tabName = strtolower(QueryList::get('http://www.optico.com.cn/product/10006')->find($tabSelector)->text());
-           return [$tabName  => $content];
+           $tabName = strtolower(QueryList::get($url)->find($tabSelector)->text());
+           return [ 'key' => $tabName, 'value'  => $content];
+
         });
+        $tabs = $body->map(function ($item){
+           return $item['key'];
+        });
+        return [
+            'cat' => $cat,
+            'sub_cat' => $subCat,
+            'name' => $name,
+            'tabs' => $tabs->implode('|'),
+            'img' => $img,
+            'body' => $body
+        ];
+    }
+
+    protected function fetchCategory()
+    {
+
     }
 
     protected function fetchProductLinks()
@@ -78,6 +107,6 @@ class ProductSpider extends Command
             fputcsv($fp,[$name,$link]);
 
         });
-        $this->info('Product  Links Fetched');
+        $this->info('Product Links Fetched');
     }
 }

@@ -16,16 +16,17 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-            $table->json('name')->comment('Product Name');
-            $table->json('description')->nullable()->comment('Product Short Description');
-            $table->json('body')->nullable()->comment('Product Long Description');
+            $table->string('name')->unique()->comment('Product Name');
+            $table->string('description')->nullable()->comment('Product Short Description');
+            $table->json('content')->nullable()->comment('Product Long Description');
             $table->json('attribute_list')->nullable()->comment('format|attr_id:value_id');
-            $table->json('features')->nullable()->comment('Product features');
-            $table->json('specs')->nullable()->comment('Product specs');
-            $table->json('seo_title')->nullable();
-            $table->json('seo_keywords')->nullable();
-            $table->json('seo_description')->nullable();
+            $table->text('features')->nullable()->comment('Product features');
+            $table->text('specs')->nullable()->comment('Product specs');
+            $table->string('seo_title')->nullable();
+            $table->string('seo_keywords')->nullable();
+            $table->string('seo_description')->nullable();
             $table->tinyInteger('flag')->default(0);
+            $table->string('featured_img')->nullable();
             $table->string('reference_url')->nullable();
             $table->boolean('active')->default(false);
             $table->integer('created_by')->unsigned()->default(0);

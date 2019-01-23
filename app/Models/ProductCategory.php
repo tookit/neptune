@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Kalnoy\Nestedset\NodeTrait;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Translatable\HasTranslations;
@@ -13,7 +12,6 @@ class ProductCategory extends Model
 {
 
     use NodeTrait,
-        HasTranslations,
         HasMediaTrait;
 
 
