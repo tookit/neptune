@@ -26,6 +26,13 @@ class ProductSpider extends Command
 
     protected $base = 'http://www.optico.com.cn';
 
+
+    static $tabMapping = [
+        'FEATURES','APPLICATION','ELECTRICAL','PACKAGING','CONSTRUCTION'
+
+    ];
+
+
     /**
      * Create a new command instance.
      *
@@ -43,22 +50,34 @@ class ProductSpider extends Command
      */
     public function handle()
     {
-        // category 1
-        QueryList::get('http://www.optico.com.cn/products')->find('li.ps-lv1')->map(function ( Elements $element){
+        // product
+        $this->fetchProduct();
+    }
+
+
+    protected function fetchProduct($url = '')
+    {
+        $name = QueryList::get('http://www.optico.com.cn/product/10006')->find('h1')->text();
+        $img = QueryList::get('http://www.optico.com.cn/product/10006')->find('.p-img')->attr('src');
+        $body = QueryList::get('http://www.optico.com.cn/product/10006')->find('.tab-pane')->map(function (Elements $ele) {
+           $id = $ele->attr('id');
+           $content = $ele->children('.para-content')->htmls()->first();
+           $tabSelector = "a[href=#{$id}]";
+           $tabName = strtolower(QueryList::get('http://www.optico.com.cn/product/10006')->find($tabSelector)->text());
+           return [$tabName  => $content];
+        });
+    }
+
+    protected function fetchProductLinks()
+    {
+
+        $fp = fopen(storage_path('product.csv'),'w');
+        QueryList::get('http://www.optico.com.cn/products')->find('li.ps-lv3')->map(function ( Elements $element) use ($fp){
             $name = $element->children('a')->text();
             $link = $this->base.$element->children('a')->attr('href');
-            $element->children('ul')->find('li.ps-lv2')->map(function (Elements $ele){
-                dd($ele->children('a')->text());
-            });
+            fputcsv($fp,[$name,$link]);
 
-//            $parent = ProductCategory::updateOrCreate(['name'=>$name],['name'=>$name,'reference_url'=>$link]);
-//            $parent->makeRoot();
-//            $element->find('li.ps-lv2 > a')->map(function (Elements $element) use ($parent) {
-//                $name = $element->text();
-//                $link = $this->base.$element->attr('href');
-//                ProductCategory::updateOrCreate(['name'=>$name],['name'=>$name,'reference_url'=>$link,'parent_id'=>$parent->id]);
-//            });
         });
-        $this->info('Category finished');
+        $this->info('Product  Links Fetched');
     }
 }
