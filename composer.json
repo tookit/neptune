@@ -19,6 +19,7 @@
         "laravel/tinker": "^1.0",
         "overtrue/laravel-lang": "^3.0",
         "overtrue/laravel-socialite": "^2.0",
+        "rinvex/laravel-categories": "^1.0",
         "spatie/async": "^0.0.4",
         "spatie/data-transfer-object": "^1.6",
         "spatie/laravel-json-api-paginate": "^1.4",

@@ -1,97 +1,69 @@
 <?php
 
-namespace App\Models;
+declare(strict_types=1);
 
-use App\Traits\AuditableTrait;
+namespace App\Traits;
+
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
-use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as BaseCollection;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
-class Product extends Model
+trait Categorizable
 {
-
-    use HasMediaTrait,
-        HasSlug,
-        HasTranslations,
-        AuditableTrait;
-
-
-    protected $table = 'products';
-
-    static $flags = [
-
-        'hot','promoted','archived'
-    ];
-
-    protected $fillable = [
-
-        'name','description','body', 'features','specs','ordering','reference_url'
-    ];
-
-
-
-    protected $guarded = [
-
-    ];
-
-
-    protected $casts = [
-
-        'active'=>'boolean',
-        'is_hot'=>'boolean',
-    ];
-
-
-    public $translatable = [
-
-        'name',
-        'description',
-        'content',
-        'features',
-        'specs',
-        'packaging'
-
-    ];
+    /**
+     * Register a saved model event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
+     */
+    abstract public static function saved($callback);
 
     /**
-     * Get the options for generating the slug.
+     * Register a deleted model event with the dispatcher.
+     *
+     * @param \Closure|string $callback
+     *
+     * @return void
      */
-    public function getSlugOptions() : SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
-    }
-
+    abstract public static function deleted($callback);
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Define a polymorphic many-to-many relationship.
+     *
+     * @param string $related
+     * @param string $name
+     * @param string $table
+     * @param string $foreignPivotKey
+     * @param string $relatedPivotKey
+     * @param string $parentKey
+     * @param string $relatedKey
+     * @param bool   $inverse
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
-    public function categories()
-    {
-        return $this->belongsToMany(ProductCategory::class,'product_has_categories');
-    }
-
-
+    abstract public function morphToMany($related, $name, $table = null, $foreignPivotKey = null,
+                                         $relatedPivotKey = null, $parentKey = null,
+                                         $relatedKey = null, $inverse = false);
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Get all attached categories to the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
-    public function properties()
+    public function categories(): MorphToMany
     {
-        return $this->belongsToMany(ProductAttribute::class,'product_has_attributes');
+        return $this->morphToMany(Category::class, 'categorizable', 'categorizables', 'categorizable_id', 'category_id')
+            ->withTimestamps();
     }
-
-
-
-
 
     /**
      * Attach the given category(ies) to the model.
      *
-     * @param int|string|array|\ArrayAccess|ProductCategory $categories
+     * @param int|string|array|\ArrayAccess|\Rinvex\Categories\Models\Category $categories
      *
      * @return void
      */
@@ -298,7 +270,7 @@ class Product extends Model
 
         // Find categories by slug, and get their IDs
         if (is_string($categories) || (is_array($categories) && is_string(array_first($categories)))) {
-            $categories = app(ProductCategory::class)->whereIn('slug', $categories)->get()->pluck('id');
+            $categories = app(Category::class)->whereIn('slug', $categories)->get()->pluck('id');
         }
 
         if ($categories instanceof Model) {
@@ -315,6 +287,4 @@ class Product extends Model
 
         return (array) $categories;
     }
-
-
 }

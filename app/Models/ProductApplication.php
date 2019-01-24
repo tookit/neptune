@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class ProductApplication extends Model
 {
 
+    use HasSlug;
 
-    protected $table = 'product_application';
+    protected $table = 'product_applications';
 
     protected $fillable = [
 
@@ -23,7 +26,6 @@ class ProductApplication extends Model
 
     protected $casts = [
 
-        'name' => 'json',
         'description',
         'is_active'=>'boolean'
     ];
@@ -35,6 +37,16 @@ class ProductApplication extends Model
         'description',
 
     ];
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
 
 
     /**

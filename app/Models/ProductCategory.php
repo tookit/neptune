@@ -31,9 +31,7 @@ class ProductCategory extends Model
 
     protected $casts = [
 
-        'name' => 'json',
-        'description' => 'json',
-        'is_active'=>'boolean'
+        'active'=>'boolean'
     ];
 
 

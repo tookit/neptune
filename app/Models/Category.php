@@ -29,7 +29,6 @@ class Category extends Model
 
     protected $casts = [
 
-        'name' => 'json',
         'is_active'=>'boolean'
     ];
 
