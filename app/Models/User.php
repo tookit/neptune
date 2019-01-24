@@ -15,9 +15,9 @@ class User extends Authenticatable implements JWTSubject
 //    use Notifiable, HasApiTokens;
     use Notifiable;
 
-    static $allowedFilters = ['username'];
+    public  static $allowedFilters = ['username'];
 
-    static $allowedSorts = ['username'];
+    public  static $allowedSorts = ['username'];
 
     const GENDER = ['male','female','other'];
 
@@ -42,16 +42,6 @@ class User extends Authenticatable implements JWTSubject
     ];
 
 
-    /**
-     * Set the user's password.
-     *
-     * @param  string  $value
-     * @return void
-     */
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
 
 
 

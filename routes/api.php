@@ -33,3 +33,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('users',UserController::class);
     Route::get('me','UserController@me');
 });
+
+
+Route::apiResource('products',ProductController::class);

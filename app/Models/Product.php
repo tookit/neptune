@@ -18,6 +18,10 @@ class Product extends Model
         AuditableTrait;
 
 
+    public static  $allowedFilters = [];
+    public static  $allowedSorts = [];
+
+
     protected $table = 'products';
 
     static $flags = [
