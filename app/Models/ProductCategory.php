@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
 
 
@@ -12,6 +14,8 @@ class ProductCategory extends Model
 {
 
     use NodeTrait,
+        HasSlug,
+        HasTranslations,
         HasMediaTrait;
 
 
@@ -41,6 +45,19 @@ class ProductCategory extends Model
         'description'
 
     ];
+
+
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->usingLanguage(app()->getLocale())
+            ->saveSlugsTo('slug');
+    }
 
 
     /**

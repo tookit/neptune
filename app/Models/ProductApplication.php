@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Spatie\Translatable\HasTranslations;
 
 class ProductApplication extends Model
 {
 
-    use HasSlug;
+    use HasSlug,
+        HasTranslations;
 
     protected $table = 'product_applications';
 
@@ -45,6 +47,7 @@ class ProductApplication extends Model
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
+            ->usingLanguage(app()->getLocale())
             ->saveSlugsTo('slug');
     }
 

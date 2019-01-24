@@ -27,7 +27,7 @@ class Product extends Model
 
     protected $fillable = [
 
-        'name','description','body', 'features','specs','ordering','reference_url'
+        'name','description','body', 'features','specs','ordering','reference_url','featured_img'
     ];
 
 

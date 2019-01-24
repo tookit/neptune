@@ -63,12 +63,7 @@ class ProductSpider extends Command
      */
     public function handle()
     {
-        // product
-//        $this->fetchCategory()->each(function ($item){
-//
-//            ProductCategory::create($item);
-//
-//        });
+        $this->storeProduct();
     }
 
 
@@ -80,13 +75,46 @@ class ProductSpider extends Command
                 $url = $data[1];
                 $tmp = $this->fetchProduct($url);
                 $item = $tmp[0];
+                // handle product
+                $product = Product::where('name->en',$item['name'])->first() ?? (new Product);
+                $product->fill([
+                    'name'=>$item['name'],
+                    'featured_img' => $item['img'],
+                    'reference_url' => $url
+                ]);
+                $product->save();
+
+                // handle category
+                $category = ProductCategory::where('name->en',$item['cat'])->first() ?? (new ProductCategory());
+                $category->fill([
+                    'name' =>$item['cat']
+                ]);
+                $category->save();
+
+                $subCategory = ProductCategory::where('name->en',$item['sub_cat'])->first() ?? (new ProductCategory());
+                $subCategory->fill([
+                    'name' => $item['sub_cat']
+                ]);
+                $subCategory->parent()->associate($category)->save();
+
+                $product->attachCategories($subCategory);
+
                 if(isset($item['content'])){
                     foreach ($item['content'] as $tab){
-                        ProductApplication::updateOrCreate(['name'=>$tab['key']],['name'=>$tab['key'],'description'=>$url]);
+                        $key = strtolower($tab['key']);
+                        $data    =
+                            [
+                                'name' => ['en'=> $key],
+                                'description' => ['en'=>$url]
+
+                            ];
+                        $instance  = ProductApplication::where('name->en',$key)->first() ?? (new ProductApplication);
+                        $instance->fill($data);
+                        $instance->save();
                     }
 
                 }
-                fputcsv($fp,$item);
+//                fputcsv($fp,$item);
                 $this->info($item['name'].'  done .');
             }
             fclose($handle);
@@ -96,15 +124,18 @@ class ProductSpider extends Command
     protected function fetchProduct($url = '')
     {
 
-        return QueryList::get($url)->rules($this->productRules)->range('#main-wap')->queryData(function($item){
+        $queryList = QueryList::get($url);
+        $item =  $queryList->rules($this->productRules)->range('#main-wap')->queryData(function($item) use($queryList) {
 
-           $item['content'] = QueryList::html($item['content'])->rules([
+           $item['content'] = $queryList->html($item['content'])->rules([
                 'key' => ['.nav-tabs > li > a','text'],
                 'value' => ['.tab-pane > div','html']
-            ])->range('')->queryData();
-            return $item;
+           ])->range('')->queryData();
+           return $item;
 
         });
+        $queryList->destruct();
+        return $item;
 
     }
 
