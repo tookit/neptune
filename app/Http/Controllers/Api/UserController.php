@@ -20,12 +20,16 @@ class UserController extends Controller
     public function index(Request $request)
     {
 
+        $builder = QueryBuilder::for(User::class)
+                    ->allowedFilters(User::$allowedFilters)
+                    ->allowedSorts(User::$allowedSorts);
         return UserResource::collection(
 
-            QueryBuilder::for(User::class)
-                ->allowedFilters(User::$allowedFilters)
-                ->allowedSorts(User::$allowedSorts)
-                ->paginate($request->get('pageSize'),['*'],'page')
+                $request-get('pageSize') != '-1'
+                    ?
+                    $builder->paginate($request->get('pageSize'),['*'],'page')
+                    :
+                    $builder->get()
 
         );
     }

@@ -22,6 +22,7 @@ class ProductCategory extends Model
     protected $table = 'product_categories';
 
 
+
     protected $fillable = [
 
         'name','description'
@@ -37,6 +38,9 @@ class ProductCategory extends Model
 
         'active'=>'boolean'
     ];
+
+    public static  $allowedFilters = [];
+    public static  $allowedSorts = [];
 
 
     public $translatable = [

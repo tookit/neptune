@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoryRequest;
-use App\Http\Resources\CategoryResource;
+use App\Http\Requests\ProductCategoryRequest;
+use App\Http\Resources\ProductCategoryResource;
+use Spatie\QueryBuilder\QueryBuilder;
 
-class CategoryController extends Controller
+class ProductCategoryController extends Controller
 {
 
 
 
     public function __construct()
     {
-
     }
 
     /**
@@ -23,16 +24,23 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return CategoryResource::collection(Category::paginate());
+        return ProductCategoryResource::collection(
+
+            QueryBuilder::for(ProductCategory::class)
+                ->allowedFilters(ProductCategory::$allowedFilters)
+                ->allowedSorts(ProductCategory::$allowedSorts)
+                ->paginate($request->get('pageSize'),['*'],'page')
+
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      *
      */
-    public function store(CategoryRequest $request)
+    public function store(ProductCategoryResource $request)
     {
 
         return new Category(Category::create($request->all()));

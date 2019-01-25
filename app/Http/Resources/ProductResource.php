@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Nexmo\Call\Collection;
 
 class ProductResource extends JsonResource
 {
@@ -19,8 +20,16 @@ class ProductResource extends JsonResource
             'name' => $this->resource->name,
             'description' => $this->resource->description,
             'featured_img' => $this->resource->featured_img,
-            'categories' => $this->resource->categories,
+            'category_path' => $this->buildCategoryPath($this->resource->categories),
+            'created_at' => $this->resource->created_at 
 
         ];
+    }
+
+
+
+    protected function buildCategoryPath(\Illuminate\Support\Collection $cats)
+    {
+        return $cats->pluck('name')->implode(',');
     }
 }

@@ -26,11 +26,19 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        $builder = QueryBuilder::for(Product::class)
+            ->with(['categories'])
+            ->allowedFilters(Product::$allowedFilters)
+            ->allowedSorts(Product::$allowedSorts);
+
         return ProductResource::collection(
-            QueryBuilder::for(Product::class)
-                ->allowedFilters(Product::$allowedFilters)
-                ->allowedSorts(Product::$allowedSorts)
-                ->paginate($request->get('pageSize'),['*'],'page')
+
+            $request->get('pageSize') !== '-1'
+                ?
+                $builder->paginate($request->get('pageSize'),['*'],'page')
+                :
+                $builder->get()
+
         );
     }
 
