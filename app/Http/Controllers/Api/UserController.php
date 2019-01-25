@@ -25,11 +25,7 @@ class UserController extends Controller
                     ->allowedSorts(User::$allowedSorts);
         return UserResource::collection(
 
-                $request-get('pageSize') != '-1'
-                    ?
                     $builder->paginate($request->get('pageSize'),['*'],'page')
-                    :
-                    $builder->get()
 
         );
     }
