@@ -82,9 +82,11 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
-        //
+        $item = Product::find($id);
+        $item->update($request->validated());
+        return new ProductResource($item);
     }
 
     /**

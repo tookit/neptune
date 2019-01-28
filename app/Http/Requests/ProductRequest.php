@@ -25,7 +25,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'slug'=> 'required'
+            'description'=>'sometimes'
         ];
     }
 
