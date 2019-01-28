@@ -42,6 +42,16 @@ class ProductController extends Controller
         );
     }
 
+
+    public function listAll(Request $request)
+    {
+
+        return ProductResource::collection(
+
+
+        );
+    }
+
     /**
      * Store a newly created resource in storage.
      *

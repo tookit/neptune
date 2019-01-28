@@ -36,7 +36,9 @@ Route::middleware(['auth:api'])->group(function () {
 
 Route::prefix('mall')->group(function (){
     Route::apiResource('products',ProductController::class);
+    Route::get('categories/tree','ProductCategoryController@listAll');
     Route::apiResource('categories',ProductCategoryController::class);
+
 
 });
 

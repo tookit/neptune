@@ -48,6 +48,16 @@ class ProductCategoryController extends Controller
 
     }
 
+
+    public function listAll(Request $request)
+    {
+
+        return ProductCategoryResource::collection(
+
+            ProductCategory::get()->toTree()
+        );
+    }
+
     /**
      * Display the specified resource.
      *
