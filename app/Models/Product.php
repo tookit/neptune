@@ -4,12 +4,13 @@ namespace App\Models;
 
 use App\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
 
-class Product extends Model
+class Product extends Model implements  HasMedia
 {
 
     use HasMediaTrait,

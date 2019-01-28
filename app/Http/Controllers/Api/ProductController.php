@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\ImageRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
@@ -101,8 +102,11 @@ class ProductController extends Controller
     }
 
 
-    public function attachImage()
+    public function attachImage($id, ImageRequest $request)
     {
+        $item = Product::find($id);
+        $item->addMedia($request->file('image'))->toMediaCollection('images');
+        return new ProductResource($item);
 
     }
 
