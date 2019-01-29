@@ -7,7 +7,6 @@ use Kalnoy\Nestedset\NodeTrait;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use Spatie\Translatable\HasTranslations;
 
 
 class ProductCategory extends Model
@@ -15,7 +14,6 @@ class ProductCategory extends Model
 
     use NodeTrait,
         HasSlug,
-        HasTranslations,
         HasMediaTrait;
 
 

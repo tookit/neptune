@@ -2,16 +2,20 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class ProductApplication extends Model
+class Tag extends Model
 {
 
     use HasSlug;
 
-    protected $table = 'product_applications';
+    protected $table = 'tags';
+
+
+
 
     protected $fillable = [
 
@@ -26,17 +30,21 @@ class ProductApplication extends Model
 
     protected $casts = [
 
-        'description',
-        'is_active'=>'boolean'
+
     ];
+
+    public static  $allowedFilters = [];
+    public static  $allowedSorts = [];
 
 
     public $translatable = [
 
         'name',
-        'description',
+        'description'
 
     ];
+
+
 
     /**
      * Get the options for generating the slug.
@@ -47,15 +55,6 @@ class ProductApplication extends Model
             ->generateSlugsFrom('name')
             ->usingLanguage(app()->getLocale())
             ->saveSlugsTo('slug');
-    }
-
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function products()
-    {
-        return $this->belongsToMany(Product::class,'product_has_applications');
     }
 
 }

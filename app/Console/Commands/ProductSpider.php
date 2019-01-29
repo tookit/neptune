@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Product;
+use App\Models\Tag;
 use Illuminate\Console\Command;
 use QL\Dom\Elements;
 use QL\QueryList;
@@ -16,7 +17,7 @@ class ProductSpider extends Command
      *
      * @var string
      */
-    protected $signature = 'spider:product';
+    protected $signature = 'spider:optico';
 
     /**
      * The console command description.
@@ -76,7 +77,7 @@ class ProductSpider extends Command
                 $tmp = $this->fetchProduct($url);
                 $item = $tmp[0];
                 // handle product
-                $product = Product::where('name->en',$item['name'])->first() ?? (new Product);
+                $product = Product::where('name',$item['name'])->first() ?? (new Product);
                 $product->fill([
                     'name'=>$item['name'],
                     'featured_img' => $item['img'],
@@ -85,13 +86,13 @@ class ProductSpider extends Command
                 $product->save();
 
                 // handle category
-                $category = ProductCategory::where('name->en',$item['cat'])->first() ?? (new ProductCategory());
+                $category = ProductCategory::where('name',$item['cat'])->first() ?? (new ProductCategory());
                 $category->fill([
                     'name' =>$item['cat']
                 ]);
                 $category->save();
 
-                $subCategory = ProductCategory::where('name->en',$item['sub_cat'])->first() ?? (new ProductCategory());
+                $subCategory = ProductCategory::where('name',$item['sub_cat'])->first() ?? (new ProductCategory());
                 $subCategory->fill([
                     'name' => $item['sub_cat']
                 ]);
@@ -104,11 +105,11 @@ class ProductSpider extends Command
                         $key = strtolower($tab['key']);
                         $data    =
                             [
-                                'name' => ['en'=> $key],
-                                'description' => ['en'=>$url]
+                                'name' => $key,
+                                'description' => $url
 
                             ];
-                        $instance  = ProductApplication::where('name->en',$key)->first() ?? (new ProductApplication);
+                        $instance  = Tag::updateOrCreate(['name'=>$key],$data);
                         $instance->fill($data);
                         $instance->save();
                     }

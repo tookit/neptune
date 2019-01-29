@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\ImageRequest;
+use App\Http\Resources\MediaResource;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
@@ -13,6 +14,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class ProductController extends Controller
 {
 
+    const IMAGE_COLLECTION = 'images';
 
 
     public function __construct()
@@ -73,7 +75,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return new ProductResource(Product::find($id));
+        return new ProductResource(Product::with(['categories'])->find($id));
     }
 
     /**
@@ -107,6 +109,14 @@ class ProductController extends Controller
         $item = Product::find($id);
         $item->addMedia($request->file('image'))->toMediaCollection('images');
         return new ProductResource($item);
+
+    }
+
+
+    public function listImage($id)
+    {
+        $item = Product::find($id);
+        return MediaResource::collection($item->getMedia('images'));
 
     }
 

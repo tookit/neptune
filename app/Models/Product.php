@@ -8,14 +8,12 @@ use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use Spatie\Translatable\HasTranslations;
 
 class Product extends Model implements  HasMedia
 {
 
     use HasMediaTrait,
         HasSlug,
-        HasTranslations,
         AuditableTrait;
 
 
@@ -43,7 +41,6 @@ class Product extends Model implements  HasMedia
 
 
     protected $casts = [
-
         'active'=>'boolean',
         'is_hot'=>'boolean',
     ];
