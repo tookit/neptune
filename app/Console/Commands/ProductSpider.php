@@ -39,6 +39,7 @@ class ProductSpider extends Command
     protected $productRules = [
 
         'name' => ['h1','text'],
+        'desc' => ['.p-desc','text'],
         'cat' => ['ul.breadcrumb li:first','text'],
         'sub_cat' => ['ul.breadcrumb li:nth-child(2)','text'],
         'img' => ['.p-img','src'],
@@ -80,6 +81,7 @@ class ProductSpider extends Command
                 $product = Product::where('name',$item['name'])->first() ?? (new Product);
                 $product->fill([
                     'name'=>$item['name'],
+                    'description'=>$item['desc'],
                     'featured_img' => $item['img'],
                     'reference_url' => $url
                 ]);
@@ -97,12 +99,24 @@ class ProductSpider extends Command
                     'name' => $item['sub_cat']
                 ]);
                 $subCategory->parent()->associate($category)->save();
-
                 $product->attachCategories($subCategory);
 
+
+                // handle product tabs
                 if(isset($item['content'])){
                     foreach ($item['content'] as $tab){
                         $key = strtolower($tab['key']);
+                        if(str_contains($key,'feature')){
+                            $product->features = $tab['value'];
+                        }
+                        if(str_contains($key,'package') or str_contains($key,'packaging') or str_contains($key,'packing')){
+                            $product->packaging = $tab['value'];
+                        }
+                        if(str_contains($key,'specification') or str_contains($key,'technical')){
+                            $product->specs = $tab['value'];
+                        }
+
+                        $product->save();
                         $data    =
                             [
                                 'name' => $key,
