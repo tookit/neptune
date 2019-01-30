@@ -45,4 +45,10 @@ class Category extends Model
     {
         return $this->hasMany(Post::class);
     }
+
+    public function ancestorsAndSelf() {
+        return $this->newScopedQuery()
+            ->where($this->getLftName(), '<=', $this->getLft())
+            ->where($this->getRgtName(), '>=', $this->getRgt());
+    }
 }

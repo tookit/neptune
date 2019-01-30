@@ -28,7 +28,8 @@ class UserRequest extends FormRequest
             'username' => 'bail|required|unique:users,username,'.$this->uniqueIdentifier(),
             'email' => 'required|email|unique:users,email,'.$this->uniqueIdentifier(),
             'mobile' => 'required|unique:users,mobile,'.$this->uniqueIdentifier(),
-            'password' => 'sometimes|required'
+            'active' => 'boolean',
+            'password' => 'sometimes|required',
         ];
     }
 

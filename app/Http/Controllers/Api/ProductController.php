@@ -100,7 +100,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return new ProductResource(Product::destroy($id));
     }
 
 
@@ -117,6 +117,22 @@ class ProductController extends Controller
     {
         $item = Product::find($id);
         return MediaResource::collection($item->getMedia('images'));
+
+    }
+
+    public function listCategories($id)
+    {
+        $item = Product::find($id);
+        return ProductResource::collection($item->categories);
+
+    }
+
+
+    public function attachCategories($id, Request $request)
+    {
+        $item = Product::find($id);
+        $item->attachCategories($request->get('categories'));
+        return ProductResource::collection($item->categories);
 
     }
 
