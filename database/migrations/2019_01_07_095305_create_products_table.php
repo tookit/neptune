@@ -18,9 +18,10 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('slug')->unique();
             $table->string('name')->unique('Product Name');
-            $table->string('description')->nullable()->comment('Product Short Description');
+            $table->text('description')->nullable()->comment('Product Short Description');
             $table->text('content')->nullable()->comment('Product Long Description');
             $table->json('attribute_list')->nullable()->comment('format|attr_id:value_id');
+            $table->text('applications')->nullable()->comment('Product applications');
             $table->text('features')->nullable()->comment('Product features');
             $table->text('specs')->nullable()->comment('Product specs');
             $table->text('packaging')->nullable()->comment('Product package info');

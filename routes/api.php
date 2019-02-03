@@ -34,6 +34,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('me','UserController@me');
 });
 
+Route::apiResource('media',MediaController::class);
+
 Route::prefix('mall')->group(function (){
     Route::apiResource('products',ProductController::class);
     Route::get('products/{id}/categories','ProductController@listCategories');

@@ -61,8 +61,11 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-
-        return new ProductResource(Product::create($request->all()));
+        $item = Product::create($request->all());
+        return response()->json([
+            'data' => $item,
+            'message'=>'成功添加产品'
+        ]);
 
 
     }
@@ -89,7 +92,10 @@ class ProductController extends Controller
     {
         $item = Product::find($id);
         $item->update($request->validated());
-        return new ProductResource($item);
+        return response()->json([
+            'data' => $item,
+            'message'=>'成功更新产品'
+        ]);
     }
 
     /**
@@ -108,6 +114,10 @@ class ProductController extends Controller
     {
         $item = Product::find($id);
         $item->addMedia($request->file('image'))->toMediaCollection('images');
+        return response()->json([
+            'data' => $item->getMedia('images'),
+            'message'=>'产品图片上传成功'
+        ]);
         return new ProductResource($item);
 
     }

@@ -18,7 +18,7 @@ class CreateProductCategoriesTable extends Migration
             $table->nestedSet();
             $table->string('slug')->unique();
             $table->string('name')->unique();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('seo_title')->nullable();
             $table->string('seo_keywords')->nullable();
             $table->string('seo_description')->nullable();

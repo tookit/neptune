@@ -106,6 +106,9 @@ class ProductSpider extends Command
                 if(isset($item['content'])){
                     foreach ($item['content'] as $tab){
                         $key = strtolower($tab['key']);
+                        if(str_contains($key,'application')){
+                            $product->applications = $tab['value'];
+                        }
                         if(str_contains($key,'feature')){
                             $product->features = $tab['value'];
                         }
