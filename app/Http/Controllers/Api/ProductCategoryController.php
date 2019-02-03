@@ -29,6 +29,7 @@ class ProductCategoryController extends Controller
         return ProductCategoryResource::collection(
 
             QueryBuilder::for(ProductCategory::class)
+                ->withCount(['products'])
                 ->allowedFilters(ProductCategory::$allowedFilters)
                 ->allowedSorts(ProductCategory::$allowedSorts)
                 ->paginate($request->get('pageSize'),['*'],'page')
@@ -66,7 +67,7 @@ class ProductCategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        return new ProductCategoryResource(ProductCategory::find($id));
     }
 
     /**

@@ -38,6 +38,7 @@ Route::apiResource('media',MediaController::class);
 
 Route::prefix('mall')->group(function (){
     Route::apiResource('products',ProductController::class);
+    Route::apiResource('categories',ProductCategoryController::class);
     Route::get('products/{id}/categories','ProductController@listCategories');
     Route::put('products/{id}/categories','ProductController@attachCategories');
     Route::get('products/{id}/images','ProductController@listImage');
