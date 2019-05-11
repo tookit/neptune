@@ -37,7 +37,9 @@ class ProductCategory extends Model
         'active'=>'boolean'
     ];
 
-    public static  $allowedFilters = [];
+    public static  $allowedFilters = [
+        'name'
+    ];
     public static  $allowedSorts = [];
 
 
