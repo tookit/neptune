@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Media;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Requests\MediaRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MediaResource;
-use App\Models\Media;
+use App\Models\Media\Media;
 
 class MediaController extends Controller
 {

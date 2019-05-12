@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\CMS;
 
+use App\Http\Resources\UserResource as Resource;
+use App\Models\User as Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
-use App\Models\User;
 
 class UserController extends Controller
 {
@@ -19,17 +20,21 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $builder = QueryBuilder::for(Model::class)
+            ->with(['roles'])
+            ->allowedFilters(Model::$allowedFilters)
+            ->allowedSorts(Model::$allowedSorts);
 
-        $builder = QueryBuilder::for(User::class)
-                    ->allowedFilters(User::$allowedFilters)
-                    ->allowedSorts(User::$allowedSorts);
-        return UserResource::collection(
+        return Resource::collection(
 
-                    $builder->paginate($request->get('pageSize'),['*'],'page')
+            $request->get('pageSize') !== '-1'
+                ?
+                $builder->paginate($request->get('pageSize'),['*'],'page')
+                :
+                $builder->get()
 
         );
     }
-
 
     public function me(){
 

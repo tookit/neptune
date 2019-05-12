@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,31 +18,41 @@ use Illuminate\Http\Request;
 
 //public route
 
-Route::post('/auth/login','AuthController@login');
+Route::post('/auth/login','Auth\LoginController@login');
 
 
 // protected route
-Route::middleware(['auth:api'])->group(function () {
+Route::middleware([])->group(function () {
 
-    Route::post('/auth/logout','AuthController@logout');
-    Route::post('/auth/refresh','AuthController@refresh');
+    Route::prefix('auth')->group(function (){
 
-    Route::apiResource('categories',CategoryController::class);
-    Route::apiResource('users',UserController::class);
+        Route::post('logout','Auth\LoginController@logout');
+        Route::post('refresh','Auth\LoginController@refresh');
+
+    });
+
+    Route::prefix('cms')->group(function (){
+
+        Route::get('users','CMS\UserController@index');
+
+    });
+
+
     Route::get('me','UserController@me');
-});
-
-Route::apiResource('media',MediaController::class);
-
-Route::prefix('mall')->group(function (){
-    Route::apiResource('products',ProductController::class);
-    Route::get('products/{id}/categories','ProductController@listCategories')->where('id', '[0-9]+');
-    Route::put('products/{id}/categories','ProductController@attachCategories')->where('id', '[0-9]+');;
-    Route::get('products/{id}/images','ProductController@listImage')->where('id', '[0-9]+');;
-    Route::post('products/{id}/images','ProductController@attachImage')->where('id', '[0-9]+');;
-    Route::get('categories/tree','ProductCategoryController@listAll')->where('id', '[0-9]+');;
-    Route::apiResource('categories',ProductCategoryController::class);
-
+//    Route::apiResource('media',MediaController::class);
 
 });
+
+
+//Route::prefix('mall')->group(function (){
+//    Route::apiResource('products',ProductController::class);
+//    Route::get('products/{id}/categories','ProductController@listCategories')->where('id', '[0-9]+');
+//    Route::put('products/{id}/categories','ProductController@attachCategories')->where('id', '[0-9]+');;
+//    Route::get('products/{id}/images','ProductController@listImage')->where('id', '[0-9]+');;
+//    Route::post('products/{id}/images','ProductController@attachImage')->where('id', '[0-9]+');;
+//    Route::get('categories/tree','ProductCategoryController@listAll')->where('id', '[0-9]+');;
+//    Route::apiResource('categories',ProductCategoryController::class);
+//
+//
+//});
 
