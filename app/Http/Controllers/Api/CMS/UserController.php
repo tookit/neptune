@@ -89,8 +89,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $item = Model::find($id);
-        $item->delete();
+        $item = Model::destroy($id);
         return new Resource($item);
     }
 }

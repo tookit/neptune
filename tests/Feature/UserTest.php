@@ -4,8 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
@@ -61,10 +59,26 @@ class UserTest extends TestCase
             'username' => 'test'.uniqid(),
             'active'=>$item->active,
             'email'=>$item->email,
-            'mobile'=>'19285468111'
+            'mobile'=>'19285468211'
 
         ];
         $response = $this->actingAs($this->makeAdmin())->put('/api/cms/users/'.$item->id,$data);
+        $response->assertStatus(200);
+
+    }
+
+    public function testDeleteUser()
+    {
+
+        $item = factory(User::class)->create();
+        $data = [
+            'username' => 'test'.uniqid(),
+            'active'=>$item->active,
+            'email'=>$item->email,
+            'mobile'=>'19285468211'
+
+        ];
+        $response = $this->actingAs($this->makeAdmin())->delete('/api/cms/users/'.$item->id);
         $response->assertStatus(200);
 
     }
