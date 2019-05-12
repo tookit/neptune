@@ -80,7 +80,12 @@ class ProductCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $item = ProductCategory::find($id);
+        $item->update($request->validated());
+        return response()->json([
+            'data' => $item,
+            'message'=>'成功更新产品分类'
+        ]);
     }
 
     /**

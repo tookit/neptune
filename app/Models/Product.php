@@ -17,7 +17,7 @@ class Product extends Model implements  HasMedia
         AuditableTrait;
 
 
-    public static  $allowedFilters = [];
+    public static  $allowedFilters = ['name','categories.name'];
     public static  $allowedSorts = [];
 
 

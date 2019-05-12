@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\ImageRequest;
 use App\Http\Resources\MediaResource;
+use App\Models\Filters\ProductCategoriesFilter;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\Filter;
 
 class ProductController extends Controller
 {
@@ -31,7 +33,9 @@ class ProductController extends Controller
     {
         $builder = QueryBuilder::for(Product::class)
             ->with(['categories'])
-            ->allowedFilters(Product::$allowedFilters)
+            ->allowedFilters(array_merge(Product::$allowedFilters,[
+                Filter::custom('category_id', ProductCategoriesFilter::class)
+            ]))
             ->allowedSorts(Product::$allowedSorts);
 
         return ProductResource::collection(
