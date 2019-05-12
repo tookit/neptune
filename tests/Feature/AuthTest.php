@@ -19,7 +19,7 @@ class AuthTest extends TestCase
     public function testLogin()
     {
 
-        $user = factory(\App\Models\User::class)->create();
+        $user = factory(\App\Models\User::class)->create(['password'=>'secret']);
         $response  = $this->post('/api/auth/login',[
             'email'=>$user->email,
             'password'=>'secret',

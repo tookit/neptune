@@ -29,7 +29,7 @@ class UserRequest extends FormRequest
             'email' => 'required|email|unique:users,email,'.$this->uniqueIdentifier(),
             'mobile' => 'required|unique:users,mobile,'.$this->uniqueIdentifier(),
             'active' => 'boolean',
-            'password' => 'sometimes|required',
+            'password' => 'sometimes|required|confirmed',
         ];
     }
 

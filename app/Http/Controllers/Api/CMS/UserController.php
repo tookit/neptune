@@ -50,7 +50,9 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
 
-        return User::create($request->validated());
+        return new UserResource([
+            'data' => Model::create($request->validated())
+        ]);
 
     }
 

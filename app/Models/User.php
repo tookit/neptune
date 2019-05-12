@@ -70,7 +70,23 @@ class User extends Authenticatable implements JWTSubject
 
     public function active()
     {
-        return $this->active;
+        return $this->getAttribute('active');
+    }
+
+    public function isRoot()
+    {
+        return $this->getAttribute('username') === config('admin.username');
+    }
+
+    /**
+     * Set password attribute
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
     }
 
     /**
