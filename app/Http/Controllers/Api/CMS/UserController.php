@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Api\CMS;
 
-use App\Http\Resources\UserResource as Resource;
-use App\Models\User as Model;
-use Illuminate\Http\Request;
+
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Auth;
-use Spatie\QueryBuilder\QueryBuilder;
-use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
+use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
+
+use App\Models\User as Model;
+use App\Http\Resources\UserResource as Resource;
+use App\Http\Requests\UserRequest as ValidateRequest;
+
 
 class UserController extends Controller
 {
@@ -38,7 +41,7 @@ class UserController extends Controller
 
     public function me(){
 
-        return new UserResource(User::find(Auth::id()));
+        return new Resource(User::find(Auth::id()));
     }
 
     /**
@@ -47,12 +50,10 @@ class UserController extends Controller
      * @param  \App\Http\Requests\UserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(ValidateRequest $request)
     {
 
-        return new UserResource([
-            'data' => Model::create($request->validated())
-        ]);
+        return new Resource(Model::create($request->validated()));
 
     }
 
@@ -64,7 +65,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return new UserResource(User::find($id));
+        return new Resource(Model::findOrFail($id));
     }
 
     /**
@@ -74,11 +75,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
+    public function update(ValidateRequest $request, $id)
     {
-        $item = User::find($id);
-        $item->update($request->validated());
-        return new UserResource($item);
+        $item = Model::updateOrCreate(['id'=>$id],$request->validated());
+        return new Resource($item);
     }
 
     /**
@@ -89,8 +89,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $item = User::find($id);
+        $item = Model::find($id);
         $item->delete();
-        return new UserResource($item);
+        return new Resource($item);
     }
 }

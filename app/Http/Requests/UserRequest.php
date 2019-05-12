@@ -24,13 +24,8 @@ class UserRequest extends FormRequest
     public function rules()
     {
 
-        return [
-            'username' => 'bail|required|unique:users,username,'.$this->uniqueIdentifier(),
-            'email' => 'required|email|unique:users,email,'.$this->uniqueIdentifier(),
-            'mobile' => 'required|unique:users,mobile,'.$this->uniqueIdentifier(),
-            'active' => 'boolean',
-            'password' => 'sometimes|required|confirmed',
-        ];
+        return ($this->uniqueIdentifier()) ? $this->updateRules() : $this->createRules();
+
     }
 
 
@@ -45,6 +40,31 @@ class UserRequest extends FormRequest
      */
     protected function uniqueIdentifier()
     {
-        return $this->user;
+        return $this->id;
     }
+
+
+
+    protected function createRules()
+    {
+        return [
+            'username' => 'required|unique:users,username',
+            'email' => 'required|email|unique:users,email',
+            'mobile' => 'required|unique:users,mobile',
+            'active' => 'boolean',
+            'password' => 'required|confirmed',
+        ];
+
+    }
+
+    protected function updateRules()
+    {
+        return [
+            'username' => 'unique:users,username,'.$this->uniqueIdentifier(),
+            'email' => 'email|unique:users,email,'.$this->uniqueIdentifier(),
+            'mobile' => 'unique:users,mobile,'.$this->uniqueIdentifier(),
+            'active' => 'boolean',
+        ];
+    }
+
 }
