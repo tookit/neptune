@@ -39,7 +39,7 @@ class AuthTest extends TestCase
             'email'=>$user->email,
             'password'=>'wrong password'
         ]);
-        $response->assertStatus(JsonResponse::HTTP_UNAUTHORIZED);
+        $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
     }
 
 }
