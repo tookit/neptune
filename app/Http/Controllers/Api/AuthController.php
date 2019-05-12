@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
 
 
+    use ValidatesRequests, ThrottlesLogins;
 
-    protected $loginRules = [
-        'email' => 'required|string|email|max:255',
-        'password'=> 'required'
-    ];
 
     /**
      * Create a new AuthController instance.
@@ -33,29 +33,102 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $validator = Validator::make($request->all(),$this->loginRules);
-        if ($validator->fails()) {
-            return response()->json($validator->errors());
+
+        $this->validateLogin($request);
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        if (method_exists($this, 'hasTooManyLoginAttempts') &&
+            $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
         }
 
-        $credentials = $request->only(['email', 'password','active'=>1]);
+        $token = $this->attemptLogin($request);
 
-        if (! $token = auth('api')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        $this->incrementLoginAttempts($request);
+
+
+
+        if (!$token ) {
+            return new JsonResponse(['errors'=>['Unauthorized']], JsonResponse::HTTP_UNAUTHORIZED);
+        }
+
+        if(!$this->guard()->getLastAttempted()->active()){
+            return new JsonResponse(['errors'=>['You account is inactive']], JsonResponse::HTTP_UNAUTHORIZED);
         }
 
         return $this->respondWithToken($token);
     }
 
+
     /**
-     * Get the authenticated User.
+     * Validate the user login request.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function me()
+    protected function validateLogin(Request $request)
     {
-        return response()->json(auth('api')->user());
+        $this->validate($request,[
+            $this->username() => 'required|string|exists:mysql.users,email',
+            'password' => 'required|string',
+        ]);
+
     }
+
+    /**
+     * Attempt to log the user into the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function attemptLogin(Request $request)
+    {
+
+        return $this->guard()->attempt(
+            $this->credentials($request)
+        );
+    }
+
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        return $request->only($this->username(), 'password');
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\Guard
+     */
+    protected function guard()
+    {
+        return Auth::guard('api');
+    }
+
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'email';
+    }
+
+
 
     /**
      * Log the user out (Invalidate the token).
@@ -87,7 +160,7 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
-        return response()->json([
+        return new JsonResponse([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60

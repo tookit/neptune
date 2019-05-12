@@ -69,6 +69,10 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function active()
+    {
+        return $this->active;
+    }
 
     /**
      * Login with email/username/mobile

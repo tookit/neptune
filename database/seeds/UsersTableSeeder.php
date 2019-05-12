@@ -21,6 +21,7 @@ class UsersTableSeeder extends Seeder
                 'password' => bcrypt(Config::get('admin.password')),
                 'email' => Config::get('admin.email'),
                 'mobile' => Config::get('admin.mobile'),
+                'active'=>1,
                 'gender' => 'male'
             ]
         );        

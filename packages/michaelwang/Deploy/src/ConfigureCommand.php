@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: michael
- * Date: 11/15/17
- * Time: 3:58 PM
- */
+
 
 namespace Michaelwang\Deploy;
 
