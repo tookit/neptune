@@ -104,4 +104,88 @@ class UserTest extends TestCase
 
     }
 
+    public function testUsernameUniqueRule()
+    {
+
+        $item = factory(User::class)->create();
+        $data = [
+            'username' => $item->username,
+            'password'=> 'secret',
+            'password_confirmation' => 'secret',
+            'active'=>$item->active,
+            'email'=>$item->email,
+            'mobile'=>$item->mobile
+
+        ];
+
+        //username required
+        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/users',$data);
+        $response->assertStatus(422);
+        $response->assertSee('The username has already been taken.');
+
+    }
+
+    public function testEmailRequiredRule()
+    {
+
+        $item = factory(User::class)->make();
+        $data = [
+            'username' => $item->username,
+            'password'=> 'secret',
+            'password_confirmation' => 'secret',
+            'active'=>$item->active,
+            'email'=>$item->email,
+            'mobile'=>$item->mobile
+
+        ];
+
+        //username required
+        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/users',array_merge($data,['email'=>null]));
+        $response->assertStatus(422);
+        $response->assertSee('The email field is required.');
+
+    }
+
+    public function testEmailUniqueRule()
+    {
+
+        $item = factory(User::class)->create();
+        $data = [
+            'username' => $item->username.uniqid(),
+            'password'=> 'secret',
+            'password_confirmation' => 'secret',
+            'active'=>$item->active,
+            'email'=>$item->email,
+            'mobile'=>$item->mobile
+
+        ];
+
+        //username required
+        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/users',$data);
+        $response->assertStatus(422);
+        $response->assertSee('The email has already been taken.');
+
+    }
+
+    public function testEmailValidRule()
+    {
+
+        $item = factory(User::class)->make();
+        $data = [
+            'username' => $item->username.uniqid(),
+            'password'=> 'secret',
+            'password_confirmation' => 'secret',
+            'active'=>$item->active,
+            'email'=>'Invalid email',
+            'mobile'=>$item->mobile
+
+        ];
+
+        //username required
+        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/users',$data);
+        $response->assertStatus(422);
+        $response->assertSee('The email must be a valid email address');
+
+    }
+
 }
