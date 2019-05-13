@@ -83,4 +83,25 @@ class UserTest extends TestCase
 
     }
 
+    public function testUsernameRequiredRule()
+    {
+
+        $item = factory(User::class)->make();
+        $data = [
+            'username' => $item->username,
+            'password'=> 'secret',
+            'password_confirmation' => 'secret',
+            'active'=>$item->active,
+            'email'=>$item->email,
+            'mobile'=>$item->mobile
+
+        ];
+
+        //username required
+        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/users',array_merge($data,['username'=>null]));
+        $response->assertStatus(422);
+        $response->assertSee('The username field is required.');
+
+    }
+
 }
