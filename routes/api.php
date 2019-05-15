@@ -40,6 +40,12 @@ Route::middleware(['auth:api'])->group(function () {
         Route::put('users/{id}',['uses'=>'CMS\UserController@update','desc'=>'Update user'])->where('id', '[0-9]+')->name('user.edit');
         Route::delete('users/{id}',['uses'=>'CMS\UserController@destroy','desc'=>'Delete User'])->where('id', '[0-9]+')->name('user.delete');
 
+        Route::get('roles',['uses'=>'CMS\RoleController@index','desc'=>'List role'])->name('role.index');
+        Route::post('roles',['uses'=>'CMS\RoleController@store','desc'=>'Create role'])->name('role.create');
+        Route::get('roles/{id}',['uses'=>'CMS\RoleController@show','desc'=>'View role detail'])->where('id', '[0-9]+')->name('role.view');
+        Route::put('roles/{id}',['uses'=>'CMS\RoleController@update','desc'=>'Update role'])->where('id', '[0-9]+')->name('role.edit');
+        Route::delete('roles/{id}',['uses'=>'CMS\RoleController@destroy','desc'=>'Delete role'])->where('id', '[0-9]+')->name('role.delete');
+
     });
 
 
