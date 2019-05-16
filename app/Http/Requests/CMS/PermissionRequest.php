@@ -31,8 +31,7 @@ class PermissionRequest extends FormRequest
     public function attributes()
     {
         return [
-            // 'slug' => '权限标识',
-            // 'http_method.*' => 'HTTP请求方法'
+
         ];
     }
 
