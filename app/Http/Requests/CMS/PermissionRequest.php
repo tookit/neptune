@@ -24,22 +24,15 @@ class PermissionRequest extends FormRequest
     public function rules()
     {
 
-        return [
-            'name' => 'required|unique:wl_cms.permissions,name,'.$this->uniqueIdentifier(),
-            'slug' => 'required|unique:wl_cms.permissions,slug,'.$this->uniqueIdentifier(),
-            'http_method'=>'array',
-            'http_method.*'=>'in:*,GET,POST,PATCH,DELETE,PUT,OPTION',
-            'http_path'=>'array',
-            'role_ids' => 'array'
-        ];
+        return ($this->uniqueIdentifier()) ? $this->updateRules() : $this->createRules();
     }
 
 
     public function attributes()
     {
         return [
-            'slug' => '权限标识',
-            'http_method.*' => 'HTTP请求方法'
+            // 'slug' => '权限标识',
+            // 'http_method.*' => 'HTTP请求方法'
         ];
     }
 
@@ -55,4 +48,27 @@ class PermissionRequest extends FormRequest
     }
 
 
+
+    protected function createRules()
+    {
+        return [
+            'name' => 'required|unique:permissions,name',
+            'slug' => 'required|unique:permissions,slug',
+            'http_methods'=>'array',
+            'http_methods.*'=>'in:*,GET,POST,PATCH,DELETE,PUT,OPTION',
+            'http_paths'=>'array',
+        ];
+
+    }
+
+    protected function updateRules()
+    {
+        return [
+            'name' => 'unique:permissions,name,'.$this->uniqueIdentifier(),
+            'slug' => 'unique:wl_cms.permissions,slug,'.$this->uniqueIdentifier(),
+            'http_methods'=>'array',
+            'http_methods.*'=>'in:*,GET,POST,PATCH,DELETE,PUT,OPTION',
+            'http_paths'=>'array',
+        ];
+    }
 }
