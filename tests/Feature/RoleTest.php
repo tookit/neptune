@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Role;
+use Illuminate\Http\JsonResponse;
 use Tests\TestCase;
 
 class RoleTest extends TestCase
@@ -18,7 +19,7 @@ class RoleTest extends TestCase
 
         $item = factory(Role::class)->create();
         $response = $this->actingAs($this->makeAdmin())->get('/api/cms/roles/'.$item->id);
-        $response->assertStatus(200);
+        $response->assertStatus(JsonResponse::HTTP_OK);
 
 
     }
@@ -27,7 +28,7 @@ class RoleTest extends TestCase
     public function testListRole()
     {
         $response = $this->actingAs($this->makeAdmin())->get('/api/cms/roles');
-        $response->assertStatus(200);
+        $response->assertStatus(JsonResponse::HTTP_OK);
     }
 
 
@@ -37,83 +38,73 @@ class RoleTest extends TestCase
         $item = factory(Role::class)->make();
         $data = $item->getAttributes();
         $response = $this->actingAs($this->makeAdmin())->post('/api/cms/roles',$data);
-        $response->assertStatus(201);
+        $response->assertStatus(JsonResponse::HTTP_CREATED);
 
     }
 
-//    public function testUpdateUser()
-//    {
-//
-//        $item = factory(Role::class)->create();
-//        $data = [
-//            'username' => 'test'.uniqid(),
-//            'active'=>$item->active,
-//            'email'=>$item->email,
-//            'mobile'=>'19285468211'
-//
-//        ];
-//        $response = $this->actingAs($this->makeAdmin())->put('/api/cms/users/'.$item->id,$data);
-//        $response->assertStatus(200);
-//
-//    }
-//
-//    public function testDeleteUser()
-//    {
-//
-//        $item = factory(Role::class)->create();
-//        $data = [
-//            'username' => 'test'.uniqid(),
-//            'active'=>$item->active,
-//            'email'=>$item->email,
-//            'mobile'=>'19285468211'
-//
-//        ];
-//        $response = $this->actingAs($this->makeAdmin())->delete('/api/cms/users/'.$item->id);
-//        $response->assertStatus(200);
-//
-//    }
-//
-//    public function testUsernameRequiredRule()
-//    {
-//
-//        $item = factory(Role::class)->make();
-//        $data = [
-//            'username' => $item->username,
-//            'password'=> 'secret',
-//            'password_confirmation' => 'secret',
-//            'active'=>$item->active,
-//            'email'=>$item->email,
-//            'mobile'=>$item->mobile
-//
-//        ];
-//
-//        //username required
-//        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/users',array_merge($data,['username'=>null]));
-//        $response->assertStatus(422);
-//        $response->assertSee('The username field is required.');
-//
-//    }
-//
-//    public function testUsernameUniqueRule()
-//    {
-//
-//        $item = factory(Role::class)->create();
-//        $data = [
-//            'username' => $item->username,
-//            'password'=> 'secret',
-//            'password_confirmation' => 'secret',
-//            'active'=>$item->active,
-//            'email'=>$item->email,
-//            'mobile'=>$item->mobile
-//
-//        ];
-//
-//        //username required
-//        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/users',$data);
-//        $response->assertStatus(422);
-//        $response->assertSee('The username has already been taken.');
-//
-//    }
+    public function testUpdateRole()
+    {
+
+        $item = factory(Role::class)->create();
+        $data = [
+            'name' => 'test'.uniqid(),
+        ];
+        $response = $this->actingAs($this->makeAdmin())->put('/api/cms/roles/'.$item->id,$data);
+        $response->assertStatus(JsonResponse::HTTP_OK);
+
+    }
+
+    public function testDeleteRole()
+    {
+
+        $item = factory(Role::class)->create();
+        $response = $this->actingAs($this->makeAdmin())->delete('/api/cms/roles/'.$item->id);
+        $response->assertStatus(JsonResponse::HTTP_OK);
+
+    }
+
+    public function testNameRequiredRule()
+    {
+
+        $item = factory(Role::class)->make();
+        $data = $item->getAttributes();
+
+        //username required
+        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/roles',array_merge($data,['name'=>null]));
+        $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertSee('The name field is required.');
+
+    }
+
+    public function testSlugRequiredRule()
+    {
+
+        $item = factory(Role::class)->make();
+        $data = $item->getAttributes();
+
+        //username required
+        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/roles',array_merge($data,['slug'=>null]));
+        $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertSee('The slug field is required.');
+
+    }
+
+
+    public function testSlugUniqueRule()
+    {
+
+        $item = factory(Role::class)->create();
+        $data = [
+          'name'=>$item->name,
+          'slug'=>$item->slug,
+        ];
+
+        //username required
+        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/roles',$data);
+        $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertSee('The slug has already been taken.');
+
+    }
 
 
 

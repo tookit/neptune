@@ -23,19 +23,13 @@ class RoleRequest extends FormRequest
      */
     public function rules()
     {
-
-        return [
-            'name' => 'required|unique:wl_cms.roles,name,'.$this->uniqueIdentifier(),
-            'slug' => 'required|unique:wl_cms.roles,slug,'.$this->uniqueIdentifier(),
-            'user_ids'=>'array'
-        ];
+        return ($this->uniqueIdentifier()) ? $this->updateRules() : $this->createRules();
     }
 
 
     public function attributes()
     {
         return [
-            'slug' => '权限标识'
         ];
     }
 
@@ -48,6 +42,26 @@ class RoleRequest extends FormRequest
     protected function uniqueIdentifier()
     {
         return $this->id;
+    }
+
+
+    protected function createRules()
+    {
+        return [
+            'name' => 'required|unique:roles,name',
+            'slug' => 'required|unique:roles,slug',
+            'user_ids'=>'array'
+        ];
+
+    }
+
+    protected function updateRules()
+    {
+        return [
+            'name' => 'unique:roles,name,'.$this->uniqueIdentifier(),
+            'slug' => 'unique:roles,slug,'.$this->uniqueIdentifier(),
+            'user_ids'=>'array'
+        ];
     }
 
 

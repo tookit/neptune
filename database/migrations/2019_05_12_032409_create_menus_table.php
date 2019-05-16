@@ -17,10 +17,11 @@ class CreateMenusTable extends Migration
             $table->increments('id');
             $table->nestedSet();
             $table->string('title');
-            $table->integer('order')->default(0)->comment('排序');
-            $table->string('uri')->comment('链接')->unique();
-            $table->string('icon')->nullable()->comment('排序');
-            $table->tinyInteger('is_active')->default(0)->comment('0:激活|1:激活');
+            $table->integer('sort_number')->default(0)->comment('Sort Number');
+            $table->string('uri')->comment('Front uri')->unique();
+            $table->string('icon')->nullable()->comment('Menu icon ');
+            $table->tinyInteger('is_active')->default(0)->comment('0:active|1:inactive');
+            $table->softDeletes();
             $table->timestamps();
         });
 

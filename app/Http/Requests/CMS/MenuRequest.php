@@ -24,19 +24,15 @@ class MenuRequest extends FormRequest
     public function rules()
     {
 
-        return [
-            'title' => 'required',
-            'uri' => 'required|unique:wl_cms.menus,uri,'.$this->uniqueIdentifier(),
-        ];
+        return ($this->uniqueIdentifier()) ? $this->updateRules() : $this->createRules();
     }
 
 
     public function attributes()
     {
         return [
-            'title'=>'菜单名称',
-//            'parent_id'=>'上级菜单',
-            'uri'=>'菜单路由',
+//            'title'=>'菜单名称',
+//            'uri'=>'菜单路由',
         ];
     }
 
@@ -52,13 +48,35 @@ class MenuRequest extends FormRequest
 
     /**
      *  return the id of query path
-     *  /menu/{id}
+     *  /menus/{id}
      *
      * @return mixed null|integer
      */
     protected function uniqueIdentifier()
     {
         return $this->id;
+    }
+
+
+    protected function createRules()
+    {
+        return [
+            'title' => 'required|unique:menus,title',
+            'uri' => 'required',
+            'sort_number'=>'integer',
+            'is_active'=>'boolean',
+        ];
+
+    }
+
+    protected function updateRules()
+    {
+        return [
+            'title' => 'required|unique:menus,title,'.$this->uniqueIdentifier(),
+            'uri' => 'max:255',
+            'sort_number'=>'integer',
+            'is_active'=>'boolean',
+        ];
     }
 
 }
