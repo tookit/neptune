@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Api\CMS;
+namespace App\Http\Controllers\Api\Acl;
 
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
-use App\Models\Role as Model;
-use App\Http\Resources\CMS\RoleResource as Resource;
-use App\Http\Requests\CMS\RoleRequest as ValidateRequest;
+use App\Models\Permission as Model;
+use App\Http\Resources\Acl\PermissionResource as Resource;
+use App\Http\Requests\Acl\PermissionRequest as ValidateRequest;
 
 
-class RoleController extends Controller
+class PermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,7 +22,7 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         $builder = QueryBuilder::for(Model::class)
-            ->with(['users'])
+            ->with([])
             ->allowedFilters(Model::$allowedFilters)
             ->allowedSorts(Model::$allowedSorts);
 
@@ -39,7 +39,7 @@ class RoleController extends Controller
 
 
     /**
-     * create a new user.
+     * create a new resource.
      *
      * @param  \App\Http\Requests\UserRequest  $request
      * @return \Illuminate\Http\Response

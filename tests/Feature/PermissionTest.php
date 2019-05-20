@@ -18,7 +18,7 @@ class PermissionTest extends TestCase
     {
 
         $item = factory(Permission::class)->create();
-        $response = $this->actingAs($this->makeAdmin())->get('/api/cms/permissions/'.$item->id);
+        $response = $this->actingAs($this->makeAdmin())->get('/api/acl/permissions/'.$item->id);
         $response->assertStatus(JsonResponse::HTTP_OK);
 
 
@@ -27,7 +27,7 @@ class PermissionTest extends TestCase
 
     public function testListPermission()
     {
-        $response = $this->actingAs($this->makeAdmin())->get('/api/cms/permissions');
+        $response = $this->actingAs($this->makeAdmin())->get('/api/acl/permissions');
         $response->assertStatus(JsonResponse::HTTP_OK);
     }
 
@@ -37,7 +37,7 @@ class PermissionTest extends TestCase
 
         $item = factory(Permission::class)->make();
         $data = $item->toArray();
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/permissions',$data);
+        $response = $this->actingAs($this->makeAdmin())->post('/api/acl/permissions',$data);
         $response->assertStatus(JsonResponse::HTTP_CREATED);
 
     }
@@ -49,7 +49,7 @@ class PermissionTest extends TestCase
         $data = [
             'name' => 'test'.uniqid(),
         ];
-        $response = $this->actingAs($this->makeAdmin())->put('/api/cms/permissions/'.$item->id,$data);
+        $response = $this->actingAs($this->makeAdmin())->put('/api/acl/permissions/'.$item->id,$data);
         $response->assertStatus(JsonResponse::HTTP_OK);
 
     }
@@ -58,7 +58,7 @@ class PermissionTest extends TestCase
     {
 
         $item = factory(Permission::class)->create();
-        $response = $this->actingAs($this->makeAdmin())->delete('/api/cms/permissions/'.$item->id);
+        $response = $this->actingAs($this->makeAdmin())->delete('/api/acl/permissions/'.$item->id);
         $response->assertStatus(JsonResponse::HTTP_OK);
 
     }
@@ -68,7 +68,7 @@ class PermissionTest extends TestCase
 
         $item = factory(Permission::class)->make();
         $data = $item->getAttributes();
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/permissions',array_merge($data,['name'=>null]));
+        $response = $this->actingAs($this->makeAdmin())->post('/api/acl/permissions',array_merge($data,['name'=>null]));
         $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         $response->assertSee('The name field is required.');
 
@@ -79,7 +79,7 @@ class PermissionTest extends TestCase
 
         $item = factory(Permission::class)->make();
         $data = $item->getAttributes();
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/permissions',array_merge($data,['slug'=>null]));
+        $response = $this->actingAs($this->makeAdmin())->post('/api/acl/permissions',array_merge($data,['slug'=>null]));
         $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         $response->assertSee('The slug field is required.');
 
@@ -94,7 +94,7 @@ class PermissionTest extends TestCase
           'name'=>$item->name,
           'slug'=>$item->slug,
         ];
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/permissions',$data);
+        $response = $this->actingAs($this->makeAdmin())->post('/api/acl/permissions',$data);
         $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         $response->assertSee('The slug has already been taken.');
 

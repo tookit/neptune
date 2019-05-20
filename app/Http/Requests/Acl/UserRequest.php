@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\CMS;
+namespace App\Http\Requests\Acl;
 
 use Illuminate\Foundation\Http\FormRequest;
 

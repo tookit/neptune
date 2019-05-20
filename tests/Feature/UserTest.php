@@ -17,7 +17,7 @@ class UserTest extends TestCase
     {
 
         $item = factory(User::class)->create();
-        $response = $this->actingAs($this->makeAdmin())->get('/api/cms/users/'.$item->id);
+        $response = $this->actingAs($this->makeAdmin())->get('/api/acl/users/'.$item->id);
         $response->assertStatus(200);
 
 
@@ -26,7 +26,7 @@ class UserTest extends TestCase
 
     public function testListUser()
     {
-        $response = $this->actingAs($this->makeAdmin())->get('/api/cms/users');
+        $response = $this->actingAs($this->makeAdmin())->get('/api/acl/users');
 
         $response->assertStatus(200);
     }
@@ -46,7 +46,7 @@ class UserTest extends TestCase
 
         ];
 
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/users',$data);
+        $response = $this->actingAs($this->makeAdmin())->post('/api/acl/users',$data);
         $response->assertStatus(201);
 
     }
@@ -62,7 +62,7 @@ class UserTest extends TestCase
             'mobile'=>'19285468211'
 
         ];
-        $response = $this->actingAs($this->makeAdmin())->put('/api/cms/users/'.$item->id,$data);
+        $response = $this->actingAs($this->makeAdmin())->put('/api/acl/users/'.$item->id,$data);
         $response->assertStatus(200);
 
     }
@@ -78,7 +78,7 @@ class UserTest extends TestCase
             'mobile'=>'19285468211'
 
         ];
-        $response = $this->actingAs($this->makeAdmin())->delete('/api/cms/users/'.$item->id);
+        $response = $this->actingAs($this->makeAdmin())->delete('/api/acl/users/'.$item->id);
         $response->assertStatus(200);
 
     }
@@ -98,7 +98,7 @@ class UserTest extends TestCase
         ];
 
         //username required
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/users',array_merge($data,['username'=>null]));
+        $response = $this->actingAs($this->makeAdmin())->post('/api/acl/users',array_merge($data,['username'=>null]));
         $response->assertStatus(422);
         $response->assertSee('The username field is required.');
 
@@ -119,7 +119,7 @@ class UserTest extends TestCase
         ];
 
         //username required
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/users',$data);
+        $response = $this->actingAs($this->makeAdmin())->post('/api/acl/users',$data);
         $response->assertStatus(422);
         $response->assertSee('The username has already been taken.');
 
@@ -140,7 +140,7 @@ class UserTest extends TestCase
         ];
 
         //username required
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/users',array_merge($data,['email'=>null]));
+        $response = $this->actingAs($this->makeAdmin())->post('/api/acl/users',array_merge($data,['email'=>null]));
         $response->assertStatus(422);
         $response->assertSee('The email field is required.');
 
@@ -161,7 +161,7 @@ class UserTest extends TestCase
         ];
 
         //username required
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/users',$data);
+        $response = $this->actingAs($this->makeAdmin())->post('/api/acl/users',$data);
         $response->assertStatus(422);
         $response->assertSee('The email has already been taken.');
 
@@ -182,7 +182,7 @@ class UserTest extends TestCase
         ];
 
         //username required
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/users',$data);
+        $response = $this->actingAs($this->makeAdmin())->post('/api/acl/users',$data);
         $response->assertStatus(422);
         $response->assertSee('The email must be a valid email address');
 

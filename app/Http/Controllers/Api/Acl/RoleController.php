@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Api\CMS;
+namespace App\Http\Controllers\Api\Acl;
 
-use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
-use App\Models\User as Model;
-use App\Http\Resources\CMS\UserResource as Resource;
-use App\Http\Requests\CMS\UserRequest as ValidateRequest;
+use App\Models\Role as Model;
+use App\Http\Resources\Acl\RoleResource as Resource;
+use App\Http\Requests\Acl\RoleRequest as ValidateRequest;
 
 
-class UserController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,7 +22,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $builder = QueryBuilder::for(Model::class)
-            ->with(['roles'])
+            ->with(['users'])
             ->allowedFilters(Model::$allowedFilters)
             ->allowedSorts(Model::$allowedSorts);
 
@@ -37,10 +37,6 @@ class UserController extends Controller
         );
     }
 
-    public function me(){
-
-        return new Resource(User::find(Auth::id()));
-    }
 
     /**
      * create a new user.

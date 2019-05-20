@@ -18,7 +18,7 @@ class RoleTest extends TestCase
     {
 
         $item = factory(Role::class)->create();
-        $response = $this->actingAs($this->makeAdmin())->get('/api/cms/roles/'.$item->id);
+        $response = $this->actingAs($this->makeAdmin())->get('/api/acl/roles/'.$item->id);
         $response->assertStatus(JsonResponse::HTTP_OK);
 
 
@@ -27,7 +27,7 @@ class RoleTest extends TestCase
 
     public function testListRole()
     {
-        $response = $this->actingAs($this->makeAdmin())->get('/api/cms/roles');
+        $response = $this->actingAs($this->makeAdmin())->get('/api/acl/roles');
         $response->assertStatus(JsonResponse::HTTP_OK);
     }
 
@@ -37,7 +37,7 @@ class RoleTest extends TestCase
 
         $item = factory(Role::class)->make();
         $data = $item->getAttributes();
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/roles',$data);
+        $response = $this->actingAs($this->makeAdmin())->post('/api/acl/roles',$data);
         $response->assertStatus(JsonResponse::HTTP_CREATED);
 
     }
@@ -49,7 +49,7 @@ class RoleTest extends TestCase
         $data = [
             'name' => 'test'.uniqid(),
         ];
-        $response = $this->actingAs($this->makeAdmin())->put('/api/cms/roles/'.$item->id,$data);
+        $response = $this->actingAs($this->makeAdmin())->put('/api/acl/roles/'.$item->id,$data);
         $response->assertStatus(JsonResponse::HTTP_OK);
 
     }
@@ -58,7 +58,7 @@ class RoleTest extends TestCase
     {
 
         $item = factory(Role::class)->create();
-        $response = $this->actingAs($this->makeAdmin())->delete('/api/cms/roles/'.$item->id);
+        $response = $this->actingAs($this->makeAdmin())->delete('/api/acl/roles/'.$item->id);
         $response->assertStatus(JsonResponse::HTTP_OK);
 
     }
@@ -70,7 +70,7 @@ class RoleTest extends TestCase
         $data = $item->getAttributes();
 
         //username required
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/roles',array_merge($data,['name'=>null]));
+        $response = $this->actingAs($this->makeAdmin())->post('/api/acl/roles',array_merge($data,['name'=>null]));
         $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         $response->assertSee('The name field is required.');
 
@@ -83,7 +83,7 @@ class RoleTest extends TestCase
         $data = $item->getAttributes();
 
         //username required
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/roles',array_merge($data,['slug'=>null]));
+        $response = $this->actingAs($this->makeAdmin())->post('/api/acl/roles',array_merge($data,['slug'=>null]));
         $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         $response->assertSee('The slug field is required.');
 
@@ -100,7 +100,7 @@ class RoleTest extends TestCase
         ];
 
         //username required
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/roles',$data);
+        $response = $this->actingAs($this->makeAdmin())->post('/api/acl/roles',$data);
         $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         $response->assertSee('The slug has already been taken.');
 
