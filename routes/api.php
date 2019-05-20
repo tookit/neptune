@@ -35,6 +35,7 @@ Route::middleware(['auth:api'])->group(function () {
 
 
         //User
+
         Route::get('users',['uses'=>'CMS\UserController@index','desc'=>'List user'])->name('user.index');
         Route::post('users',['uses'=>'CMS\UserController@store','desc'=>'Create user'])->name('user.create');
         Route::get('users/{id}',['uses'=>'CMS\UserController@show','desc'=>'View user detail'])->where('id', '[0-9]+')->name('user.view');
@@ -65,7 +66,7 @@ Route::middleware(['auth:api'])->group(function () {
     });
 
 
-    Route::get('me','UserController@me');
+    Route::get('me','CMS\UserController@me');
 
 });
 

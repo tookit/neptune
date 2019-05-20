@@ -17,7 +17,7 @@ class Permission extends \Spatie\Permission\Models\Permission
 
     protected $fillable = [
 
-        'name','slug','guard_name','http_methods','http_paths'
+        'name','slug','guard_name','http_methods','http_paths','is_system','parent_id','action'
     ];
 
 

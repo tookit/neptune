@@ -19,11 +19,16 @@ class CreatePermissionTables extends Migration
 
         Schema::create($tableNames['permissions'], function (Blueprint $table) {
             $table->increments('id');
+            $table->nestedSet();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->string('action')->default('')->comment('api action name');
             $table->json('http_methods');
             $table->json('http_paths');
             $table->string('guard_name');
+            $table->boolean('is_system')->default(1)->comment('is system built-in permission.');
+            $table->timestamp('created_by')->nullable();
+            $table->timestamp('updated_by')->nullable();
             $table->timestamps();
         });
 

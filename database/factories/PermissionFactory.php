@@ -14,6 +14,7 @@ $factory->define(Model::class, function (Faker $faker) use ($paths) {
     return [
         'name' => $faker->name,
         'slug' => $faker->slug(),
+        'is_system'=> true,
         'guard_name' => 'api',
         'http_methods' => $faker->randomElements(['GET','HEAD','CREATE','PUT','POST','DELETE','OPTION']),
         'http_paths' => $faker->randomElements($paths)
