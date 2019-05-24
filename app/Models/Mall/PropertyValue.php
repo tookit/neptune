@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductAttributeValue extends Model
+class PropertyValue extends Model
 {
 
 
@@ -44,6 +44,6 @@ class ProductAttributeValue extends Model
      */
     public function property()
     {
-        return $this->belongsTo(ProductAttribute::clas);
+        return $this->belongsTo(Property::clas);
     }
 }
