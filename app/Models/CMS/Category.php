@@ -5,10 +5,12 @@ namespace App\Models;
 use App\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class Category extends Model
 {
     use NodeTrait,
+        HasMediaTrait,
         AuditableTrait;
 
 

@@ -17,7 +17,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Models\CMS\Menu::class, function (Faker $faker) {
     return [
-        'title' => $faker->name,
+        'name' => $faker->name,
         'uri' => $faker->url(),
         'icon' => $faker->imageUrl(),
         'sort_number' => $faker->randomDigit,

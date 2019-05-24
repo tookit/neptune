@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Acl;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -38,8 +39,14 @@ class UserController extends Controller
     }
 
     public function me(){
+        $me = Auth::guard('api')->user();
+        $me->menu = $me->getAssignedMenu();
+        $me->permissions = $me->getPermissionsViaRoles();
+        return new JsonResponse([
 
-        return new Resource(User::find(Auth::id()));
+            'data' =>  $me
+        ]);
+
     }
 
     /**

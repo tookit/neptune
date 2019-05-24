@@ -3,23 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Kalnoy\Nestedset\NodeTrait;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-
-class ProductCategory extends Model
+class Application extends Model
 {
 
-    use NodeTrait,
-        HasSlug,
+    use HasSlug,
         HasMediaTrait;
 
-
-    protected $table = 'product_categories';
-
-
+    protected $table = 'applications';
 
     protected $fillable = [
 
@@ -34,23 +28,17 @@ class ProductCategory extends Model
 
     protected $casts = [
 
-        'active'=>'boolean'
+        'description',
+        'is_active'=>'boolean'
     ];
-
-    public static  $allowedFilters = [
-        'name'
-    ];
-    public static  $allowedSorts = [];
 
 
     public $translatable = [
 
         'name',
-        'description'
+        'description',
 
     ];
-
-
 
     /**
      * Get the options for generating the slug.
@@ -69,8 +57,7 @@ class ProductCategory extends Model
      */
     public function products()
     {
-        return $this->belongsToMany(Product::class,'product_has_categories');
+        return $this->belongsToMany(Product::class,'product_has_applications');
     }
-
 
 }

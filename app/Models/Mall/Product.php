@@ -83,7 +83,7 @@ class Product extends Model implements  HasMedia
      */
     public function properties()
     {
-        return $this->belongsToMany(ProductAttribute::class,'product_has_attributes');
+        return $this->belongsToMany(ProductAttribute::class,'product_has_properties');
     }
 
 

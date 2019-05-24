@@ -4,17 +4,7 @@ namespace Michaelwang\Logging;
 
 use Psr\Log\InvalidArgumentException;
 
-/**
- * Options Class
- *
- * Options for all the logging operation classes
- *
- * @package    Logging
- * @category   Options
- * @copyright  Copyright (c) 2016 Enigma Software (http://www.enigmasoftware.com)
- * @version    1.0
- * @link       http://enigmasoftware.com
- */
+
 class Options extends Accessor
 {
 

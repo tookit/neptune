@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductApplicationsTable extends Migration
+class CreateApplicationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateProductApplicationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_applications', function (Blueprint $table) {
+        Schema::create('applications', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug')->unique();
             $table->string('name')->unique()->comment('Application Name');
@@ -26,7 +26,7 @@ class CreateProductApplicationsTable extends Migration
         Schema::create('product_has_applications', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id');
-            $table->integer('product_application_id');
+            $table->integer('application_id');
             $table->timestamps();
         });
     }

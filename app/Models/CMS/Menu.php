@@ -11,8 +11,8 @@ use Spatie\Translatable\HasTranslations;
 class Menu extends Model
 {
 
-    public  static $allowedFilters = ['title'];
-    public  static $allowedSorts = ['title'];
+    public  static $allowedFilters = ['name'];
+    public  static $allowedSorts = ['name'];
 
     use HasTranslations,
         SoftDeletes,
@@ -23,7 +23,7 @@ class Menu extends Model
 
     protected $fillable = [
 
-        'title','sort_number','uri','icon','is_active',
+        'name','sort_number','uri','icon','is_active',
     ];
 
 

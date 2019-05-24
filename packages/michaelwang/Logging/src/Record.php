@@ -1,17 +1,7 @@
 <?php
 namespace Michaelwang\Logging;
 
-/**
- * Record Class
- *
- * For handling log record
- *
- * @package    Logging
- * @category   Record
- * @copyright  Copyright (c) 2016 Enigma Software (http://www.enigmasoftware.com)
- * @version    1.0
- * @link       http://enigmasoftware.com
- */
+
 class Record
 {
     /**

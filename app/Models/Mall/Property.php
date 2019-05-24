@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductAttribute extends Model
+class Property extends Model
 {
 
 
-    protected $table = 'product_attributes';
+    protected $table = 'properties';
 
 
     protected $fillable = [
@@ -42,7 +42,7 @@ class ProductAttribute extends Model
      */
     public function products()
     {
-        return $this->belongsToMany(Product::class,'product_has_attributes');
+        return $this->belongsToMany(Product::class,'product_has_properties');
     }
 
     /**

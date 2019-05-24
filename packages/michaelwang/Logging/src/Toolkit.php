@@ -2,17 +2,6 @@
 
 namespace Michaelwang\Logging;
 
-/**
- * Toolkit Class
- *
- * Toolkit for maintaining logging data
- *
- * @category   Toolkit
- * @package    Logging
- * @copyright  Copyright (c) 2016 Enigma Software (http://www.enigmasoftware.com)
- * @version    1.0
- * @link       http://enigmasoftware.com
- */
 class Toolkit extends Base
 {
     public function prepare()

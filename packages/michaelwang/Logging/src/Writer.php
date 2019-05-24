@@ -1,17 +1,7 @@
 <?php
 namespace Michaelwang\Logging;
 
-/**
- * Writer Class
- *
- * For writing logs
- *
- * @category   Writer
- * @package    Logging
- * @copyright  Copyright (c) 2016 Enigma Software (http://www.enigmasoftware.com)
- * @version    1.0
- * @link       http://enigmasoftware.com
- */
+
 class Writer extends Base
 {
 

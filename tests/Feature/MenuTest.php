@@ -47,7 +47,7 @@ class MenuTest extends TestCase
 
         $item = factory(Menu::class)->create();
         $data = [
-            'title' => 'test'.uniqid(),
+            'name' => 'test'.uniqid(),
         ];
         $response = $this->actingAs($this->makeAdmin())->put('/api/cms/menus/'.$item->id,$data);
         $response->assertStatus(JsonResponse::HTTP_OK);

@@ -4,14 +4,15 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategoriesTable extends Migration
+class CreateQuotesTable extends Migration
 {
 
-    protected $table = 'mall_categories';
 
+    protected $table = 'quotes';
 
     /**
      * Run the migrations.
+     * SPU table
      *
      * @return void
      */
@@ -19,21 +20,23 @@ class CreateCategoriesTable extends Migration
     {
         Schema::create($this->table, function (Blueprint $table) {
             $table->increments('id');
-            $table->nestedSet();
-            $table->string('slug')->unique();
-            $table->string('name')->unique();
-            $table->string('featured_img')->nullable();
-            $table->text('description')->nullable();
-            $table->string('reference_url')->nullable();
+            $table->integer('customer_id');
+            $table->string('username')->comment('Customer name');
+            $table->string('email')->comment('Customer email');
+            $table->string('mobile')->comment('Customer mobile');
+            $table->text('remark')->nullable()->comment('Customer remark');
+            $table->tinyInteger('flag')->unsigned()->default(0)->comment('1:processing|2:converted|3:failed');
             $table->integer('created_by')->unsigned()->default(0);
             $table->integer('updated_by')->unsigned()->default(0);
-            $table->boolean('is_active')->default(0);
+            $table->softDeletes();
             $table->timestamps();
+
         });
-        Schema::create('product_has_categories', function (Blueprint $table) {
+
+        Schema::create('quote_has_products', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id');
-            $table->integer('product_category_id');
+            $table->integer('quote_id');
             $table->timestamps();
         });
     }
@@ -46,6 +49,6 @@ class CreateCategoriesTable extends Migration
     public function down()
     {
         Schema::dropIfExists($this->table);
-        Schema::dropIfExists('product_has_categories');
+        Schema::dropIfExists('quote_has_products');
     }
 }

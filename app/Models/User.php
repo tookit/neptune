@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\CMS\Menu;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -114,4 +115,25 @@ class User extends Authenticatable implements JWTSubject
             return $this->active;
         }
     }
+
+
+    public  function getAssignedMenu()
+    {
+
+        return $this->isRoot() ?  Menu::all() : $this->getMenusViaRoles();
+
+    }
+
+
+    /**
+     * Return all the permissions the model has via roles.
+     */
+    public function getMenusViaRoles()
+    {
+        return $this->load('roles', 'roles.menus')
+            ->roles->flatMap(function ($role) {
+                return $role->menus;
+            })->sort()->values();
+    }
+
 }

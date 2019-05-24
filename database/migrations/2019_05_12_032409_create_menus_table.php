@@ -16,7 +16,7 @@ class CreateMenusTable extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->increments('id');
             $table->nestedSet();
-            $table->string('title');
+            $table->string('name');
             $table->integer('sort_number')->default(0)->comment('Sort Number');
             $table->string('uri')->comment('Front uri')->unique();
             $table->string('icon')->nullable()->comment('Menu icon ');
