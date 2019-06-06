@@ -18,6 +18,9 @@
 
 //public route
 
+Route::post('/media',['uses'=>'Media\MediaController@store','desc'=>'Upload Media']);
+
+
 Route::post('/auth/login','Auth\LoginController@login');
 
 
@@ -72,6 +75,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::delete('menus/{id}',['uses'=>'CMS\MenuController@destroy','desc'=>'Delete menu'])->where('id', '[0-9]+')->name('menu.delete');
 
     });
+
 
 
 

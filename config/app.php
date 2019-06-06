@@ -227,6 +227,7 @@ return [
         //JWT-AUTH
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',
+        'MediaUploader' => Plank\Mediable\MediaUploaderFacade::class,
 
     ],
 
