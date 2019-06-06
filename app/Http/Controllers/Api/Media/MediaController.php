@@ -41,7 +41,11 @@ class MediaController extends Controller
     public function store(MediaRequest $request)
     {
 
-        $media = MediaUploader::fromSource($request->file('image'))->upload();
+        $media = MediaUploader::fromSource($request->file('image'))
+
+                ->toDirectory('/images')
+                ->toDestination('oss', 'image')
+                ->upload();
 
         return new MediaResource($media);
 
