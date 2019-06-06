@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api\Media;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Requests\MediaRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MediaResource;
-use App\Models\Media\Media;
+use Plank\Mediable\Media;
 use Plank\Mediable\MediaUploaderFacade as MediaUploader;
 
 class MediaController extends Controller
@@ -21,10 +20,8 @@ class MediaController extends Controller
     public function index(Request $request)
     {
 
-        $builder = QueryBuilder::for(Media::class)
-                    ->allowedFilters(Media::$allowedFilters)
-                    ->allowedSorts(Media::$allowedSorts);
-        return UserResource::collection(
+        $builder = QueryBuilder::for(Media::class);
+        return MediaResource::collection(
 
                     $builder->paginate($request->get('pageSize'),['*'],'page')
 

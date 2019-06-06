@@ -19,6 +19,7 @@
 //public route
 
 Route::post('/media',['uses'=>'Media\MediaController@store','desc'=>'Upload Media']);
+Route::get('/media',['uses'=>'Media\MediaController@index','desc'=>'List Media']);
 
 
 Route::post('/auth/login','Auth\LoginController@login');
