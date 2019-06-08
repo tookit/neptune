@@ -11,33 +11,28 @@
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
+
 
 
 //public route
 
-Route::post('/media',['uses'=>'Media\MediaController@store','desc'=>'Upload Media']);
-Route::get('/media',['uses'=>'Media\MediaController@index','desc'=>'List Media']);
+Route::post('/media',['uses'=>'Media\MediaController@store','desc'=>'Upload Media'])->name('media.upload');
+Route::get('/media',['uses'=>'Media\MediaController@index','desc'=>'List Media'])->name('media.index');
 
-
-Route::post('/auth/login','Auth\LoginController@login');
-
+Route::post('/auth/login',['uses'=>'Auth\LoginController@login','desc'=>'Login'])->name('login');
 
 // protected route
 Route::middleware(['auth:api'])->group(function () {
 
     Route::prefix('auth')->group(function (){
 
-        Route::post('logout','Auth\LoginController@logout');
-        Route::post('refresh','Auth\LoginController@refresh');
+        Route::post('logout',['uses'=>'Auth\LoginController@logout','desc'=>'Logout'])->name('logout');
+        Route::post('refresh',['uses'=>'Auth\LoginController@refresh','desc'=>'Refresh token'])->name('token.refresh');
 
     });
 
     // Current Login user info
-    Route::get('me','CMS\UserController@me');
-
+    Route::get('me',['uses'=>'CMS\UserController@me','desc'=>'View self'])->name('user.me');
 
     // Access control
     Route::prefix('acl')->group(function (){

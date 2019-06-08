@@ -2,16 +2,6 @@
 
 namespace Michaelwang\Logging;
 
-/**
- * Base Class
- *
- * The base class
- *
- * @package    Logging
- * @category   Base
- * @version    1.0
- * @link       http://enigmasoftware.com
- */
 class Base
 {
     /**

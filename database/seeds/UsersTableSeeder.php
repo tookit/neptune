@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
         User::updateOrCreate(
             [
                 'username' => Config::get('admin.username'),
-                'password' => bcrypt(Config::get('admin.password')),
+                'password' => (Config::get('admin.password')),
                 'email' => Config::get('admin.email'),
                 'mobile' => Config::get('admin.mobile'),
                 'active'=>1,

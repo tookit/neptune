@@ -2,16 +2,6 @@
 
 namespace Michaelwang\Logging;
 
-/**
- * Accessor Class
- *
- * The abstract class for access customized data
- *
- * @package    Logging
- * @category   Accessor
- * @version    1.0
- * @link       http://enigmasoftware.com
- */
 abstract class Accessor
 {
     /**
