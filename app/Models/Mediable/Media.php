@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Mediable;
 
-use Spatie\MediaLibrary\Models\Media as Model;
+use Plank\Mediable\Media as Model;
 
 class Media extends Model
 {
-
     protected $table = 'medias';
-
 
 }

@@ -13,7 +13,7 @@ class CreateMediableTables extends Migration
      */
     public function up()
     {
-        Schema::create('media', function (Blueprint $table) {
+        Schema::create('medias', function (Blueprint $table) {
             $table->increments('id');
             $table->string('disk', 32);
             $table->string('directory');
@@ -40,7 +40,7 @@ class CreateMediableTables extends Migration
             $table->index(['mediable_id', 'mediable_type']);
             $table->index('tag');
             $table->index('order');
-            $table->foreign('media_id')->references('id')->on('media')
+            $table->foreign('media_id')->references('id')->on('medias')
                 ->onDelete('cascade');
         });
     }

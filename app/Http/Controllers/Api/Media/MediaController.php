@@ -7,7 +7,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Requests\MediaRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MediaResource;
-use Plank\Mediable\Media;
+use App\Models\Mediable\Media;
 use Plank\Mediable\MediaUploaderFacade as MediaUploader;
 
 class MediaController extends Controller
@@ -22,9 +22,7 @@ class MediaController extends Controller
 
         $builder = QueryBuilder::for(Media::class);
         return MediaResource::collection(
-
-                    $builder->paginate($request->get('pageSize'),['*'],'page')
-
+            $builder->paginate($request->get('pageSize'),['*'],'page')
         );
     }
 
@@ -33,13 +31,12 @@ class MediaController extends Controller
      * create a new user.
      *
      * @param  \App\Http\Requests\MediaRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\MediaResource
      */
-    public function store(MediaRequest $request)
+    public function store(MediaRequest $request) : MediaResource
     {
 
         $media = MediaUploader::fromSource($request->file('image'))
-
                 ->toDirectory('/images')
                 ->toDestination('oss', 'image')
                 ->upload();

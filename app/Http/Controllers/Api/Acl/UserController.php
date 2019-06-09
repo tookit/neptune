@@ -42,18 +42,15 @@ class UserController extends Controller
         $me = Auth::guard('api')->user();
         $me->menu = $me->getAssignedMenu();
         $me->permissions = $me->getPermissionsViaRoles();
-        return new JsonResponse([
-
-            'data' =>  $me
-        ]);
+        return new Resource($me);
 
     }
 
     /**
      * create a new user.
      *
-     * @param  \App\Http\Requests\UserRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\Acl\UserRequest  $request
+     * @return \App\Http\Resources\Acl\UserResource
      */
     public function store(ValidateRequest $request)
     {

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\Route;
@@ -58,6 +59,7 @@ class ApiExplorer extends Command
         $paths = Yaml::parseFile($this->pathFile) ?? [];
         collect($this->routes)->each(function (Route $route) use ( & $paths) {
             if(in_array('api',$route->middleware())){
+                $this->getReturnType($route);
                 $methods = $route->methods();
                 $uri = $route->uri();
                 $method = $methods[0];
@@ -78,9 +80,23 @@ class ApiExplorer extends Command
                 $paths[$uri][$method]  = $uriOption;
             }
 
-;
         });
         $yaml = Yaml::dump($paths,6);
         file_put_contents($this->pathFile, $yaml);
     }
+
+
+    protected function getReturnType(Route $route)
+    {
+        $reflectionMethod = new \ReflectionMethod($route->getController(),$route->getActionMethod());
+        $resource = $reflectionMethod->getReturnType()->getName();
+        $model = call_user_func([$resource,'model']);
+        $instance = factory($model)->make();
+//        $resourceInstance = call_user_func([$resource,'make'],$instance);
+//        dd($resourceInstance->response());
+//        $builder = $instance->getConnection()->getSchemaBuilder();
+//        $columns = $builder->getColumnListing($instance->getTable());
+        return $columns;
+    }
+
 }

@@ -32,7 +32,7 @@ Route::middleware(['auth:api'])->group(function () {
     });
 
     // Current Login user info
-    Route::get('me',['uses'=>'CMS\UserController@me','desc'=>'View self'])->name('user.me');
+    Route::get('me',['uses'=>'Acl\UserController@me','desc'=>'View self'])->name('user.me');
 
     // Access control
     Route::prefix('acl')->group(function (){

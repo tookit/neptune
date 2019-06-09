@@ -2,10 +2,16 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Mediable\Media;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MediaResource extends JsonResource
 {
+
+    public static function  model()
+    {
+       return Media::class;
+    }
 
     /**
      * Transform the resource into an array.
@@ -20,5 +26,10 @@ class MediaResource extends JsonResource
         return $this->resource->toArray();
     }
 
+
+    public function additional(array $data)
+    {
+        return parent::additional($data);
+    }
 
 }
