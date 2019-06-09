@@ -27,6 +27,7 @@ class MediaController extends Controller
     }
 
 
+
     /**
      * create a new user.
      *
@@ -51,9 +52,9 @@ class MediaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Media $media)
     {
-        return new MediaResource(Media::find($id));
+        return new MediaResource($media);
     }
 
 

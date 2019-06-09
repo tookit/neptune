@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Str;
@@ -40,6 +41,8 @@ class ApiExplorer extends Command
 
     protected $produce = ["application/json"];
 
+    protected $models = [];
+
     /**
      * Create a new command instance.
      *
@@ -64,7 +67,7 @@ class ApiExplorer extends Command
         $paths = Yaml::parseFile($this->pathFile) ?? [];
         collect($this->routes)->each(function (Route $route) use ( & $paths) {
             if(in_array('api',$route->middleware())){
-                $this->buildSchema($route);
+                $modelClass = $this->getModelClassFromRoute($route);
                 $methods = $route->methods();
                 $uri = $route->uri();
                 $method = $methods[0];
@@ -91,14 +94,27 @@ class ApiExplorer extends Command
     }
 
 
-    protected function buildSchema(Route $route)
+    protected function getModelClassFromRoute(Route $route)
     {
-        $schemas = Yaml::parseFile($this->schemaFile) ?? [];
         $reflectionMethod = new \ReflectionMethod($route->getController(),$route->getActionMethod());
         $resource = $reflectionMethod->getReturnType()->getName();
         $model = call_user_func([$resource,'model']);
-        $modelReflection = new \ReflectionClass($model);
-        $instance = factory($model)->make();
+        return $model;
+    }
+
+
+    /**
+     * Get model schema
+     * @param string $modelClass
+     * @return array
+     * @throws \ReflectionException
+     */
+    protected function getSchemaFromModel($abstract)
+    {
+        $schema = [];
+        $reflector = new \ReflectionClass($abstract);
+        $object = $reflector->getShortName();
+        $instance = factory($abstract)->make();
         $collection = collect($instance->toArray())->map(function ($value,$prop){
             return [
                 $prop => [
@@ -107,18 +123,11 @@ class ApiExplorer extends Command
             ];
         });
         $properties = $collection->all();
-        $object = $modelReflection->getShortName();
-        $schemas[$object] = [
+        $schema[$object] = [
             "type" => "Object",
             "properties" => $properties
 
         ];
-        $yaml = Yaml::dump($schemas,6);
-        file_put_contents($this->schemaFile, $yaml);
-//        $resourceInstance = call_user_func([$resource,'make'],$instance);
-//        dd($resourceInstance->response());
-//        $builder = $instance->getConnection()->getSchemaBuilder();
-//        $columns = $builder->getColumnListing($instance->getTable());
+        return $schema;
     }
-
 }

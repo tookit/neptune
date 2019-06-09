@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Acl;
 
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -52,7 +53,7 @@ class UserController extends Controller
      * @param  \App\Http\Requests\Acl\UserRequest  $request
      * @return \App\Http\Resources\Acl\UserResource
      */
-    public function store(ValidateRequest $request)
+    public function store(ValidateRequest $request) : Resource
     {
 
         return new Resource(Model::create($request->validated()));
@@ -65,9 +66,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user) : Resource
     {
-        return new Resource(Model::findOrFail($id));
+        return new Resource($user);
     }
 
     /**

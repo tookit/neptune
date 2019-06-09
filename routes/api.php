@@ -18,6 +18,7 @@
 
 Route::post('/media',['uses'=>'Media\MediaController@store','desc'=>'Upload Media'])->name('media.upload');
 Route::get('/media',['uses'=>'Media\MediaController@index','desc'=>'List Media'])->name('media.index');
+Route::get('/media/{media}',['uses'=>'Media\MediaController@show','desc'=>'Get Media'])->name('media.view');
 
 Route::post('/auth/login',['uses'=>'Auth\LoginController@login','desc'=>'Login'])->name('login');
 
@@ -40,8 +41,8 @@ Route::middleware(['auth:api'])->group(function () {
         //User
         Route::get('users',['uses'=>'Acl\UserController@index','desc'=>'List user'])->name('user.index');
         Route::post('users',['uses'=>'Acl\UserController@store','desc'=>'Create user'])->name('user.create');
-        Route::get('users/{id}',['uses'=>'Acl\UserController@show','desc'=>'View user detail'])->where('id', '[0-9]+')->name('user.view');
-        Route::put('users/{id}',['uses'=>'Acl\UserController@update','desc'=>'Update user'])->where('id', '[0-9]+')->name('user.edit');
+        Route::get('users/{user}',['uses'=>'Acl\UserController@show','desc'=>'View user detail'])->where('id', '[0-9]+')->name('user.view');
+        Route::put('users/{user}',['uses'=>'Acl\UserController@update','desc'=>'Update user'])->where('id', '[0-9]+')->name('user.edit');
         Route::delete('users/{id}',['uses'=>'Acl\UserController@destroy','desc'=>'Delete User'])->where('id', '[0-9]+')->name('user.delete');
 
         //Role
