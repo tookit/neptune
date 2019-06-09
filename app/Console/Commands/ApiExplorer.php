@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Str;
+use function PHPSTORM_META\type;
 use Symfony\Component\Yaml\Yaml;
 
 class ApiExplorer extends Command
@@ -35,6 +36,8 @@ class ApiExplorer extends Command
 
     protected $pathFile;
 
+    protected $schemaFile;
+
     protected $produce = ["application/json"];
 
     /**
@@ -47,6 +50,8 @@ class ApiExplorer extends Command
         parent::__construct();
         $this->routes = $router->getRoutes();
         $this->pathFile = base_path('/docs/path.yml');
+        $this->schemaFile = base_path('/docs/schema.yml');
+
     }
 
     /**
@@ -59,7 +64,7 @@ class ApiExplorer extends Command
         $paths = Yaml::parseFile($this->pathFile) ?? [];
         collect($this->routes)->each(function (Route $route) use ( & $paths) {
             if(in_array('api',$route->middleware())){
-                $this->getReturnType($route);
+                $this->buildSchema($route);
                 $methods = $route->methods();
                 $uri = $route->uri();
                 $method = $methods[0];
@@ -86,17 +91,34 @@ class ApiExplorer extends Command
     }
 
 
-    protected function getReturnType(Route $route)
+    protected function buildSchema(Route $route)
     {
+        $schemas = Yaml::parseFile($this->schemaFile) ?? [];
         $reflectionMethod = new \ReflectionMethod($route->getController(),$route->getActionMethod());
         $resource = $reflectionMethod->getReturnType()->getName();
         $model = call_user_func([$resource,'model']);
+        $modelReflection = new \ReflectionClass($model);
         $instance = factory($model)->make();
+        $collection = collect($instance->toArray())->map(function ($value,$prop){
+            return [
+                $prop => [
+                    "type" => gettype($value)
+                ]
+            ];
+        });
+        $properties = $collection->all();
+        $object = $modelReflection->getShortName();
+        $schemas[$object] = [
+            "type" => "Object",
+            "properties" => $properties
+
+        ];
+        $yaml = Yaml::dump($schemas,6);
+        file_put_contents($this->schemaFile, $yaml);
 //        $resourceInstance = call_user_func([$resource,'make'],$instance);
 //        dd($resourceInstance->response());
 //        $builder = $instance->getConnection()->getSchemaBuilder();
 //        $columns = $builder->getColumnListing($instance->getTable());
-        return $columns;
     }
 
 }
