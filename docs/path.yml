@@ -23,3 +23,205 @@ Media:
         aggregate_type:
             aggregate_type:
                 type: string
+api/media:
+    GET:
+        description: 'List Media'
+        operationId: listMedia
+        produces:
+            - application/json
+    POST:
+        description: 'Upload Media'
+        operationId: uploadMedia
+        produces:
+            - application/json
+'api/media/{media}':
+    GET:
+        description: 'Get Media'
+        operationId: getMedia
+        produces:
+            - application/json
+        parameters:
+            -
+                name: id
+                in: path
+api/auth/login:
+    POST:
+        description: Login
+        operationId: login
+        produces:
+            - application/json
+api/auth/logout:
+    POST:
+        description: Logout
+        operationId: logout
+        produces:
+            - application/json
+api/auth/refresh:
+    POST:
+        description: 'Refresh token'
+        operationId: refreshToken
+        produces:
+            - application/json
+api/me:
+    GET:
+        description: 'View self'
+        operationId: viewSelf
+        produces:
+            - application/json
+api/acl/users:
+    GET:
+        description: 'List user'
+        operationId: listUser
+        produces:
+            - application/json
+    POST:
+        description: 'Create user'
+        operationId: createUser
+        produces:
+            - application/json
+'api/acl/users/{user}':
+    GET:
+        description: 'View user detail'
+        operationId: viewUserDetail
+        produces:
+            - application/json
+        parameters:
+            -
+                name: id
+                in: path
+    PUT:
+        description: 'Update user'
+        operationId: updateUser
+        produces:
+            - application/json
+        parameters:
+            -
+                name: id
+                in: path
+'api/acl/users/{id}':
+    DELETE:
+        description: 'Delete User'
+        operationId: deleteUser
+        produces:
+            - application/json
+        parameters:
+            -
+                name: id
+                in: path
+api/acl/roles:
+    GET:
+        description: 'List role'
+        operationId: listRole
+        produces:
+            - application/json
+    POST:
+        description: 'Create role'
+        operationId: createRole
+        produces:
+            - application/json
+'api/acl/roles/{id}':
+    GET:
+        description: 'View role detail'
+        operationId: viewRoleDetail
+        produces:
+            - application/json
+        parameters:
+            -
+                name: id
+                in: path
+    PUT:
+        description: 'Update role'
+        operationId: updateRole
+        produces:
+            - application/json
+        parameters:
+            -
+                name: id
+                in: path
+    DELETE:
+        description: 'Delete role'
+        operationId: deleteRole
+        produces:
+            - application/json
+        parameters:
+            -
+                name: id
+                in: path
+api/acl/permissions:
+    GET:
+        description: 'List permission'
+        operationId: listPermission
+        produces:
+            - application/json
+    POST:
+        description: 'Create permission'
+        operationId: createPermission
+        produces:
+            - application/json
+'api/acl/permissions/{id}':
+    GET:
+        description: 'View permission detail'
+        operationId: viewPermissionDetail
+        produces:
+            - application/json
+        parameters:
+            -
+                name: id
+                in: path
+    PUT:
+        description: 'Update permission'
+        operationId: updatePermission
+        produces:
+            - application/json
+        parameters:
+            -
+                name: id
+                in: path
+    DELETE:
+        description: 'Delete permission'
+        operationId: deletePermission
+        produces:
+            - application/json
+        parameters:
+            -
+                name: id
+                in: path
+api/cms/menus:
+    GET:
+        description: 'List menu'
+        operationId: listMenu
+        produces:
+            - application/json
+    POST:
+        description: 'Create menu'
+        operationId: createMenu
+        produces:
+            - application/json
+'api/cms/menus/{id}':
+    GET:
+        description: 'View menu detail'
+        operationId: viewMenuDetail
+        produces:
+            - application/json
+        parameters:
+            -
+                name: id
+                in: path
+    PUT:
+        description: 'Update menu'
+        operationId: updateMenu
+        produces:
+            - application/json
+        parameters:
+            -
+                name: id
+                in: path
+    DELETE:
+        description: 'Delete menu'
+        operationId: deleteMenu
+        produces:
+            - application/json
+        parameters:
+            -
+                name: id
+                in: path

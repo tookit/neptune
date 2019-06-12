@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Media;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Requests\MediaRequest;
 use App\Http\Controllers\Controller;
@@ -12,15 +13,25 @@ use Plank\Mediable\MediaUploaderFacade as MediaUploader;
 
 class MediaController extends Controller
 {
+
+    protected $model ;
+
+    public function __construct(Media $model)
+    {
+
+        $this->model = $model;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index(Request $request)
+    public function index(Request $request) : AnonymousResourceCollection
     {
 
-        $builder = QueryBuilder::for(Media::class);
+        $builder = QueryBuilder::for(get_class($this->model));
         return MediaResource::collection(
             $builder->paginate($request->get('pageSize'),['*'],'page')
         );
@@ -65,7 +76,7 @@ class MediaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id) : MediaResource
     {
         $item = Media::find($id);
         $item->delete();

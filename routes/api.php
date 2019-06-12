@@ -15,9 +15,8 @@
 
 
 //public route
-
-Route::post('/media',['uses'=>'Media\MediaController@store','desc'=>'Upload Media'])->name('media.upload');
 Route::get('/media',['uses'=>'Media\MediaController@index','desc'=>'List Media'])->name('media.index');
+Route::post('/media',['uses'=>'Media\MediaController@store','desc'=>'Upload Media'])->name('media.upload');
 Route::get('/media/{media}',['uses'=>'Media\MediaController@show','desc'=>'Get Media'])->name('media.view');
 
 Route::post('/auth/login',['uses'=>'Auth\LoginController@login','desc'=>'Login'])->name('login');
