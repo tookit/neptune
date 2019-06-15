@@ -80,7 +80,8 @@ class UserController extends Controller
      */
     public function update(ValidateRequest $request, $id)
     {
-        $item = Model::updateOrCreate(['id'=>$id],$request->validated());
+        $item = Model::findOrFail($id);
+        $item->update($request->validated());
         return new Resource($item);
     }
 

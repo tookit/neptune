@@ -61,7 +61,7 @@ class UserRequest extends FormRequest
     {
         return [
             'username' => 'unique:users,username,'.$this->uniqueIdentifier(),
-            'email' => 'email|unique:users,email,'.$this->uniqueIdentifier(),
+            'email' => 'unique:users,email,'.$this->uniqueIdentifier(),
             'mobile' => 'unique:users,mobile,'.$this->uniqueIdentifier(),
             'active' => 'boolean',
         ];

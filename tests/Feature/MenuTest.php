@@ -63,14 +63,14 @@ class MenuTest extends TestCase
 
     }
 
-    public function testTitleRequiredRule()
+    public function testNanmeRequiredRule()
     {
 
         $item = factory(Menu::class)->make();
         $data = $item->getAttributes();
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/menus',array_merge($data,['title'=>null]));
+        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/menus',array_merge($data,['name'=>null]));
         $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
-        $response->assertSee('The title field is required.');
+        $response->assertSee('The name field is required.');
 
     }
 

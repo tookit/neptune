@@ -57,10 +57,6 @@ class UserTest extends TestCase
         $item = factory(User::class)->create();
         $data = [
             'username' => 'test'.uniqid(),
-            'active'=>$item->active,
-            'email'=>$item->email,
-            'mobile'=>'19285468211'
-
         ];
         $response = $this->actingAs($this->makeAdmin())->put('/api/acl/users/'.$item->id,$data);
         $response->assertStatus(200);
@@ -71,13 +67,6 @@ class UserTest extends TestCase
     {
 
         $item = factory(User::class)->create();
-        $data = [
-            'username' => 'test'.uniqid(),
-            'active'=>$item->active,
-            'email'=>$item->email,
-            'mobile'=>'19285468211'
-
-        ];
         $response = $this->actingAs($this->makeAdmin())->delete('/api/acl/users/'.$item->id);
         $response->assertStatus(200);
 

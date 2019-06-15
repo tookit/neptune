@@ -50,7 +50,7 @@ class MediaController extends Controller
 
         $media = MediaUploader::fromSource($request->file('image'))
                 ->toDirectory('/images')
-                ->toDestination('oss', 'image')
+//                ->toDestination('oss', 'image')
                 ->upload();
 
         return new MediaResource($media);

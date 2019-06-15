@@ -61,7 +61,7 @@ class MenuRequest extends FormRequest
     protected function createRules()
     {
         return [
-            'title' => 'required|unique:menus,title',
+            'name' => 'required|unique:menus,name',
             'uri' => 'required',
             'sort_number'=>'integer',
             'is_active'=>'boolean',
@@ -72,7 +72,7 @@ class MenuRequest extends FormRequest
     protected function updateRules()
     {
         return [
-            'title' => 'required|unique:menus,title,'.$this->uniqueIdentifier(),
+            'name' => 'required|unique:menus,name,'.$this->uniqueIdentifier(),
             'uri' => 'max:255',
             'sort_number'=>'integer',
             'is_active'=>'boolean',

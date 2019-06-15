@@ -41,7 +41,7 @@ class RoleController extends Controller
     /**
      * create a new user.
      *
-     * @param  \App\Http\Requests\UserRequest  $request
+     * @param  \App\Http\Requests\RoleRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(ValidateRequest $request)
@@ -65,7 +65,7 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UserRequest  $request
+     * @param  \App\Http\Requests\RoleRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
