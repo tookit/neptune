@@ -6,10 +6,12 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\Models\Mediable\Media::class, function (Faker $faker) {
     return [
-        'disk' => $faker->randomElement(['local','public']),
-        'directory' => $faker->randomElement(['image','text','video','office','other']),
+        'disk' => 'public',
+        'directory' => $faker->randomElement(['image','text','video','doc','other']),
         'filename' => $faker->word.$faker->fileExtension,
+        'extension' => $faker->fileExtension,
         'mime_type' => $faker->mimeType,
-        'aggregate_type' => $faker->randomElement(['image','text','video','office','other']),
+        'size' => $faker->randomDigit,
+        'aggregate_type' => $faker->randomElement(['image','text','video','doc','other']),
     ];
 });

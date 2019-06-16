@@ -67,8 +67,6 @@ class ApiExplorer extends Command
         $paths = Yaml::parseFile($this->pathFile) ?? [];
         collect($this->routes)->each(function (Route $route) use ( & $paths) {
             if(in_array('api',$route->middleware())){
-//                $modelClass = $this->getModelClassFromRoute($route);
-//                array_push($this->models,$modelClass);
                 $methods = $route->methods();
                 $uri = $route->uri();
                 $method = $methods[0];

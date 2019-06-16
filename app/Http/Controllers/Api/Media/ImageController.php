@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Api\Media;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
-use App\Http\Requests\MediaRequest;
+use App\Http\Requests\ImageRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MediaResource;
 use App\Models\Mediable\Media;
 use Plank\Mediable\MediaUploaderFacade as MediaUploader;
 
-class MediaController extends Controller
+class ImageController extends Controller
 {
 
     protected $model ;
@@ -39,20 +39,13 @@ class MediaController extends Controller
 
 
 
-    /**
-     * create a new user.
-     *
-     * @param  \App\Http\Requests\MediaRequest  $request
-     * @return \App\Http\Resources\MediaResource
-     */
-    public function store(MediaRequest $request) : MediaResource
+    public function store(ImageRequest $request) : MediaResource
     {
 
         $media = MediaUploader::fromSource($request->file('image'))
-                ->toDirectory('/images')
+                ->toDirectory(Media::TYPE_IMAGE)
 //                ->toDestination('oss', 'image')
                 ->upload();
-
         return new MediaResource($media);
 
     }
@@ -63,9 +56,10 @@ class MediaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Media $media)
+    public function show($id) : MediaResource
     {
-        return new MediaResource($media);
+        $item = Media::findOrFail($id);
+        return new MediaResource($item);
     }
 
 

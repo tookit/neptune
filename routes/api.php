@@ -70,9 +70,9 @@ Route::middleware(['auth:api'])->group(function () {
 
     });
 
-    Route::get('/media',['uses'=>'Media\MediaController@index','desc'=>'List Media'])->name('media.index');
-    Route::post('/media',['uses'=>'Media\MediaController@store','desc'=>'Upload Media'])->name('media.upload');
-    Route::get('/media/{media}',['uses'=>'Media\MediaController@show','desc'=>'Get Media'])->name('media.view');
+    Route::get('/media/image',['uses'=>'Media\ImageController@index','desc'=>'List Image'])->name('media.image.list');
+    Route::post('/media/image',['uses'=>'Media\ImageController@store','desc'=>'Upload Image'])->name('media.image.upload');
+    Route::get('/media/image/{id}',['uses'=>'Media\ImageController@show','desc'=>'Get Image'])->where('id', '[0-9]+')->name('media.image.view');
 
 
 });
