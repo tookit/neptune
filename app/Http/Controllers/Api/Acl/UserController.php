@@ -23,6 +23,12 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+
+        $users = Model::search('tookit')->get();
+        dd($users);
+
+
+
         $builder = QueryBuilder::for(Model::class)
             ->with(['roles'])
             ->allowedFilters(Model::$allowedFilters)

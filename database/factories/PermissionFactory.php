@@ -12,8 +12,8 @@ $paths = collect($routes->getRoutes())->pluck('uri')->toArray();
 
 $factory->define(Model::class, function (Faker $faker) use ($paths) {
     return [
-        'name' => $faker->name,
-        'slug' => $faker->slug(),
+        'name' => uniqid().$faker->name,
+        'slug' => uniqid().$faker->slug(),
         'is_system'=> true,
         'guard_name' => 'api',
         'http_methods' => $faker->randomElements(['GET','HEAD','CREATE','PUT','POST','DELETE','OPTION']),
