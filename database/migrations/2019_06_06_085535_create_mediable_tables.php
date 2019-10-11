@@ -56,3 +56,4 @@ class CreateMediableTables extends Migration
         Schema::drop('media');
     }
 }
+    

@@ -14,3 +14,9 @@
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+
+// test public channel
+Broadcast::channel('public_channel', function ($user, $id) {
+    return true;
+});
