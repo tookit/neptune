@@ -20,7 +20,7 @@ class CreateQuotesTable extends Migration
     {
         Schema::create($this->table, function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('customer_id');
+            $table->integer('customer_id')->default(0);
             $table->string('username')->comment('Customer name');
             $table->string('email')->comment('Customer email');
             $table->string('mobile')->comment('Customer mobile');

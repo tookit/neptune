@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,7 +12,7 @@ class LoginController extends Controller
 {
 
 
-    use ValidatesRequests, ThrottlesLogins;
+    use ValidatesRequests;
 
 
     /**
@@ -50,7 +49,7 @@ class LoginController extends Controller
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
-        $this->incrementLoginAttempts($request);
+        // $this->incrementLoginAttempts($request);
 
 
 
