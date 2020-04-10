@@ -16,7 +16,7 @@ return [
     /*
      * Filesystem disk to use if none is specified
      */
-    'default_disk' => 'public',
+    'default_disk' => 'oss',
 
     /*
      * Filesystems that can be used for media storage

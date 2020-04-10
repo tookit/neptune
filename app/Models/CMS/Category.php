@@ -10,7 +10,7 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 class Category extends Model
 {
     use NodeTrait,
-        HasMediaTrait,
+        // HasMediaTrait,
         AuditableTrait;
 
 

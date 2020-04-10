@@ -30,7 +30,7 @@ class OssUrlGenerator extends BaseUrlGenerator
     /**
      * {@inheritdoc}
      */
-    public function getAbsolutePath()
+    public function getAbsolutePath(): string
     {
         return $this->getUrl();
     }
@@ -38,7 +38,7 @@ class OssUrlGenerator extends BaseUrlGenerator
     /**
      * {@inheritdoc}
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         if (! $this->isPubliclyAccessible()) {
             throw MediaUrlException::cloudMediaNotPubliclyAccessible($this->media->disk);
@@ -48,7 +48,7 @@ class OssUrlGenerator extends BaseUrlGenerator
         return $adapter->getClient()->signUrl($adapter->getBucket(), $this->media->getDiskPath());
     }
 
-    public function isPubliclyAccessible()
+    public function isPubliclyAccessible(): bool
     {
         return true;
     }

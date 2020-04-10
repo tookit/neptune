@@ -6,7 +6,6 @@ use App\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Kalnoy\Nestedset\NodeTrait;
-use Spatie\Translatable\HasTranslations;
 
 class Menu extends Model
 {
@@ -14,7 +13,7 @@ class Menu extends Model
     public  static $allowedFilters = ['name'];
     public  static $allowedSorts = ['name'];
 
-    use HasTranslations,
+    use
         SoftDeletes,
         NodeTrait;
 
@@ -23,21 +22,15 @@ class Menu extends Model
 
     protected $fillable = [
 
-        'name','sort_number','uri','icon','is_active',
+        'name', 'sort_number', 'uri', 'icon', 'is_active',
     ];
 
 
-    protected $guarded = [
-
-    ];
+    protected $guarded = [];
 
 
     protected $casts = [
 
-        'is_active'=>'boolean'
+        'is_active' => 'boolean'
     ];
-
-
-
-
 }

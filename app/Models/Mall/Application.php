@@ -10,8 +10,8 @@ use Spatie\Sluggable\SlugOptions;
 class Application extends Model
 {
 
-    use HasSlug,
-        HasMediaTrait;
+    use HasSlug;
+        // HasMediaTrait;
 
     protected $table = 'applications';
 

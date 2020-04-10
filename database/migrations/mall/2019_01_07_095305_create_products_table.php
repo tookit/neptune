@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('slug')->unique();
             $table->string('name')->unique()->comment('Product name');
+            $table->integer('brand_id')->default(0)->comment('Brand');
             $table->text('description')->nullable()->comment('Product Short Description');
             $table->text('body')->nullable()->comment('Product Long Description');
             $table->json('props')->nullable()->comment('duplicated for properties relations -  format|attr_id:value_id');
