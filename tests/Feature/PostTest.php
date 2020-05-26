@@ -28,7 +28,7 @@ class PostTest extends TestCase
     {
 
         $item = factory(Post::class)->make();
-        $data = $item->getAttributes();
+        $data = $item->toArray();
         $response = $this->actingAs($this->makeAdmin())->post('/api/cms/post',$data);
         $response->assertStatus(JsonResponse::HTTP_CREATED);
 
@@ -37,12 +37,9 @@ class PostTest extends TestCase
     public function testUpdate()
     {
 
-        $item = factory(Post::class)->create();
-        $data = [
-            'name' => 'test'.uniqid(),
-            'description' => 'test'
-        ];
-        $response = $this->actingAs($this->makeAdmin())->put('/api/cms/post/'.$item->id,$data);
+        $data = factory(Post::class)->create()->toArray();
+        $data['title'] = 'test'.uniqid();
+        $response = $this->actingAs($this->makeAdmin())->put('/api/cms/post/'.$data['id'],$data);
         $response->assertStatus(JsonResponse::HTTP_OK);
 
     }

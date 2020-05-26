@@ -11,8 +11,9 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 class Post extends Model
 {
-    use HasTranslations,
+    use
         SoftDeletes,
+        HasSlug,
         // HasMediaTrait,
         AuditableTrait;
 
@@ -21,7 +22,7 @@ class Post extends Model
 
     protected $fillable = [
 
-        'title','description',
+        'title','description', 'content'
     ];
 
 
@@ -46,7 +47,7 @@ class Post extends Model
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('name')
+            ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
     }
 
