@@ -53,7 +53,6 @@ class CreateMediableTables extends Migration
     public function down()
     {
         Schema::drop('mediables');
-        Schema::drop('media');
+        Schema::drop('medias');
     }
 }
-    

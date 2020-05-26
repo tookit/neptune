@@ -24,12 +24,13 @@
         "spatie/laravel-validation-rules": "^2.5",
         "spatie/laravel-valuestore": "^1.2",
         "symfony/yaml": "^4.3",
+        "nunomaduro/collision": "^4.1",
         "tymon/jwt-auth": "^1.0."
     },
     "require-dev": {
         "algolia/algoliasearch-client-php": "^2.6",
         "barryvdh/laravel-ide-helper": "^2.6",
-        "facade/ignition": "^1.4",
+        "facade/ignition": "^2.0",
         "fideloper/proxy": "^4.3",
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.9",
@@ -75,5 +76,11 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
     }
 }

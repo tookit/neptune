@@ -13,28 +13,21 @@ class Category extends Model
         // HasMediaTrait,
         AuditableTrait;
 
-
     protected $table = 'categories';
-
     protected $fillable = [
 
         'name','slug'
     ];
 
-
     protected $guarded = [
 
     ];
 
-
     protected $casts = [
-
         'is_active'=>'boolean'
     ];
 
-
     public $translatable = [
-
         'name',
         'description'
 

@@ -24,6 +24,8 @@ class CreateProductCategoriesTable extends Migration
             $table->string('name')->unique();
             $table->string('featured_img')->nullable();
             $table->text('description')->nullable();
+            $table->text('meta_title')->nullable();
+            $table->text('meta_description')->nullable();
             $table->string('reference_url')->nullable();
             $table->integer('created_by')->unsigned()->default(0);
             $table->integer('updated_by')->unsigned()->default(0);

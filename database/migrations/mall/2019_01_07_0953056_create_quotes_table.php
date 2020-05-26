@@ -8,7 +8,7 @@ class CreateQuotesTable extends Migration
 {
 
 
-    protected $table = 'quotes';
+    protected $table = 'mall_quotes';
 
     /**
      * Run the migrations.
@@ -21,6 +21,7 @@ class CreateQuotesTable extends Migration
         Schema::create($this->table, function (Blueprint $table) {
             $table->increments('id');
             $table->integer('customer_id')->default(0);
+            $table->ipAddress('ip')->nullable()->comment('IP Address');
             $table->string('username')->comment('Customer name');
             $table->string('email')->comment('Customer email');
             $table->string('mobile')->comment('Customer mobile');
