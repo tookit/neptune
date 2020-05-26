@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Mall;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 

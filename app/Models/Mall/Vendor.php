@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Mall;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 class ProductVendor extends Model
 {
     use SoftDeletes,
-        HasMediaTrait;
+        HasSlug;
 
-    protected $table = 'product_applications';
+    protected $table = 'mall_vendors';
 
     protected $fillable = [
 
@@ -23,13 +24,6 @@ class ProductVendor extends Model
 
     ];
 
-
-    protected $casts = [
-
-        'name' => 'json',
-        'description'=>'json',
-        'actvie'=>'boolean'
-    ];
 
 
     public $translatable = [

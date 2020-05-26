@@ -30,6 +30,7 @@ class CreateProductCategoriesTable extends Migration
             $table->integer('created_by')->unsigned()->default(0);
             $table->integer('updated_by')->unsigned()->default(0);
             $table->boolean('is_active')->default(0);
+            $table->boolean('is_home')->default(0);
             $table->timestamps();
         });
         Schema::create('product_has_categories', function (Blueprint $table) {

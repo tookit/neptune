@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Mall;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductCategoryResource extends JsonResource
+class CategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

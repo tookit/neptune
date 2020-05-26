@@ -1,31 +1,27 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Mall;
 
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-
+use Plank\Mediable\Mediable;
 
 class Category extends Model
 {
 
     use NodeTrait,
-        HasSlug,
-        HasMediaTrait;
+        Mediable,
+        HasSlug;
 
 
-    protected $table = 'product_categories';
-
-
+    protected $table = 'mall_categories';
 
     protected $fillable = [
 
         'name','description'
     ];
-
 
     protected $guarded = [
 
