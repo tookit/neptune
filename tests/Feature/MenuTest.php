@@ -18,7 +18,7 @@ class MenuTest extends TestCase
     {
 
         $item = factory(Menu::class)->create();
-        $response = $this->actingAs($this->makeAdmin())->get('/api/cms/menus/'.$item->id);
+        $response = $this->actingAs($this->makeAdmin())->get('/api/cms/menu/'.$item->id);
         $response->assertStatus(JsonResponse::HTTP_OK);
 
 
@@ -27,7 +27,7 @@ class MenuTest extends TestCase
 
     public function testListMenu()
     {
-        $response = $this->actingAs($this->makeAdmin())->get('/api/cms/menus');
+        $response = $this->actingAs($this->makeAdmin())->get('/api/cms/menu');
         $response->assertStatus(JsonResponse::HTTP_OK);
     }
 
@@ -37,7 +37,7 @@ class MenuTest extends TestCase
 
         $item = factory(Menu::class)->make();
         $data = $item->getAttributes();
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/menus',$data);
+        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/menu',$data);
         $response->assertStatus(JsonResponse::HTTP_CREATED);
 
     }
@@ -49,7 +49,7 @@ class MenuTest extends TestCase
         $data = [
             'name' => 'test'.uniqid(),
         ];
-        $response = $this->actingAs($this->makeAdmin())->put('/api/cms/menus/'.$item->id,$data);
+        $response = $this->actingAs($this->makeAdmin())->put('/api/cms/menu/'.$item->id,$data);
         $response->assertStatus(JsonResponse::HTTP_OK);
 
     }
@@ -58,7 +58,7 @@ class MenuTest extends TestCase
     {
 
         $item = factory(Menu::class)->create();
-        $response = $this->actingAs($this->makeAdmin())->delete('/api/cms/menus/'.$item->id);
+        $response = $this->actingAs($this->makeAdmin())->delete('/api/cms/menu/'.$item->id);
         $response->assertStatus(JsonResponse::HTTP_OK);
 
     }
@@ -68,7 +68,7 @@ class MenuTest extends TestCase
 
         $item = factory(Menu::class)->make();
         $data = $item->getAttributes();
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/menus',array_merge($data,['name'=>null]));
+        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/menu',array_merge($data,['name'=>null]));
         $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         $response->assertSee('The name field is required.');
 
@@ -79,7 +79,7 @@ class MenuTest extends TestCase
 
         $item = factory(Menu::class)->make();
         $data = $item->getAttributes();
-        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/menus',array_merge($data,['uri'=>null]));
+        $response = $this->actingAs($this->makeAdmin())->post('/api/cms/menu',array_merge($data,['uri'=>null]));
         $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         $response->assertSee('The uri field is required.');
 

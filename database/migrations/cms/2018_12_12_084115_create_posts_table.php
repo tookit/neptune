@@ -17,9 +17,12 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->integer('category_id')->unsigned()->default(0);
             $table->string('slug');
-            $table->json('title');
-            $table->json('description');
-            $table->json('content');
+            $table->string('title');
+            $table->string('description');
+            $table->text('content');
+            $table->string('meta_title')->nullable();
+            $table->string('meta_keyword')->nullable();
+            $table->string('meta_description')->nullable();
             $table->integer('created_by')->unsigned()->default(0);
             $table->integer('updated_by')->unsigned()->default(0);
             $table->boolean('is_active')->default(0);

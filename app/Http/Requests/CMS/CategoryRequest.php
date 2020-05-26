@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\CMS;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,7 +25,7 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'slug'=> 'required'
+            // 'slug'=> 'required'
         ];
     }
 

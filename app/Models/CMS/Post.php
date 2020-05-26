@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\CMS;
 
 use App\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +12,7 @@ class Post extends Model
 {
     use HasTranslations,
         SoftDeletes,
-        HasMediaTrait,
+        // HasMediaTrait,
         AuditableTrait;
 
 

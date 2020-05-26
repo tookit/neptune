@@ -62,12 +62,17 @@ Route::middleware(['auth:api'])->group(function () {
     Route::prefix('cms')->group(function (){
 
         //Menu
-        Route::get('menus',['uses'=>'CMS\MenuController@index','desc'=>'List menu'])->name('menu.index');
-        Route::post('menus',['uses'=>'CMS\MenuController@store','desc'=>'Create menu'])->name('menu.create');
-        Route::get('menus/{id}',['uses'=>'CMS\MenuController@show','desc'=>'View menu detail'])->where('id', '[0-9]+')->name('menu.view');
-        Route::put('menus/{id}',['uses'=>'CMS\MenuController@update','desc'=>'Update menu'])->where('id', '[0-9]+')->name('menu.edit');
-        Route::delete('menus/{id}',['uses'=>'CMS\MenuController@destroy','desc'=>'Delete menu'])->where('id', '[0-9]+')->name('menu.delete');
-
+        Route::get('menu',['uses'=>'CMS\MenuController@index','desc'=>'List menu'])->name('menu.index');
+        Route::post('menu',['uses'=>'CMS\MenuController@store','desc'=>'Create menu'])->name('menu.create');
+        Route::get('menu/{id}',['uses'=>'CMS\MenuController@show','desc'=>'View menu detail'])->where('id', '[0-9]+')->name('menu.view');
+        Route::put('menu/{id}',['uses'=>'CMS\MenuController@update','desc'=>'Update menu'])->where('id', '[0-9]+')->name('menu.edit');
+        Route::delete('menu/{id}',['uses'=>'CMS\MenuController@destroy','desc'=>'Delete menu'])->where('id', '[0-9]+')->name('menu.delete');
+        //category
+        Route::get('category',['uses'=>'CMS\CategoryController@index','desc'=>'List category'])->name('category.index');
+        Route::post('category',['uses'=>'CMS\CategoryController@store','desc'=>'Create category'])->name('category.create');
+        Route::get('category/{id}',['uses'=>'CMS\CategoryController@show','desc'=>'View category detail'])->where('id', '[0-9]+')->name('category.view');
+        Route::put('category/{id}',['uses'=>'CMS\CategoryController@update','desc'=>'Update category'])->where('id', '[0-9]+')->name('category.edit');
+        Route::delete('category/{id}',['uses'=>'CMS\CategoryController@destroy','desc'=>'Delete category'])->where('id', '[0-9]+')->name('category.delete');
     });
 
     // Media

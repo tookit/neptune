@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\CMS;
 
 use App\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -32,6 +32,10 @@ class Category extends Model
         'description'
 
     ];
+
+    static $allowedFilters = [];
+
+    static $allowedSorts = [];
 
 
 
