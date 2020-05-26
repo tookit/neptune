@@ -1,9 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Api\CMS;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
+
+use App\Models\CMS\Post as Model;
+use App\Http\Resources\CMS\PostResource as Resource;
+use App\Http\Requests\CMS\PostRequest as ValidateRequest;
+
 
 class PostController extends Controller
 {
@@ -12,20 +18,35 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $builder = QueryBuilder::for(Model::class)
+            ->with([])
+            ->allowedFilters(Model::$allowedFilters)
+            ->allowedSorts(Model::$allowedSorts);
+
+        return Resource::collection(
+
+            $request->get('pageSize') !== '-1'
+                ?
+                $builder->paginate($request->get('pageSize'),['*'],'page')
+                :
+                $builder->get()
+
+        );
     }
 
+
     /**
-     * Store a newly created resource in storage.
+     * create a new category.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ValidateRequest $request)
     {
-        //
+        return new Resource(Model::create($request->validated()));
+
     }
 
     /**
@@ -36,19 +57,20 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        return new Resource(Model::findOrFail($id));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UserRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ValidateRequest $request, $id)
     {
-        //
+        $item = Model::updateOrCreate(['id'=>$id],$request->validated());
+        return new Resource($item);
     }
 
     /**
@@ -59,6 +81,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = Model::findOrFail($id);
+        $item->delete();
+        return new Resource($item);
     }
 }

@@ -73,6 +73,13 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('category/{id}',['uses'=>'CMS\CategoryController@show','desc'=>'View category detail'])->where('id', '[0-9]+')->name('category.view');
         Route::put('category/{id}',['uses'=>'CMS\CategoryController@update','desc'=>'Update category'])->where('id', '[0-9]+')->name('category.edit');
         Route::delete('category/{id}',['uses'=>'CMS\CategoryController@destroy','desc'=>'Delete category'])->where('id', '[0-9]+')->name('category.delete');
+        //post
+        Route::get('post',['uses'=>'CMS\PostController@index','desc'=>'List category'])->name('post.index');
+        Route::post('post',['uses'=>'CMS\PostController@store','desc'=>'Create category'])->name('post.create');
+        Route::get('post/{id}',['uses'=>'CMS\PostController@show','desc'=>'View category detail'])->where('id', '[0-9]+')->name('post.view');
+        Route::put('post/{id}',['uses'=>'CMS\PostController@update','desc'=>'Update category'])->where('id', '[0-9]+')->name('post.edit');
+        Route::delete('post/{id}',['uses'=>'CMS\PostController@destroy','desc'=>'Delete category'])->where('id', '[0-9]+')->name('post.delete');
+
     });
 
     // Media

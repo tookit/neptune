@@ -9,11 +9,12 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
-        "laravel/framework": "^7.0",
         "jacobcyl/ali-oss-storage": "^2.1",
         "jaeger/querylist": "^4.2",
         "james2doyle/laravel-scout-sonic": "^1.0",
         "kalnoy/nestedset": "^5.0",
+        "laravel/framework": "^7.0",
+        "nunomaduro/collision": "^4.1",
         "plank/laravel-mediable": "^4.2",
         "predis/predis": "^1.1",
         "spatie/data-transfer-object": "^1.6",
@@ -24,7 +25,6 @@
         "spatie/laravel-validation-rules": "^2.5",
         "spatie/laravel-valuestore": "^1.2",
         "symfony/yaml": "^4.3",
-        "nunomaduro/collision": "^4.1",
         "tymon/jwt-auth": "^1.0."
     },
     "require-dev": {

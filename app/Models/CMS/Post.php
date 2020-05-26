@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Translatable\HasTranslations;
-
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 class Post extends Model
 {
     use HasTranslations,
@@ -20,7 +21,7 @@ class Post extends Model
 
     protected $fillable = [
 
-        'name','description',
+        'title','description',
     ];
 
 
@@ -30,11 +31,24 @@ class Post extends Model
 
     public $translatable = [
 
-        'name',
+        'title',
         'description',
 
     ];
 
+    static $allowedFilters = [];
+
+    static $allowedSorts = [];
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
 
     public function category(){
 
