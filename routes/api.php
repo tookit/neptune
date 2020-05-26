@@ -79,6 +79,12 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('post/{id}',['uses'=>'CMS\PostController@show','desc'=>'View category detail'])->where('id', '[0-9]+')->name('post.view');
         Route::put('post/{id}',['uses'=>'CMS\PostController@update','desc'=>'Update category'])->where('id', '[0-9]+')->name('post.edit');
         Route::delete('post/{id}',['uses'=>'CMS\PostController@destroy','desc'=>'Delete category'])->where('id', '[0-9]+')->name('post.delete');
+        //post
+        Route::get('tag',['uses'=>'CMS\TagController@index','desc'=>'List tag'])->name('tag.index');
+        Route::post('tag',['uses'=>'CMS\TagController@store','desc'=>'Create tag'])->name('tag.create');
+        Route::get('tag/{id}',['uses'=>'CMS\TagController@show','desc'=>'View tag detail'])->where('id', '[0-9]+')->name('tag.view');
+        Route::put('tag/{id}',['uses'=>'CMS\TagController@update','desc'=>'Update tag'])->where('id', '[0-9]+')->name('tag.edit');
+        Route::delete('tag/{id}',['uses'=>'CMS\TagController@destroy','desc'=>'Delete tag'])->where('id', '[0-9]+')->name('tag.delete');
 
     });
 
