@@ -24,7 +24,7 @@ class Product extends Model
     public static  $allowedSorts = [];
 
 
-    protected $table = 'products';
+    protected $table = 'mall_products';
 
     static $flags = [
 

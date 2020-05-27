@@ -21,7 +21,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $builder = QueryBuilder::for(Model::class)
-            ->withCount(['products'])
+            ->with(['products'])
             ->allowedFilters(Model::$allowedFilters)
             ->allowedSorts(Model::$allowedSorts);
 

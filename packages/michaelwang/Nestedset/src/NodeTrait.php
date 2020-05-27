@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Arr;
 use LogicException;
 
 trait NodeTrait
@@ -248,7 +249,7 @@ trait NodeTrait
      */
     public function descendants()
     {
-        return new DescendantsRelation($this->newScopedQuery(), $this);
+        return new DescendantsRelation($this->newQuery(), $this);
     }
 
     /**
@@ -337,7 +338,7 @@ trait NodeTrait
      */
     public function ancestors()
     {
-        return new AncestorsRelation($this->newScopedQuery(), $this);
+        return new AncestorsRelation($this->newQuery(), $this);
     }
 
     /**
@@ -735,13 +736,13 @@ trait NodeTrait
         return $instance->newScopedQuery();
     }
 
-    // /**
-    //  * {@inheritdoc}
-    //  */
-    // public function newCollection(array $models = array())
-    // {
-    //     return new Collection($models);
-    // }
+    /**
+     * {@inheritdoc}
+     */
+    public function newCollection(array $models = array())
+    {
+        return new Collection($models);
+    }
 
     /**
      * {@inheritdoc}
@@ -752,7 +753,7 @@ trait NodeTrait
      */
     public static function create(array $attributes = [], self $parent = null)
     {
-        $children = array_pull($attributes, 'children');
+        $children = Arr::pull($attributes, 'children');
 
         $instance = new static($attributes);
 

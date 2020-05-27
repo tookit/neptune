@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Mall;
 
 use App\Http\Requests\ImageRequest;
 use App\Http\Resources\MediaResource;

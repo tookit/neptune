@@ -3,7 +3,8 @@
 namespace App\Models\Mall;
 
 use Illuminate\Database\Eloquent\Model;
-use Kalnoy\Nestedset\NodeTrait;
+use Michaelwang\Nestedset\NodeTrait;
+use Plank\Mediable\Mediable;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -13,6 +14,7 @@ class Category extends Model
 {
 
     use NodeTrait,
+        // Mediable,
         HasSlug;
 
 
