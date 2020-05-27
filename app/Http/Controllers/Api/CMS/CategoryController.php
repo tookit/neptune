@@ -24,7 +24,6 @@ class CategoryController extends Controller
             ->with([])
             ->allowedFilters(Model::$allowedFilters)
             ->allowedSorts(Model::$allowedSorts);
-
         return Resource::collection(
 
             $request->get('pageSize') !== '-1'

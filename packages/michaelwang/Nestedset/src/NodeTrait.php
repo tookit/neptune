@@ -736,13 +736,13 @@ trait NodeTrait
         return $instance->newScopedQuery();
     }
 
-    // /**
-    //  * {@inheritdoc}
-    //  */
-    // public function newCollection(array $models = array())
-    // {
-    //     return new Collection($models);
-    // }
+    /**
+     * {@inheritdoc}
+     */
+    public function newCollection(array $models = array())
+    {
+        return new Collection($models);
+    }
 
     /**
      * {@inheritdoc}

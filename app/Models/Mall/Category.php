@@ -14,7 +14,7 @@ class Category extends Model
 {
 
     use NodeTrait,
-        Mediable,
+        // Mediable,
         HasSlug;
 
 

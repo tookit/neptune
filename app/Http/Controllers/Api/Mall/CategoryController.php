@@ -21,17 +21,16 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $builder = QueryBuilder::for(Model::class)
-            ->with(['products'])
+            ->with(['products','children'])
             ->allowedFilters(Model::$allowedFilters)
             ->allowedSorts(Model::$allowedSorts);
-
         return Resource::collection(
 
             $request->get('pageSize') !== '-1'
                 ?
                 $builder->paginate($request->get('pageSize'),['*'],'page')
                 :
-                $builder->get()
+                $builder->get()->toTree()
 
         );
     }
