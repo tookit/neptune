@@ -9,6 +9,6 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as Model;
 
 class Media extends Model
 {
-    protected $table = 'medias';
+    protected $table = 'media';
 
 }

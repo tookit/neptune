@@ -97,6 +97,14 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('category/{id}',['uses'=>'Mall\CategoryController@show','desc'=>'View category detail'])->where('id', '[0-9]+')->name('category.view');
         Route::put('category/{id}',['uses'=>'Mall\CategoryController@update','desc'=>'Update category'])->where('id', '[0-9]+')->name('category.edit');
         Route::delete('category/{id}',['uses'=>'Mall\CategoryController@destroy','desc'=>'Delete category'])->where('id', '[0-9]+')->name('category.delete');
+        //product
+        Route::get('item',['uses'=>'Mall\ProductController@index','desc'=>'List product'])->name('product.index');
+        Route::post('item',['uses'=>'Mall\ProductController@store','desc'=>'Create product'])->name('product.create');
+        Route::get('item/{id}',['uses'=>'Mall\ProductController@show','desc'=>'View product detail'])->where('id', '[0-9]+')->name('product.view');
+        Route::put('item/{id}',['uses'=>'Mall\ProductController@update','desc'=>'Update product'])->where('id', '[0-9]+')->name('product.edit');
+        Route::delete('item/{id}',['uses'=>'Mall\ProductController@destroy','desc'=>'Delete product'])->where('id', '[0-9]+')->name('product.delete');
+        Route::post('item/{id}/image',['uses'=>'Mall\ProductController@attachImage','desc'=>'Attach image for product'])->where('id', '[0-9]+')->name('product.image.attach');
+
 
     });
 

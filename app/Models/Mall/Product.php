@@ -4,19 +4,19 @@ namespace App\Models\Mall;
 
 use App\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Plank\Mediable\Mediable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
-class Product extends Model
+class Product extends Model implements  HasMedia
 {
 
     use HasSlug,
-        Mediable,
+        InteractsWithMedia,
         AuditableTrait;
 
 

@@ -7,11 +7,12 @@ use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
 use App\Models\Mall\Product as Model;
-use App\Http\Resources\Mall\CategoryResource as Resource;
-use App\Http\Requests\Mall\CategoryRequest as ValidateRequest;
+use App\Http\Resources\Mall\ProductResource as Resource;
+use App\Http\Requests\Mall\ProductRequest as ValidateRequest;
+use App\Http\Requests\Mall\ImageRequest as ImageRequest;
 
 
-class CategoryController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +22,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $builder = QueryBuilder::for(Model::class)
-            ->with(['products','children'])
+            ->with(['categories','media'])
             ->allowedFilters(Model::$allowedFilters)
             ->allowedSorts(Model::$allowedSorts);
         return Resource::collection(
@@ -30,7 +31,7 @@ class CategoryController extends Controller
                 ?
                 $builder->paginate($request->get('pageSize'),['*'],'page')
                 :
-                $builder->get()->toTree()
+                $builder->get()
 
         );
     }
@@ -56,7 +57,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        return new Resource(Model::findOrFail($id));
+        $item = Model::with(['media'])->findOrFail($id);
+        return new Resource($item);
     }
 
     /**
@@ -82,6 +84,13 @@ class CategoryController extends Controller
     {
         $item = Model::findOrFail($id);
         $item->delete();
+        return new Resource($item);
+    }
+
+    public function attachImage($id,ImageRequest $request){
+        $image = $request->validated()['image'];
+        $item = Model::findOrFail($id);
+        $item->addMedia($image)->toMediaCollection();
         return new Resource($item);
     }
 }

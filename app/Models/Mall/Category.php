@@ -5,15 +5,17 @@ namespace App\Models\Mall;
 use Illuminate\Database\Eloquent\Model;
 use Michaelwang\Nestedset\NodeTrait;
 use Plank\Mediable\Mediable;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 
-class Category extends Model
+class Category extends Model implements HasMedia
 {
 
     use NodeTrait,
+        InteractsWithMedia,
         // Mediable,
         HasSlug;
 
