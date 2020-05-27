@@ -1,6 +1,6 @@
 <?php
 
-namespace Tookit\Nestedset;
+namespace Michaelwang\Nestedset;
 
 use Exception;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -735,13 +735,13 @@ trait NodeTrait
         return $instance->newScopedQuery();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function newCollection(array $models = array())
-    {
-        return new Collection($models);
-    }
+    // /**
+    //  * {@inheritdoc}
+    //  */
+    // public function newCollection(array $models = array())
+    // {
+    //     return new Collection($models);
+    // }
 
     /**
      * {@inheritdoc}

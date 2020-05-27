@@ -88,6 +88,18 @@ Route::middleware(['auth:api'])->group(function () {
 
     });
 
+    // Mall
+    Route::prefix('mall')->group(function (){
+
+        //category
+        Route::get('category',['uses'=>'Mall\CategoryController@index','desc'=>'List category'])->name('category.index');
+        Route::post('category',['uses'=>'Mall\CategoryController@store','desc'=>'Create category'])->name('category.create');
+        Route::get('category/{id}',['uses'=>'Mall\CategoryController@show','desc'=>'View category detail'])->where('id', '[0-9]+')->name('category.view');
+        Route::put('category/{id}',['uses'=>'Mall\CategoryController@update','desc'=>'Update category'])->where('id', '[0-9]+')->name('category.edit');
+        Route::delete('category/{id}',['uses'=>'Mall\CategoryController@destroy','desc'=>'Delete category'])->where('id', '[0-9]+')->name('category.delete');
+
+    });
+
     // Media
 
     Route::prefix('media')->group(function (){

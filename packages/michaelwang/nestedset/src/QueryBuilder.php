@@ -1,6 +1,6 @@
 <?php
 
-namespace Tookit\Nestedset;
+namespace Michaelwang\Nestedset;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;

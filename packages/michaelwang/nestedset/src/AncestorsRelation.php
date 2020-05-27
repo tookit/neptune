@@ -1,6 +1,6 @@
 <?php
 
-namespace Tookit\Nestedset;
+namespace Michaelwang\Nestedset;
 
 use Illuminate\Database\Eloquent\Model;
 
