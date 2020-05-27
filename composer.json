@@ -62,7 +62,7 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/",
-            "Michaelwang\\Nestedset\\": "packages/Michaelwang/Nestedset/src"
+            "Michaelwang\\Nestedset\\": "packages/michaelwang/Nestedset/src"
         }
     },
     "minimum-stability": "dev",

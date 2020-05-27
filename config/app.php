@@ -176,7 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ExceptionsServiceProvider::class,
         Jacobcyl\AliOSS\AliOssServiceProvider::class,
-        \Michaelwang\Nestedset\NestedSetServiceProvider::class,
+        Michaelwang\Nestedset\NestedSetServiceProvider::class,
 
     ],
 

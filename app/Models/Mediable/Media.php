@@ -2,7 +2,7 @@
 
 namespace App\Models\Mediable;
 
-use Plank\Mediable\Media as Model;
+use Spatie\MediaLibrary\MediaCollections\Models\Media as Model;
 /*
  * images/files/videos
  */
