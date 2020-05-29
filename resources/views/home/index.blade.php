@@ -105,32 +105,32 @@
                 </div>
                 <div class="tt-tab-wrapper">
                     <ul class="nav nav-tabs tt-tabs-default" role="tablist">
-{{--                        {% for index,cat in fiber.children.take(4) %}--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link show" data-toggle="tab" href="#tt-tab-{{cat.id}}" role="tab">{{cat.name}}</a>--}}
-{{--                        </li>--}}
-{{--                        {% endfor %}--}}
+                        @foreach ($fiber->children->take(4) as $item)
+                            <li class="nav-item">
+                                <a class="nav-link show" data-toggle="tab" href="#tt-tab-{{$item->id}}" role="tab">{{$item->name}}</a>
+                            </li>
+                        @endforeach
                     </ul>
                     <div class="tab-content">
-{{--                        {% for index,cat in fiber.children.take(4) %}--}}
-{{--                        <div class="tab-pane fade {{index == 0 ? 'active':''}}" id="tt-tab-{{cat.id}}" role="tabpanel">--}}
-{{--                            <div class="tt-carousel-products row arrow-location-tab tt-alignment-img tt-collection-listing slick-animated-show-js">--}}
-{{--                                {%for item in cat.getAllProducts() %}--}}
-{{--                                <div class="col-2 col-md-4 col-lg-3">--}}
-{{--                                    <a href="/products/items/{{item.slug}}" class="tt-collection-item">--}}
-{{--                                        <div class="tt-image-box"><img src="{{'assets/images/product/product-26.jpg'|theme}}" alt="{{item.anme}}"></div>--}}
-{{--                                        <div class="tt-description">--}}
-{{--                                            <h2 class="tt-title">{{item.name}}</h2>--}}
-{{--                                            <ul class="tt-add-info">--}}
-{{--                                                <!--<li>22 PRODUCTS</li>-->--}}
-{{--                                            </ul>--}}
-{{--                                        </div>--}}
-{{--                                    </a>--}}
-{{--                                </div>--}}
-{{--                                {% endfor %}--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        {% endfor %}--}}
+                        @foreach ($fiber->children->take(4) as $cat)
+                        <div class="tab-pane fade {{$loop->first ? 'active':''}}" id="tt-tab-{{$cat->id}}" role="tabpanel">
+                            <div class="tt-carousel-products row arrow-location-tab tt-alignment-img tt-collection-listing slick-animated-show-js">
+                                @foreach( $cat->products as $item)
+                                <div class="col-2 col-md-4 col-lg-3">
+                                    <a href="/products/items/{{$item->slug}}" class="tt-collection-item">
+                                        <div class="tt-image-box"><img src="{{asset('/images/product/product-26.jpg')}}" alt="{{$item->name}}"></div>
+                                        <div class="tt-description">
+                                            <h2 class="tt-title">{{$item->name}}</h2>
+                                            <ul class="tt-add-info">
+                                                <!--<li>22 PRODUCTS</li>-->
+                                            </ul>
+                                        </div>
+                                    </a>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
