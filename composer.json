@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
+        "igaster/laravel-theme": "^2.0",
         "jacobcyl/ali-oss-storage": "^2.1",
         "jaeger/querylist": "^4.2",
         "james2doyle/laravel-scout-sonic": "^1.0",

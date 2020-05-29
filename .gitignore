@@ -32,3 +32,4 @@ _ide_helper.php
 /public/mix-manifest.json
 /dist
 /frontend/node_modules
+/storage/product/

@@ -9,7 +9,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 use App\Models\Mall\Category as Model;
 use App\Http\Resources\Mall\CategoryResource as Resource;
 use App\Http\Requests\Mall\CategoryRequest as ValidateRequest;
-
+use App\Http\Requests\Mall\ImageRequest as ImageRequest;
 
 class CategoryController extends Controller
 {
@@ -82,6 +82,14 @@ class CategoryController extends Controller
     {
         $item = Model::findOrFail($id);
         $item->delete();
+        return new Resource($item);
+    }
+
+
+    public function attachImage($id,ImageRequest $request){
+        $image = $request->validated()['image'];
+        $item = Model::findOrFail($id);
+        $item->addMedia($image)->toMediaCollection('images','oss');
         return new Resource($item);
     }
 }

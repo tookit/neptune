@@ -90,7 +90,7 @@ class ProductController extends Controller
     public function attachImage($id,ImageRequest $request){
         $image = $request->validated()['image'];
         $item = Model::findOrFail($id);
-        $item->addMedia($image)->toMediaCollection();
+        $item->addMedia($image)->toMediaCollection('images','oss');
         return new Resource($item);
     }
 }

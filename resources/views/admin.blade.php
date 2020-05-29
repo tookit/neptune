@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>logo.png">
     <title>Ant Design Pro</title>
+      <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <style>.preloading-animate{background:#ffffff;width:100%;height:100%;position:fixed;left:0;top:0;z-index:299;}.preloading-animate .preloading-wrapper{position:absolute;width:5rem;height:5rem;left:50%;top:50%;transform:translate(-50%,-50%);}.preloading-animate .preloading-wrapper .preloading-balls{font-size:5rem;}</style>
   </head>
   <body>
@@ -17,7 +18,11 @@
         <img src="/loading/option2/loading.svg" />
       </div>
     </div>
-    <div id="app"></div>
+    <div id="app">
+        <example-component></example-component>
+    </div>
+
     <!-- built files will be auto injected -->
+    <script src="{{ mix('js/app.js') }}"></script>
   </body>
 </html>

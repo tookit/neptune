@@ -11,12 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','Web\HomeController@index');
 
 
 
-Route::get('/chat', function () {
-    return view('chat');
+Route::get('/admin', function () {
+    return view('admin');
 });
