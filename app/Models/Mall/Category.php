@@ -75,5 +75,37 @@ class Category extends Model implements HasMedia
         return $this->belongsToMany(Product::class,'product_has_categories');
     }
 
+    /**
+     * Return an array of all child category ids.
+     *
+     * @return array
+     */
+    public function getChildrenIds()
+    {
+        return $this->scopeAllChildren(self::newQuery(), true)
+            ->get(['id'])
+            ->pluck('id')
+            ->toArray();
+    }
+
+
+    public function scopeAllChildren($query, $includeSelf = false)
+    {
+        $query
+            ->where($this->getLftName(), '>=', $this->getLft())
+            ->where($this->getRgtName(), '<', $this->getRgt())
+        ;
+
+        return $includeSelf ? $query : $query->withoutSelf();
+    }
+
+    public function getAllChildrenAndSelf()
+    {
+        return $this->newQuery()->allChildren(true)->get();
+    }
+
+    public function getAllProducts() {
+        return Product::inCategories($this->getAllChildrenAndSelf()->pluck('id')->toArray())->get();
+    }
 
 }

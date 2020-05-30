@@ -118,7 +118,7 @@
                                 @foreach( $cat->products as $item)
                                 <div class="col-2 col-md-4 col-lg-3">
                                     <a href="/products/items/{{$item->slug}}" class="tt-collection-item">
-                                        <div class="tt-image-box"><img src="{{asset('/images/product/product-26.jpg')}}" alt="{{$item->name}}"></div>
+                                        <div class="tt-image-box"><img src="{{$item->getFirstMediaUrl('fiber')}}" alt="{{$item->name}}"></div>
                                         <div class="tt-description">
                                             <h2 class="tt-title">{{$item->name}}</h2>
                                             <ul class="tt-add-info">

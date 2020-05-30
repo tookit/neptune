@@ -1,10 +1,13 @@
+@extends('layouts.app')
+
+@section('content')
 <div class="tt-breadcrumb">
     <div class="container">
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/products">Products</a></li>
 
-            <li>{{item.name}}</li>
+            <li>{{$item->name}}</li>
 
         </ul>
     </div>
@@ -16,7 +19,6 @@
         <div class="tt-mobile-product-layout visible-xs">
             <div class="tt-mobile-product-slider arrow-location-center slick-animated-show-js">
                 <!--{% for image in item.all_images %}-->
-            <!--<div><img src="{{ image.getThumb(60,75,{mode:'crop'}) }}" alt=""></div>-->
                 <!--{% endfor %}-->
 
                 <!--<div>-->
@@ -40,22 +42,22 @@
                         <div class="tt-product-single-img">
                             <div>
                                 <button class="tt-btn-zomm tt-top-right"><i class="icon-f-86"></i></button>
-                                {% if mainImage %}
-                                <img class="zoom-product" src="{{ mainImage.getThumb(480,600,{mode:'crop'})}}" data-zoom-image="{{image.getPath()}}" alt="{{item.name}}">
-                                {% else %}
-                                <img class="zoom-product" src="{{'assets/images/product/product-01.jpg'|theme }}" data-zoom-image="{{'assets/images/product/product-01.jpg'|theme }}" alt="{{item.name}}">
-                                {% endif %}
+                                @if ($item->media)
+                                    <img class="zoom-product" src="{{ $item->getFirstMediaUrl('fiber')}}" data-zoom-image="{{$item->getFirstMediaUrl('fiber')}}" alt="{{$item->name}}">
+                                @else
+                                    <img class="zoom-product" src="{{asset('/images/product/product-01.jpg') }}" data-zoom-image="{{asset('/images/product/product-01.jpg') }}" alt="{{$item->name}}">
+                                @endif
                             </div>
                         </div>
                         <div class="tt-product-single-carousel-vertical">
                             <ul id="smallGallery" class="tt-slick-button-vertical  slick-animated-show-js">
-                                {% if item.all_images %}
-                                {% for image in item.all_images %}
-                                <li><a href="#" data-image="{{image.getThumb(480,600,{mode:'crop'})}}" data-zoom-image="{{image.getPath()}}"><img src="{{image.getPath()}}" alt=""></a></li>
-                                {% endfor %}
-                                {% else %}
-                                <li><a href="#" data-image="{{'assets/images/product/product-01.jpg'|theme }}" data-zoom-image="{{'assets/images/product/product-01.jpg'|theme }}"><img src="{{'assets/images/product/product-01.jpg'|theme }}" alt=""></a></li>
-                                {% endif %}
+                                @if ($item->media)
+                                    @foreach ($item->media as $media)
+                                        <li><a href="#" data-image="{{$media->getUrl()}}" data-zoom-image="{{$media->getUrl()}}"><img src="{{$media->getUrl()}}" alt=""></a></li>
+                                    @endforeach
+                                @else
+                                    <li><a href="#" data-image="{{'assets/images/product/product-01.jpg'|theme }}" data-zoom-image="{{'assets/images/product/product-01.jpg'|theme }}"><img src="{{'assets/images/product/product-01.jpg'|theme }}" alt=""></a></li>
+                                @endif
                                 <!--<li>-->
                                 <!--<div class="video-link-product" data-toggle="modal" data-type="youtube" data-target="#modalVideoProduct" data-value="http://www.youtube.com/embed/GhyKqj_P2E4">-->
                                 <!--<img src="images/product/product-small-empty.png" alt="">-->
@@ -84,7 +86,7 @@
                         <!--<li><span>Availability:</span> 40 in Stock</li>-->
                         <!--</ul>-->
                         <!--</div>-->
-                        <h1 class="tt-title">{{item.name}}</h1>
+                        <h1 class="tt-title">{{$item->name}}</h1>
                         <div class="tt-price">
                             <!--<span class="new-price">$29</span>-->
                         </div>
@@ -126,7 +128,7 @@
                                     </div>
                                 </div>
                                 <div class="col-item">
-                                    <a href="#" class="btn btn-lg tt-btn-quote" data-pid="{{item.id}}"><i class="icon-f-39"></i>Quote</a>
+                                    <a href="#" class="btn btn-lg tt-btn-quote" data-pid="{{$item->id}}"><i class="icon-f-39"></i>Quote</a>
                                 </div>
                             </div>
                         </div>
@@ -158,15 +160,15 @@
                     <div class="tt-title-border"></div>
                     <h3 class="tt-title-border mt-3">Description</h3>
                     <div>
-                        {{item.description_short | raw }}
+                        {!! $item->description !!}
                     </div>
                     <h3 class="tt-title-border mt-3">Features</h3>
                     <div style="margin-bottom: 25px">
-                        {{item.features | raw }}
+                        {!! $item->featrue !!}
                     </div>
                     <h3 class="tt-title-border mt-3">Specs</h3>
                     <div>
-                        {{item.specs | raw }}
+                        {!! $item->specs !!}
                     </div>
                     <h3 class="tt-title-border mt-3">Quality Certification</h3>
                     <div>
@@ -177,7 +179,6 @@
                         <div class="tt-item">
                             <div class="tt-collapse-title">DESCRIPTION</div>
                             <div class="tt-collapse-content">
-                               {{item.short_descrption}}
 
                     </div>
                 </div>
@@ -339,61 +340,61 @@
             </ul>
         </div>
     </div>
-    <div class="container-indent" style="margin-bottom: 45px">
-        <div class="container container-fluid-custom-mobile-padding">
-            <div class="tt-block-title text-left">
-                <h3 class="tt-title-small">RELATED PRODUCT</h3>
-            </div>
-            <div class="tt-carousel-products row arrow-location-right-top tt-alignment-img tt-layout-product-item slick-animated-show-js">
-                {% for item in related %}
-                <div class="col-2 col-md-4 col-lg-3">
-                    <div class="tt-product thumbprod-center">
-                        <div class="tt-image-box">
-                            <a href="#" class="tt-btn-quickview" data-toggle="modal" data-tooltip="Quick View" data-tposition="left"></a>
-                            <a href="#" class="tt-btn-wishlist" data-tooltip="Add to Wishlist" data-tposition="left"></a>
-                            <a href="#" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>
-                            <a href="#">
-                                {% if item.all_images %}
-                                <span class="tt-img"><img src="{{ item.all_images[0].getThumb(280,350,{mode:'crop'})}}" alt="{{item.name}}"></span>
-                                <span class="tt-img-roll-over"><img src="{{'assets/images/product/product-17-01.jpg'|theme}}" alt="{{item.name}}"></span>
-                                {% else %}
-                                <span class="tt-img"><img src="{{'assets/images/product/product-17.jpg'|theme}}" alt="{{item.name}}"></span>
-                                <span class="tt-img-roll-over"><img src="{{'assets/images/product/product-17-01.jpg'|theme}}" alt="{{item.name}}"></span>
-                                {% endif %}
-                            </a>
-                        </div>
-                        <div class="tt-description">
-                            <div class="tt-row">
-                                <ul class="tt-add-info">
-                                    <li><a href="#">Category</a></li>
-                                </ul>
-                                <div class="tt-rating">
-                                    <i class="icon-star"></i>
-                                    <i class="icon-star"></i>
-                                    <i class="icon-star"></i>
-                                    <i class="icon-star-half"></i>
-                                    <i class="icon-star-empty"></i>
-                                </div>
-                            </div>
-                            <h2 class="tt-title"><a href="/products/items/{{item.slug}}">{{item.name |raw}}</a></h2>
-                            <div class="tt-price">
-                            </div>
-                            <div class="tt-product-inside-hover">
-                                <div class="tt-row-btn">
-                                    <a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</a>
-                                </div>
-                                <div class="tt-row-btn">
-                                    <a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
-                                    <a href="#" class="tt-btn-wishlist"></a>
-                                    <a href="#" class="tt-btn-compare"></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
+{{--    <div class="container-indent" style="margin-bottom: 45px">--}}
+{{--        <div class="container container-fluid-custom-mobile-padding">--}}
+{{--            <div class="tt-block-title text-left">--}}
+{{--                <h3 class="tt-title-small">RELATED PRODUCT</h3>--}}
+{{--            </div>--}}
+{{--            <div class="tt-carousel-products row arrow-location-right-top tt-alignment-img tt-layout-product-item slick-animated-show-js">--}}
+{{--                <div class="col-2 col-md-4 col-lg-3">--}}
+{{--                    <div class="tt-product thumbprod-center">--}}
+{{--                        <div class="tt-image-box">--}}
+{{--                            <a href="#" class="tt-btn-quickview" data-toggle="modal" data-tooltip="Quick View" data-tposition="left"></a>--}}
+{{--                            <a href="#" class="tt-btn-wishlist" data-tooltip="Add to Wishlist" data-tposition="left"></a>--}}
+{{--                            <a href="#" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>--}}
+{{--                            <a href="#">--}}
+{{--                                {% if item.all_images %}--}}
+{{--                                <span class="tt-img"><img src="{{ item.all_images[0].getThumb(280,350,{mode:'crop'})}}" alt="{{item.name}}"></span>--}}
+{{--                                <span class="tt-img-roll-over"><img src="{{'assets/images/product/product-17-01.jpg'|theme}}" alt="{{item.name}}"></span>--}}
+{{--                                {% else %}--}}
+{{--                                <span class="tt-img"><img src="{{'assets/images/product/product-17.jpg'|theme}}" alt="{{item.name}}"></span>--}}
+{{--                                <span class="tt-img-roll-over"><img src="{{'assets/images/product/product-17-01.jpg'|theme}}" alt="{{item.name}}"></span>--}}
+{{--                                {% endif %}--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
+{{--                        <div class="tt-description">--}}
+{{--                            <div class="tt-row">--}}
+{{--                                <ul class="tt-add-info">--}}
+{{--                                    <li><a href="#">Category</a></li>--}}
+{{--                                </ul>--}}
+{{--                                <div class="tt-rating">--}}
+{{--                                    <i class="icon-star"></i>--}}
+{{--                                    <i class="icon-star"></i>--}}
+{{--                                    <i class="icon-star"></i>--}}
+{{--                                    <i class="icon-star-half"></i>--}}
+{{--                                    <i class="icon-star-empty"></i>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <h2 class="tt-title"><a href="/product/item/{{$item->slug}}">{{$item->name}}</a></h2>--}}
+{{--                            <div class="tt-price">--}}
+{{--                            </div>--}}
+{{--                            <div class="tt-product-inside-hover">--}}
+{{--                                <div class="tt-row-btn">--}}
+{{--                                    <a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</a>--}}
+{{--                                </div>--}}
+{{--                                <div class="tt-row-btn">--}}
+{{--                                    <a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>--}}
+{{--                                    <a href="#" class="tt-btn-wishlist"></a>--}}
+{{--                                    <a href="#" class="tt-btn-compare"></a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
-            </div>
-        </div>
-    </div>
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 </div>
+
+@endsection

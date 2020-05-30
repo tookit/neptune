@@ -106,8 +106,8 @@ Site: http://www.isocked.com
 <script src="{{ asset('/external/rs-plugin/js/jquery.themepunch.tools.min.js') }}"></script>
 <script src="{{ asset('/external/rs-plugin/js/jquery.themepunch.revolution.min.js') }}"></script>
 <script src="{{ asset('/external/rs-plugin/js/jquery.themepunch.revolution.min.js') }}"></script>
-{{--<script src="{{ asset('/external/countdown/jquery.plugin.min.js') }}"></script>--}}
-{{--<script src="{{ asset('/external/countdown/jquery.countdown.min.js') }}"></script>--}}
+<script src="{{ asset('/external/countdown/jquery.plugin.min.js') }}"></script>
+<script src="{{ asset('/external/countdown/jquery.countdown.min.js') }}"></script>
 <script src="{{ asset('/external/elevatezoom/jquery.elevatezoom.js') }}"></script>
 <script src="{{ asset('/external/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
 <script src="{{ asset('external/lazyLoad/lazyload.min.js') }}"></script>

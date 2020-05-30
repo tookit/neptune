@@ -87,6 +87,15 @@ class Product extends Model implements  HasMedia
     //     return $this->belongsTo(Brand::class);
     // }
 
+    public function scopeInCategories($query, $ids)
+    {
+        if ( ! count($ids)) {
+            return $query;
+        }
 
+        return $query->whereHas('categories', function ($q) use ($ids) {
+            $q->whereIn('category_id', $ids);
+        });
+    }
 
 }
