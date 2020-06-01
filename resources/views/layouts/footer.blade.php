@@ -45,9 +45,9 @@
                             <ul class="tt-list">
                                 @foreach ($categories as $item)
                                     <li>
-                                        <a href="/products/categories/{{ $item->slug }}">
+                                        <a href="{{route('product.category',['slug'=>$item->slug])}}">
                                             <i class="icon-e-03"></i>
-                                            <span>{{$item->name}}</span>
+                                            <span>{!!  $item->name !!}</span>
                                         </a>
                                     </li>
                                 @endforeach

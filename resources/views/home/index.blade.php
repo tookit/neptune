@@ -113,11 +113,11 @@
                     </ul>
                     <div class="tab-content">
                         @foreach ($fiber->children->take(4) as $cat)
-                        <div class="tab-pane fade {{$loop->first ? 'active':''}}" id="tt-tab-{{$cat->id}}" role="tabpanel">
+                        <div class="tab-pane fade {{$loop->index === 1 ? 'active':''}}" id="tt-tab-{{$cat->id}}" role="tabpanel">
                             <div class="tt-carousel-products row arrow-location-tab tt-alignment-img tt-collection-listing slick-animated-show-js">
-                                @foreach( $cat->products as $item)
+                                @foreach( $cat->getAllProducts()->take(4) as $item)
                                 <div class="col-2 col-md-4 col-lg-3">
-                                    <a href="/products/items/{{$item->slug}}" class="tt-collection-item">
+                                    <a href="{{route('product.view',['slug'=>$item->slug])}}" class="tt-collection-item">
                                         <div class="tt-image-box"><img src="{{$item->getFirstMediaUrl('fiber')}}" alt="{{$item->name}}"></div>
                                         <div class="tt-description">
                                             <h2 class="tt-title">{{$item->name}}</h2>

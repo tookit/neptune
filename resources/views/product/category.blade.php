@@ -5,7 +5,7 @@
         <div class="container">
             <ul>
                 <li><a href="/">Home</a></li>
-                <li>{{ $item->name }}</li>
+                <li>{!! $item->name  !!}</li>
             </ul>
         </div>
     </div>
@@ -50,7 +50,7 @@
                             <div class="tt-collapse-content">
                                 <ul class="tt-list-row">
                                     @foreach($categories as $cat)
-                                    <li class="{{$cat->id == $item->id ? 'active': ''}}"><a href="/product/category/{{ $cat->slug }}">{{$cat->name}}</a></li>
+                                    <li class="{{$cat->id == $item->id ? 'active': ''}}"><a href="/product/category/{{ $cat->slug }}">{!! $cat->name !!}</a></li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -236,11 +236,9 @@
                                             <a href="#" class="tt-btn-quote" data-tooltip="Quote" data-tposition="left"></a>
                                             <a href="#" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>
                                             <a href="/product/item/{{ $product->slug }}">
-                                                @if($product->hasMedia('firber'))
-                                                    @foreach($product->media as $media)
-                                                    <span class="tt-img"><img src="{{asset('/images/loader.svg')}}" data-src="{{ $media->getUrl()  }}" alt="{{$product->name}}"></span>
-                                                    <span class="tt-img-roll-over"><img src="{{asset('/images/loader.svg')}}" data-src="{{ $media->getUrl()  }}}" alt="{{$product->name}}"></span>
-                                                    @endforeach
+                                                @if($product->hasMedia('fiber'))
+                                                    <span class="tt-img"><img src="{{asset('/images/loader.svg')}}" data-src="{{ $product->getFirstMediaUrl('fiber')  }}" alt="{{$product->name}}"></span>
+                                                    <span class="tt-img-roll-over"><img src="{{asset('/images/loader.svg')}}" data-src="{{ $product->getFirstMediaUrl('fiber')  }}" alt="{{$product->name}}"></span>
                                                 @else
                                                 <span class="tt-img"><img src="{{asset('/images/loader.svg')}}" data-src="{{asset('/images/product/product-18.jpg')}}" alt="{{$product->name}}"></span>
                                                 <span class="tt-img-roll-over"><img src="{{asset('/images/loader.svg')}}" data-src="{{asset('/images/product/product-18-01.jpg')}}" alt="{{$product->name}}"></span>
@@ -280,12 +278,24 @@
                                 @endforeach
 
                             </div>
-                            <div class="text-center tt_product_showmore" style="margin-bottom: 35px">
-                                <a href="#" class="btn btn-border">LOAD MORE</a>
-                                <div class="tt_item_all_js">
-                                    <a href="#" class="btn btn-border01">NO MORE ITEM TO SHOW</a>
-                                </div>
-                            </div>
+{{--                            <div class="tt-pagination">--}}
+{{--                                <a href="#" class="btn-pagination btn-prev"></a>--}}
+{{--                                <ul>--}}
+{{--                                    <li class="active"><a href="#">1</a></li>--}}
+{{--                                    <li><a href="#">2</a></li>--}}
+{{--                                    <li><a href="#">3</a></li>--}}
+{{--                                </ul>--}}
+{{--                                <a href="#" class="btn-pagination btn-next"></a>--}}
+{{--                            </div>--}}
+                            <ul class="tt-pagination">
+                                {{ $item->getAllProducts()->render() }}
+                            </ul>
+{{--                            <div class="text-center tt_product_showmore" style="margin-bottom: 35px">--}}
+{{--                                <a href="#" class="btn btn-border">LOAD MORE</a>--}}
+{{--                                <div class="tt_item_all_js">--}}
+{{--                                    <a href="#" class="btn btn-border01">NO MORE ITEM TO SHOW</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                     </div>
                 </div>

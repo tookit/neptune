@@ -105,7 +105,7 @@ class Category extends Model implements HasMedia
     }
 
     public function getAllProducts() {
-        return Product::inCategories($this->getAllChildrenAndSelf()->pluck('id')->toArray())->get();
+        return Product::inCategories($this->getAllChildrenAndSelf()->pluck('id')->toArray())->paginate();
     }
 
 }
